@@ -4,20 +4,30 @@ A Scalaz wrapper for the Twitter API.
 
 # Examples
 
+## Usage
+
+    scala> import twitter4z._
+
+    scala> import Twitter4z._
+    
+    scala> publicTimeline()
+
 ## Authorization
 
-    scala> val rtoken = requestToken("*key*", "*secret*")
+    scala> val rtoken = requestToken(key, secret)
     
     scala> val url = authorization(rtoken)
     
-    **Open URL**
-    
-    scala> implicit val atoken = accessToken(rtoken, "*pin code*")
+    scala> implicit val atoken = accessToken(rtoken, "XXXXXXX")
     
     scala> update("Twitter4Z!")
 
+## Read & Write
+    
+    scala> atoken.write("hoge")
+    
+    scala> implicit val atoken = readTokens("hoge")
+
 ## Option
 
-   scala> homeTimeline(page = 2, count = 50)
-   
-   scala> update("@*screen name* *text*", inReplyToStatusId = *status id*)
+    scala> homeTimeline(page = 2, count = 50)
