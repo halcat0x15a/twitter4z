@@ -6,7 +6,7 @@ package object http {
 
   case class Timeout(connect: Int, read: Int)
 
-  implicit def Request(request: Http.Request) = new {
+  implicit def RichRequest(request: Http.Request) = new {
     def option(timeout: Timeout) = request.options(HttpOptions.connTimeout(timeout.connect), HttpOptions.readTimeout(timeout.read))
     def oauth(tokens: Tokens): Http.Request = request.oauth(tokens.consumer, tokens.token)
     def oauth(tokens: Option[Tokens]): Http.Request = tokens.map(oauth).getOrElse(request)

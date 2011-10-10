@@ -12,10 +12,12 @@ case object Admin extends PlaceType
 
 case object Country extends PlaceType
 
-case class Place(country: String,
-		 countryCode: String,
-		 fullName: String,
-		 id: String,
-		 name: String,
-		 placeType: PlaceType,
-		 url: URL)
+case class Place(
+  country: String,
+  countryCode: String,
+  fullName: String,
+  id: String,
+  name: String,
+  placeType: PlaceType,
+  url: URL
+)

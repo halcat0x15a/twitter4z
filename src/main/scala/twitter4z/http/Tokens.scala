@@ -11,6 +11,6 @@ case class Tokens(consumer: Token, token: Token) {
     stream.close()
   }
 
-  override def toString = "Tokens"
+  override def toString = "Tokens@" + hashCode.toHexString
 
 }
