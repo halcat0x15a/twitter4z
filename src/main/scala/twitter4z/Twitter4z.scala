@@ -14,9 +14,11 @@ object Twitter4z extends OAuth with Timelines with Tweets {
 
   implicit val DefaultTokens = none[Tokens]
 
-  implicit def IdToUserId(id: ID) = id.right[String].some
+  implicit def IdToUserId(id: ID) = Some(id.right[String])
 
-  implicit def StringToUserId(string: String) = string.left[ID].some
+  implicit def StringToUserId(string: String) = Some(string.left[ID])
+
+  implicit def ToParam[A](value: A) = New(value)
 
   def readTokens(name: String) = {
     val stream = new ObjectInputStream(new FileInputStream(name))

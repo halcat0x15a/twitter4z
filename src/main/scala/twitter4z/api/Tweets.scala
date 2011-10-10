@@ -9,8 +9,6 @@ import twitter4z.json._
 
 trait Tweets {
 
-  import Param._
-
   def retweetedBy(id: ID, count: Param[Int] = Default, page: Param[Int] = Default)(implicit timeout: Timeout, tokens: Option[Tokens]) = resource[List[User]](get, "statuses/" + id + "/retweeted_by", tokens, Count(count), Page(page))
 
   def retweetedByIds(id: ID, count: Param[Int] = Default, page: Param[Int] = Default, stringifyIds: Param[Boolean] = Default)(implicit timeout: Timeout, tokens: Some[Tokens]) = resource[List[ID]](get, "statuses/" + id + "retweeted_by/ids", tokens, Count(count), Page(page), StringifyIds(stringifyIds))

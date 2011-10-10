@@ -9,8 +9,6 @@ import twitter4z.auth._
 
 trait Timelines {
 
-  import Param._
-
   def homeTimeline(count: Param[Int] = Default, sinceId: Param[ID] = Default, maxId: Param[ID] = Default, page: Param[Int] = Default, trimUser: Param[Boolean] = Default, includeRts: Param[Boolean] = Default, includeEntities: Param[Boolean] = Default, excludeReplies: Param[Boolean] = Default, contributorDetails: Param[Boolean] = Default)(implicit timeout: Timeout, tokens: Some[Tokens]) = resource[Statuses](get, "statuses/home_timeline", tokens, Count(count), SinceId(sinceId), MaxId(maxId), Page(page), TrimUser(trimUser), IncludeRts(includeRts), IncludeEntities(includeEntities), ExcludeReplies(excludeReplies), ContributorDetails(contributorDetails))
 
   def mentions(count: Param[Int] = Default, sinceId: Param[ID] = Default, maxId: Param[ID] = Default, page: Param[Int] = Default, trimUser: Param[Boolean] = Default, includeRts: Param[Boolean] = Default, includeEntities: Param[Boolean] = Default, contributorDetails: Param[Boolean] = Default)(implicit timeout: Timeout, tokens: Some[Tokens]) = resource[Statuses](get, "statuses/mentions", tokens, Count(count), SinceId(sinceId), MaxId(maxId), Page(page), TrimUser(trimUser), IncludeRts(includeRts), IncludeEntities(includeEntities), ContributorDetails(contributorDetails))
