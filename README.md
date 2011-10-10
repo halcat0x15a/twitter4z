@@ -31,3 +31,7 @@ A Scalaz wrapper for Twitter API.
 ## Option
 
     scala> homeTimeline(page = 2, count = 50)
+
+# Source
+
+    http://halcat0x15a.github.com/twitter4z/target/scala-2.9.1.final/classes.sxr/
