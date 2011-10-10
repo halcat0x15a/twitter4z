@@ -11,4 +11,8 @@ libraryDependencies ++= Seq("org.scalaz" %% "scalaz-core" % "6.0.3",
                             "net.liftweb" %% "lift-json-scalaz" % "2.4-M4",
                             "org.apache.httpcomponents" % "httpclient" % "4.1.2")
 
+addCompilerPlugin("org.scala-tools.sxr" % "sxr_2.9.0" % "0.2.7")
+
+scalacOptions <+= scalaSource in Compile map { "-P:sxr:base-directory:" + _.getAbsolutePath }
+
 scalacOptions += "-deprecation"
