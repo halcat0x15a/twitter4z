@@ -1,6 +1,6 @@
 # Twitter4Z
 
-A Scalaz wrapper for the Twitter API.
+A Scalaz wrapper for Twitter API.
 
 # Examples
 
