@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>twitter4z/objects/Media.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.objects
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Resize extends java.lang.Object" id="9581">Resize</a>
+
+case <span class="keyword">object</span> <a href="#76534" title="object twitter4z.objects.Crop" id="76539">Crop</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9581" title="twitter4z.objects.Resize">Resize</a>
+
+case <span class="keyword">object</span> <a href="#76546" title="object twitter4z.objects.Fit" id="76551">Fit</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9581" title="twitter4z.objects.Resize">Resize</a>
+
+case <span class="keyword">class</span> <a title="class Size extends java.lang.Object with ScalaObject with Product with Serializable" id="76894">Size</a><a href="#76894" title="ScalaObject" class="delimiter">(</a>
+  <a title="Int" id="62987">w</a>: <span title="Int">Int</span>,
+  <a title="Int" id="62988">h</a>: <span title="Int">Int</span>,
+  <a title="twitter4z.objects.Resize" id="62989">resize</a>: <a href="#9581" title="twitter4z.objects.Resize">Resize</a>
+<span class="delimiter">)</span>
+
+case <span class="keyword">class</span> <a title="class Sizes extends java.lang.Object with ScalaObject with Product with Serializable" id="76890">Sizes</a><a href="#76890" title="ScalaObject" class="delimiter">(</a>
+  <a title="twitter4z.objects.Size" id="63443">large</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>,
+  <a title="twitter4z.objects.Size" id="63444">medium</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>,
+  <a title="twitter4z.objects.Size" id="63445">small</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>,
+  <a title="twitter4z.objects.Size" id="63446">thumb</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>
+<span class="delimiter">)</span>
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait MediaType extends java.lang.Object" id="9592">MediaType</a>
+
+case <span class="keyword">object</span> <a href="#76726" title="object twitter4z.objects.Photo" id="76731">Photo</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9592" title="twitter4z.objects.MediaType">MediaType</a>
+
+case <span class="keyword">class</span> <a title="class Media extends java.lang.Object with ScalaObject with Product with Serializable" id="76886">Media</a><a href="#76886" title="ScalaObject" class="delimiter">(</a>
+  <a title="twitter4z.objects.package.ID" id="52404">id</a>: <span title="twitter4z.objects.package.ID">ID</span>,
+  <a title="twitter4z.objects.package.URL" id="52405">mediaUrl</a>: <span title="twitter4z.objects.package.URL">URL</span>,
+  <a title="twitter4z.objects.package.URL" id="52406">url</a>: <span title="twitter4z.objects.package.URL">URL</span>,
+  <a title="String" id="52407">displayUrl</a>: <span title="String">String</span>,
+  <a title="twitter4z.objects.package.URL" id="52408">expandedUrl</a>: <span title="twitter4z.objects.package.URL">URL</span>,
+  <a title="twitter4z.objects.Sizes" id="52409">sizes</a>: <a href="#76890" title="twitter4z.objects.Sizes">Sizes</a>,
+  <a title="twitter4z.objects.MediaType" id="52410">mediaType</a>: <a href="#9592" title="twitter4z.objects.MediaType">MediaType</a>,
+  <a title="(Int, Int)" id="52411">indices</a>: <span title="(Int, Int)">Indices</span>
+<span class="delimiter">)</span>
+
+
+        </pre>
+    </body>
+</html>

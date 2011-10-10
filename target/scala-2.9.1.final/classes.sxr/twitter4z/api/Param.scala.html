@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>twitter4z/api/Param.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.api
+
+<span class="keyword">import</span> scalaz._
+<span class="keyword">import</span> <span title="object scalaz.Scalaz">Scalaz</span>._
+<span class="keyword">import</span> twitter4z.objects._
+
+<span class="keyword">sealed</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <a title="class Param[+A] extends java.lang.Object with ScalaObject" id="9484">Param</a><span class="delimiter">[</span>+<a title="&gt;: Nothing &lt;: Any" id="9485">A</a><span class="delimiter">]</span>
+
+case <span class="keyword">class</span> <a title="class New[+A] extends twitter4z.api.Param[A] with ScalaObject with Product with Serializable" id="50191">New</a><span class="delimiter">[</span>+<a title="&gt;: Nothing &lt;: Any" id="48091">A</a><span class="delimiter">]</span><a href="#50191" title="ScalaObject" class="delimiter">(</a><a title="A" id="48103">value</a>: <a href="#48091" title="A">A</a><span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#9484" title="twitter4z.api.Param[A]">Param</a><span class="delimiter">[</span>A<span class="delimiter">]</span>
+
+case <span class="keyword">object</span> <a href="#48715" title="object twitter4z.api.Default" id="48720">Default</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9484" title="twitter4z.api.Param[Nothing]">Param</a><span class="delimiter">[</span>Nothing<span class="delimiter">]</span>
+
+<span class="keyword">object</span> <a title="object twitter4z.api.Param" id="9492">Param</a> <span title="ScalaObject" class="delimiter">{</span>
+
+  <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="=&gt; java.lang.Object with scalaz.Monad[twitter4z.api.Param]{def pure[A](a: =&gt; A): twitter4z.api.New[A]}" id="48722">ParamMonad</a> = <a href="#48728" title="java.lang.Object with scalaz.Monad[twitter4z.api.Param]" class="keyword">new</a> <a title="anonymous class $anon extends java.lang.Object with scalaz.Monad[twitter4z.api.Param]" id="48728">Monad</a><span class="delimiter">[</span>Param<span class="delimiter">]</span> <span class="delimiter">{</span>
+    <span class="keyword">def</span> <a title="[A, B](a: twitter4z.api.Param[A], f: A =&gt; twitter4z.api.Param[B])twitter4z.api.Param[B]" id="49371">bind</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="49374">A</a>, <a title="&gt;: Nothing &lt;: Any" id="49375">B</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="twitter4z.api.Param[A]" id="49912">a</a>: <a href="#9484" title="twitter4z.api.Param[A]">Param</a><span class="delimiter">[</span>A<span class="delimiter">]</span>, <a title="A =&gt; twitter4z.api.Param[B]" id="49913">f</a>: <span class="delimiter">(</span>A<span class="delimiter">)</span> =&gt; Param<span class="delimiter">[</span>B<span class="delimiter">]</span><span class="delimiter">)</span> = <a href="#49912" title="twitter4z.api.Param[A]">a</a> <span title="twitter4z.api.Param[B]" class="keyword">match</span> <span class="delimiter">{</span>
+      <span class="keyword">case</span> <span title="twitter4z.api.Param[B]">New</span><span class="delimiter">(</span><a title="A" id="49929">value</a><span class="delimiter">)</span> =&gt; <a href="#49913" title="(v1: A)twitter4z.api.Param[B]">f</a><span class="delimiter">(</span><a href="#49929" title="A">value</a><span class="delimiter">)</span>
+      <span class="keyword">case</span> <span title="twitter4z.api.Default.type">_</span> =&gt; <a href="#48720" title="object twitter4z.api.Default">Default</a>
+    <span class="delimiter">}</span>
+    <span class="keyword">def</span> <a title="[A](a: =&gt; A)twitter4z.api.New[A]" id="49376">pure</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="49378">A</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="=&gt; A" id="49935">a</a>: =&gt; A<span class="delimiter">)</span> = <a href="#50191" title="(value: A)twitter4z.api.New[A]">New</a><span class="delimiter">(</span><a href="#49935" title="=&gt; A">a</a><span class="delimiter">)</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="=&gt; java.lang.Object with scalaz.Foldable[twitter4z.api.Param]" id="48723">ParamFoldable</a> = <a href="#50003" title="java.lang.Object with scalaz.Foldable[twitter4z.api.Param]" class="keyword">new</a> <a title="anonymous class $anon extends java.lang.Object with scalaz.Foldable[twitter4z.api.Param]" id="50003">Foldable</a><span class="delimiter">[</span>Param<span class="delimiter">]</span> <span class="delimiter">{</span>
+    <span class="keyword">override</span> <span class="keyword">def</span> <a title="[A, B](t: twitter4z.api.Param[A], b: =&gt; B, f: (A, =&gt; B) =&gt; B)B" id="50107">foldRight</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="50110">A</a>, <a title="&gt;: Nothing &lt;: Any" id="50111">B</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="twitter4z.api.Param[A]" id="50112">t</a>: <a href="#9484" title="twitter4z.api.Param[A]">Param</a><span class="delimiter">[</span>A<span class="delimiter">]</span>, <a title="=&gt; B" id="50113">b</a>: =&gt; B, <a title="(A, =&gt; B) =&gt; B" id="50114">f</a>: <span class="delimiter">(</span>A, =&gt; B<span class="delimiter">)</span> =&gt; B<span class="delimiter">)</span> = <a href="#50112" title="twitter4z.api.Param[A]">t</a> <span title="B" class="keyword">match</span> <span class="delimiter">{</span>
+      <span class="keyword">case</span> <span title="B">New</span><span class="delimiter">(</span><a title="A" id="50136">a</a><span class="delimiter">)</span> =&gt; <a href="#50114" title="(v1: A, v2: =&gt; B)B">f</a><span class="delimiter">(</span><a href="#50136" title="A">a</a>, <a href="#50113" title="=&gt; B">b</a><span class="delimiter">)</span>
+      <span class="keyword">case</span> <a href="#48720" title="B">Default</a> =&gt; <a href="#50113" title="=&gt; B">b</a>
+    <span class="delimiter">}</span>
+  <span class="delimiter">}</span>
+
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

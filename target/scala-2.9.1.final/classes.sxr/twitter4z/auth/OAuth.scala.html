@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>twitter4z/auth/OAuth.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.auth
+
+<span class="keyword">import</span> scalaj.http._
+<span class="keyword">import</span> twitter4z.http._
+
+<span class="keyword">trait</span> <a title="trait OAuth extends java.lang.Object with ScalaObject" id="9531">OAuth</a> <span title="ScalaObject" class="delimiter">{</span>
+
+  <span class="keyword">def</span> <a title="(key: String, secret: String)(implicit timeout: twitter4z.http.package.Timeout)twitter4z.http.Tokens" id="25180">requestToken</a><span class="delimiter">(</span><a title="String" id="72552">key</a>: <span title="String">String</span>, <a title="String" id="72553">secret</a>: <span title="String">String</span><span class="delimiter">)</span><span class="delimiter">(</span><span class="keyword">implicit</span> <a title="twitter4z.http.package.Timeout" id="72554">timeout</a>: <a href="../http/package.scala.html#9691" title="twitter4z.http.package.Timeout">Timeout</a><span class="delimiter">)</span> = <span class="delimiter">{</span>
+    <span class="keyword">val</span> <a title="scalaj.http.Token" id="72557">consumer</a> = <span title="(key: String, secret: String)scalaj.http.Token">Token</span><span class="delimiter">(</span><a href="#72552" title="String">key</a>, <a href="#72553" title="String">secret</a><span class="delimiter">)</span>
+    <a href="../http/Tokens.scala.html#65603" title="(consumer: scalaj.http.Token, token: scalaj.http.Token)twitter4z.http.Tokens">Tokens</a><span class="delimiter">(</span><a href="#72557" title="scalaj.http.Token">consumer</a>, <a href="../http/package.scala.html#9697" title="(url: String)(implicit timeout: twitter4z.http.package.Timeout)scalaj.http.Http.Request">post</a><a href="#72554" title="twitter4z.http.package.Timeout" class="delimiter">(</a><span title="java.lang.String(&quot;http://api.twitter.com/oauth/request_token&quot;)" class="string">&quot;&quot;&quot;http://api.twitter.com/oauth/request_token&quot;&quot;&quot;</span><span class="delimiter">)</span>.<span title="(consumer: scalaj.http.Token)scalaj.http.Http.Request">oauth</span><span class="delimiter">(</span><a href="#72557" title="scalaj.http.Token">consumer</a><span class="delimiter">)</span>.<span title="=&gt; scalaj.http.Token">asToken</span><span class="delimiter">)</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">def</span> <a title="(tokens: twitter4z.http.Tokens)String" id="25181">authorization</a><span class="delimiter">(</span><a title="twitter4z.http.Tokens" id="72574">tokens</a>: <a href="../http/Tokens.scala.html#9537" title="twitter4z.http.Tokens">Tokens</a><span class="delimiter">)</span>: <span title="String">String</span> = <a href="#25182" title="(requestToken: scalaj.http.Token)String">authorization</a><span class="delimiter">(</span><a href="#72574" title="twitter4z.http.Tokens">tokens</a>.<a href="../http/Tokens.scala.html#27783" title="=&gt; scalaj.http.Token">token</a><span class="delimiter">)</span>
+
+  <span class="keyword">def</span> <a title="(requestToken: scalaj.http.Token)String" id="25182">authorization</a><span class="delimiter">(</span><a title="scalaj.http.Token" id="72580">requestToken</a>: <span title="scalaj.http.Token">Token</span><span class="delimiter">)</span>: <span title="String">String</span> = <span title="java.lang.String(&quot;http://api.twitter.com/oauth/authorize?oauth_token=&quot;)" class="string">&quot;&quot;&quot;http://api.twitter.com/oauth/authorize?oauth_token=&quot;&quot;&quot;</span> <span title="(x$1: Any)java.lang.String">+</span> <a href="#72580" title="scalaj.http.Token">requestToken</a>.<span title="=&gt; String">key</span>
+
+  <span class="keyword">def</span> <a title="(tokens: twitter4z.http.Tokens, verifier: String)(implicit timeout: twitter4z.http.package.Timeout)twitter4z.http.Tokens" id="25183">accessToken</a><span class="delimiter">(</span><a title="twitter4z.http.Tokens" id="72584">tokens</a>: <a href="../http/Tokens.scala.html#9537" title="twitter4z.http.Tokens">Tokens</a>, <a title="String" id="72585">verifier</a>: <span title="String">String</span><span class="delimiter">)</span><span class="delimiter">(</span><span class="keyword">implicit</span> <a title="twitter4z.http.package.Timeout" id="72586">timeout</a>: <a href="../http/package.scala.html#9691" title="twitter4z.http.package.Timeout">Timeout</a><span class="delimiter">)</span> = <a href="#72584" title="twitter4z.http.Tokens">tokens</a>.<a href="../http/Tokens.scala.html#72594" title="scalaj.http.Token" id="72604">copy</a><span class="delimiter">(</span>token = <a href="../http/package.scala.html#9696" title="(url: String)(implicit timeout: twitter4z.http.package.Timeout)scalaj.http.Http.Request">get</a><a href="#72586" title="twitter4z.http.package.Timeout" class="delimiter">(</a><span title="java.lang.String(&quot;https://api.twitter.com/oauth/access_token&quot;)" class="string">&quot;&quot;&quot;https://api.twitter.com/oauth/access_token&quot;&quot;&quot;</span><span class="delimiter">)</span>.<span title="(consumer: scalaj.http.Token, token: scalaj.http.Token, verifier: String)scalaj.http.Http.Request">oauth</span><span class="delimiter">(</span><a href="#72584" title="twitter4z.http.Tokens">tokens</a>.<a href="../http/Tokens.scala.html#27781" title="=&gt; scalaj.http.Token">consumer</a>, <a href="#72584" title="twitter4z.http.Tokens">tokens</a>.<a href="../http/Tokens.scala.html#27783" title="=&gt; scalaj.http.Token">token</a>, <a href="#72585" title="String">verifier</a><span class="delimiter">)</span>.<a title="scalaj.http.Token" id="72603">asToken</a><span class="delimiter">)</span>
+    
+
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>
