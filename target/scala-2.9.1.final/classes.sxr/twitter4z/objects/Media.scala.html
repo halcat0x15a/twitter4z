@@ -12,38 +12,38 @@
         <pre>
 <span class="keyword">package</span> twitter4z.objects
 
-<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Resize extends java.lang.Object" id="9581">Resize</a>
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Resize extends java.lang.Object" id="9557">Resize</a>
 
-case <span class="keyword">object</span> <a href="#76534" title="object twitter4z.objects.Crop" id="76539">Crop</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9581" title="twitter4z.objects.Resize">Resize</a>
+case <span class="keyword">object</span> <a href="#72631" title="object twitter4z.objects.Crop" id="72636">Crop</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9557" title="twitter4z.objects.Resize">Resize</a>
 
-case <span class="keyword">object</span> <a href="#76546" title="object twitter4z.objects.Fit" id="76551">Fit</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9581" title="twitter4z.objects.Resize">Resize</a>
+case <span class="keyword">object</span> <a href="#72643" title="object twitter4z.objects.Fit" id="72648">Fit</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9557" title="twitter4z.objects.Resize">Resize</a>
 
-case <span class="keyword">class</span> <a title="class Size extends java.lang.Object with ScalaObject with Product with Serializable" id="76894">Size</a><a href="#76894" title="ScalaObject" class="delimiter">(</a>
-  <a title="Int" id="62987">w</a>: <span title="Int">Int</span>,
-  <a title="Int" id="62988">h</a>: <span title="Int">Int</span>,
-  <a title="twitter4z.objects.Resize" id="62989">resize</a>: <a href="#9581" title="twitter4z.objects.Resize">Resize</a>
+case <span class="keyword">class</span> <a title="class Size extends java.lang.Object with ScalaObject with Product with Serializable" id="72991">Size</a><a href="#72991" title="ScalaObject" class="delimiter">(</a>
+  <a title="Int" id="61634">w</a>: <span title="Int">Int</span>,
+  <a title="Int" id="61635">h</a>: <span title="Int">Int</span>,
+  <a title="twitter4z.objects.Resize" id="61636">resize</a>: <a href="#9557" title="twitter4z.objects.Resize">Resize</a>
 <span class="delimiter">)</span>
 
-case <span class="keyword">class</span> <a title="class Sizes extends java.lang.Object with ScalaObject with Product with Serializable" id="76890">Sizes</a><a href="#76890" title="ScalaObject" class="delimiter">(</a>
-  <a title="twitter4z.objects.Size" id="63443">large</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>,
-  <a title="twitter4z.objects.Size" id="63444">medium</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>,
-  <a title="twitter4z.objects.Size" id="63445">small</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>,
-  <a title="twitter4z.objects.Size" id="63446">thumb</a>: <a href="#76894" title="twitter4z.objects.Size">Size</a>
+case <span class="keyword">class</span> <a title="class Sizes extends java.lang.Object with ScalaObject with Product with Serializable" id="72987">Sizes</a><a href="#72987" title="ScalaObject" class="delimiter">(</a>
+  <a title="twitter4z.objects.Size" id="62093">large</a>: <a href="#72991" title="twitter4z.objects.Size">Size</a>,
+  <a title="twitter4z.objects.Size" id="62094">medium</a>: <a href="#72991" title="twitter4z.objects.Size">Size</a>,
+  <a title="twitter4z.objects.Size" id="62095">small</a>: <a href="#72991" title="twitter4z.objects.Size">Size</a>,
+  <a title="twitter4z.objects.Size" id="62096">thumb</a>: <a href="#72991" title="twitter4z.objects.Size">Size</a>
 <span class="delimiter">)</span>
 
-<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait MediaType extends java.lang.Object" id="9592">MediaType</a>
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait MediaType extends java.lang.Object" id="9568">MediaType</a>
 
-case <span class="keyword">object</span> <a href="#76726" title="object twitter4z.objects.Photo" id="76731">Photo</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9592" title="twitter4z.objects.MediaType">MediaType</a>
+case <span class="keyword">object</span> <a href="#72823" title="object twitter4z.objects.Photo" id="72828">Photo</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9568" title="twitter4z.objects.MediaType">MediaType</a>
 
-case <span class="keyword">class</span> <a title="class Media extends java.lang.Object with ScalaObject with Product with Serializable" id="76886">Media</a><a href="#76886" title="ScalaObject" class="delimiter">(</a>
-  <a title="twitter4z.objects.package.ID" id="52404">id</a>: <span title="twitter4z.objects.package.ID">ID</span>,
-  <a title="twitter4z.objects.package.URL" id="52405">mediaUrl</a>: <span title="twitter4z.objects.package.URL">URL</span>,
-  <a title="twitter4z.objects.package.URL" id="52406">url</a>: <span title="twitter4z.objects.package.URL">URL</span>,
-  <a title="String" id="52407">displayUrl</a>: <span title="String">String</span>,
-  <a title="twitter4z.objects.package.URL" id="52408">expandedUrl</a>: <span title="twitter4z.objects.package.URL">URL</span>,
-  <a title="twitter4z.objects.Sizes" id="52409">sizes</a>: <a href="#76890" title="twitter4z.objects.Sizes">Sizes</a>,
-  <a title="twitter4z.objects.MediaType" id="52410">mediaType</a>: <a href="#9592" title="twitter4z.objects.MediaType">MediaType</a>,
-  <a title="(Int, Int)" id="52411">indices</a>: <span title="(Int, Int)">Indices</span>
+case <span class="keyword">class</span> <a title="class Media extends java.lang.Object with ScalaObject with Product with Serializable" id="72983">Media</a><a href="#72983" title="ScalaObject" class="delimiter">(</a>
+  <a title="twitter4z.objects.package.ID" id="49210">id</a>: <span title="twitter4z.objects.package.ID">ID</span>,
+  <a title="twitter4z.objects.package.URL" id="49211">mediaUrl</a>: <span title="twitter4z.objects.package.URL">URL</span>,
+  <a title="twitter4z.objects.package.URL" id="49212">url</a>: <span title="twitter4z.objects.package.URL">URL</span>,
+  <a title="String" id="49213">displayUrl</a>: <span title="String">String</span>,
+  <a title="twitter4z.objects.package.URL" id="49214">expandedUrl</a>: <span title="twitter4z.objects.package.URL">URL</span>,
+  <a title="twitter4z.objects.Sizes" id="49215">sizes</a>: <a href="#72987" title="twitter4z.objects.Sizes">Sizes</a>,
+  <a title="twitter4z.objects.MediaType" id="49216">mediaType</a>: <a href="#9568" title="twitter4z.objects.MediaType">MediaType</a>,
+  <a title="(Int, Int)" id="49217">indices</a>: <span title="(Int, Int)">Indices</span>
 <span class="delimiter">)</span>
 
 
