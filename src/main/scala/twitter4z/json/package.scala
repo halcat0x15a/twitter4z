@@ -10,21 +10,6 @@ import objects._
 
 package object json {
 
-  implicit def Func10ToJSON[A: JSONR, B: JSONR, C: JSONR, D: JSONR, E: JSONR, F: JSONR, G: JSONR, H: JSONR, I: JSONR, J: JSONR, R](z: (A, B, C, D, E, F, G, H, I, J) => R) = new {
-    def applyJSON(a: JValue => Result[A], b: JValue => Result[B], c: JValue => Result[C], d: JValue => Result[D], e: JValue => Result[E], f: JValue => Result[F], g: JValue => Result[G], h: JValue => Result[H], i: JValue => Result[I], j: JValue => Result[J]): JValue => Result[R] =
-      (json: JValue) => (a(json) |@| b(json) |@| c(json) |@| d(json) |@| e(json) |@| f(json) |@| g(json) |@| h(json) |@| i(json) |@| j(json))(z)
-  }
-
-  implicit def Func11ToJSON[A: JSONR, B: JSONR, C: JSONR, D: JSONR, E: JSONR, F: JSONR, G: JSONR, H: JSONR, I: JSONR, J: JSONR, K: JSONR, R](z: (A, B, C, D, E, F, G, H, I, J, K) => R) = new {
-    def applyJSON(a: JValue => Result[A], b: JValue => Result[B], c: JValue => Result[C], d: JValue => Result[D], e: JValue => Result[E], f: JValue => Result[F], g: JValue => Result[G], h: JValue => Result[H], i: JValue => Result[I], j: JValue => Result[J], k: JValue => Result[K]): JValue => Result[R] =
-      (json: JValue) => (a(json) |@| b(json) |@| c(json) |@| d(json) |@| e(json) |@| f(json) |@| g(json) |@| h(json) |@| i(json) |@| j(json) |@| k(json))(z)
-  }
-
-  implicit def Func12ToJSON[A: JSONR, B: JSONR, C: JSONR, D: JSONR, E: JSONR, F: JSONR, G: JSONR, H: JSONR, I: JSONR, J: JSONR, K: JSONR, L: JSONR, R](z: (A, B, C, D, E, F, G, H, I, J, K, L) => R) = new {
-    def applyJSON(a: JValue => Result[A], b: JValue => Result[B], c: JValue => Result[C], d: JValue => Result[D], e: JValue => Result[E], f: JValue => Result[F], g: JValue => Result[G], h: JValue => Result[H], i: JValue => Result[I], j: JValue => Result[J], k: JValue => Result[K], l: JValue => Result[L]): JValue => Result[R] =
-      (json: JValue) => (a(json) |@| b(json) |@| c(json) |@| d(json) |@| e(json) |@| f(json) |@| g(json) |@| h(json) |@| i(json) |@| j(json) |@| k(json) |@| l(json))(z)
-  }
-
   implicit def CoordinatesJSONR = JSONR[Coordinates]((Coordinates.apply _).applyJSON(field("coordinates"), field("type")))
 
   implicit def UrlJSONR = JSONR[Url]((Url.apply _).applyJSON(field("url"), field("display_url"), field("expanded_url"), field("indices")))
