@@ -1,8 +1,7 @@
 package twitter4z
 
-import java.util.Locale
-import java.text.SimpleDateFormat
 import java.io._
+import org.joda.time.format._
 import scalaz._
 import Scalaz._
 import net.liftweb.json._
@@ -126,9 +125,7 @@ package object json {
 
   implicit def URLJSONR: JSONR[URL] = jsonr(new URL(_))
 
-  val TwitterDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH)
-
-  implicit def DateJSONR: JSONR[Date] = jsonr(TwitterDateFormat.parse)
+  implicit def DateJSONR: JSONR[Date] = jsonr(DateTimeFormat.forPattern("EEE MMM dd HH:mm:ss Z yyyy").withLocale(java.util.Locale.ENGLISH).parseDateTime)
 
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {

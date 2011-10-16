@@ -65,8 +65,7 @@ package object api {
       case Some(param) => param
     }
     val request = method("http://api.twitter.com/1/" + string + ".json").params(params: _*)
-    val jvalue = tokens.fold(request.oauth(_), request)(parse)
-    fromJSON[A](jvalue).map(_.set(jvalue))
+    fromJSON[A](tokens.fold(request.oauth(_), request)(parse))
   }
 
 }
