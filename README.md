@@ -1,4 +1,4 @@
-# Twitter4Z
+# Twitter4z
 
 A Scalaz wrapper for Twitter API.
 
@@ -20,7 +20,7 @@ A Scalaz wrapper for Twitter API.
     
     scala> implicit val atoken = accessToken(rtoken, "XXXXXXX")
     
-    scala> update("Twitter4Z!")
+    scala> update("Twitter4z!")
 
 ## Read & Write
     
@@ -34,4 +34,4 @@ A Scalaz wrapper for Twitter API.
 
 # Source
 
-http://halcat0x15a.github.com/twitter4z/target/scala-2.9.1.final/classes.sxr/
+http://halcat0x15a.github.com/twitter4z/target/scala-2.9.1.final/classes.sxr/index.html
