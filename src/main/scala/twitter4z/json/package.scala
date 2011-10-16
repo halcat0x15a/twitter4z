@@ -1,5 +1,7 @@
 package twitter4z
 
+import java.util.Locale
+import java.text.SimpleDateFormat
 import java.io._
 import scalaz._
 import Scalaz._
@@ -89,7 +91,7 @@ package object json {
     def read(json: JValue) = for {
       x <- field[Option[List[ID]]]("contributors")(json).map((Status.apply _).curried)
       x <- field[Option[Coordinates]]("coordinates")(json).map(x)
-      x <- field[String]("created_at")(json).map(x)
+      x <- field[Date]("created_at")(json).map(x)
       x <- fieldOpt[Entities]("entities")(json).map(x)
       x <- field[Boolean]("favorited")(json).map(x)
       x <- field[ID]("id")(json).map(x)
@@ -99,6 +101,7 @@ package object json {
       x <- field[Option[Place]]("place")(json).map(x)
       x <- field[Count]("retweet_count")(json).map(x)
       x <- field[Boolean]("retweeted")(json).map(x)
+      x <- fieldOpt[Status]("retweeted_status")(json).map(x)
       x <- field[String]("source")(json).map(x)
       x <- field[String]("text")(json).map(x)
       x <- field[Boolean]("truncated")(json).map(x)
@@ -123,6 +126,10 @@ package object json {
 
   implicit def URLJSONR: JSONR[URL] = jsonr(new URL(_))
 
+  val TwitterDateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.ENGLISH)
+
+  implicit def DateJSONR: JSONR[Date] = jsonr(TwitterDateFormat.parse)
+
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {
       case NoSuchFieldError(_, _) => Success(None)
@@ -142,8 +149,6 @@ package object json {
     }
   }
 
-  def parse[A: JSONR]: InputStream => Result[A] = { input =>
-    fromJSON[A](JsonParser.parse(new InputStreamReader(input)))
-  }
+  def parse(input: InputStream) = JsonParser.parse(new InputStreamReader(input))
 
 }

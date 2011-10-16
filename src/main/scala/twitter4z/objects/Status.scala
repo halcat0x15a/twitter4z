@@ -3,7 +3,7 @@ package twitter4z.objects
 case class Status(
   contributors: Option[List[ID]],
   coordinates: Option[Coordinates],
-  createdAt: String,
+  createdAt: Date,
   entities: Option[Entities],
   favorited: Boolean,
   id: ID,
@@ -13,6 +13,7 @@ case class Status(
   place: Option[Place],
   retweetCount: Count,
   retweeted: Boolean,
+  retweetedStatus: Option[Status],
   source: String,
   text: String,
   truncated: Boolean,

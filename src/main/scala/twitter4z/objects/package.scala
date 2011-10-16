@@ -10,4 +10,6 @@ package object objects {
 
   type Count = Either[String, Int]
 
+  type Date = java.util.Date
+
 }
