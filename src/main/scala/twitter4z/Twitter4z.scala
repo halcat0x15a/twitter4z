@@ -8,7 +8,7 @@ import twitter4z.api._
 import twitter4z.auth._
 import twitter4z.objects._
 
-object Twitter4z extends OAuth with Timelines with Tweets {
+object Twitter4z extends OAuth with Parameters with Timelines with Tweets {
 
   implicit val DefaultTimeout = Timeout(5000, 5000)
 
