@@ -14,7 +14,7 @@ case class Profile(
 
 case class User(
   contributorsEnabled: Boolean,
-  createdAt: String,
+  createdAt: DateTime,
   description: Option[String],
   favouritesCount: Int,
   followRequestSent: Option[Boolean],

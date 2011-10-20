@@ -3,7 +3,7 @@ package twitter4z.objects
 case class Status(
   contributors: Option[List[ID]],
   coordinates: Option[Coordinates],
-  createdAt: Date,
+  createdAt: DateTime,
   entities: Option[Entities],
   favorited: Boolean,
   id: ID,

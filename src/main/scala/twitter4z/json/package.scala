@@ -39,7 +39,7 @@ package object json {
   implicit object UserJSONR extends JSONR[User] {
     def read(json: JValue) = for {
       x <- field[Boolean]("contributors_enabled")(json).map((User.apply _).curried)
-      x <- field[String]("created_at")(json).map(x)
+      x <- field[DateTime]("created_at")(json).map(x)
       x <- field[Option[String]]("description")(json).map(x)
       x <- field[Int]("favourites_count")(json).map(x)
       x <- field[Option[Boolean]]("follow_request_sent")(json).map(x)
@@ -75,7 +75,7 @@ package object json {
     def read(json: JValue) = for {
       x <- field[Option[List[ID]]]("contributors")(json).map((Status.apply _).curried)
       x <- field[Option[Coordinates]]("coordinates")(json).map(x)
-      x <- field[Date]("created_at")(json).map(x)
+      x <- field[DateTime]("created_at")(json).map(x)
       x <- fieldOpt[Entities]("entities")(json).map(x)
       x <- field[Boolean]("favorited")(json).map(x)
       x <- field[ID]("id")(json).map(x)
@@ -110,7 +110,7 @@ package object json {
 
   implicit def URLJSONR: JSONR[URL] = jsonr(new URL(_))
 
-  implicit def DateJSONR: JSONR[Date] = jsonr(DateTimeFormat.forPattern("EEE MMM dd HH:mm:ss Z yyyy").withLocale(java.util.Locale.ENGLISH).parseDateTime)
+  implicit def DateTimeJSONR: JSONR[DateTime] = jsonr(DateTimeFormat.forPattern("EEE MMM dd HH:mm:ss Z yyyy").withLocale(java.util.Locale.ENGLISH).parseDateTime)
 
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {

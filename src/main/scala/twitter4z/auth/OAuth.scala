@@ -1,5 +1,6 @@
 package twitter4z.auth
 
+import java.io._
 import scalaj.http._
 import twitter4z.http._
 
@@ -15,6 +16,12 @@ trait OAuth {
   def authorization(requestToken: Token): String = """http://api.twitter.com/oauth/authorize?oauth_token=""" + requestToken.key
 
   def accessToken(tokens: Tokens, verifier: String)(implicit timeout: Timeout) = tokens.copy(token = get("""https://api.twitter.com/oauth/access_token""").oauth(tokens.consumer, tokens.token, verifier).asToken)
-    
+
+  def readTokens(name: String) = {
+    val stream = new ObjectInputStream(new FileInputStream(name))
+    val tokens = stream.readObject.asInstanceOf[Tokens]
+    stream.close()
+    Some(tokens)
+  }    
 
 }

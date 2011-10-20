@@ -10,6 +10,6 @@ package object objects {
 
   type Count = Either[String, Int]
 
-  type Date = org.joda.time.DateTime
+  type DateTime = org.joda.time.DateTime
 
 }
