@@ -6,7 +6,7 @@ import twitter4z.http._
 
 trait OAuth {
 
-  def requestToken(key: String, secret: String)(implicit timeout: Timeout) = {
+  def requestToken(key: String, secret: String) = {
     val consumer = Token(key, secret)
     Tokens(consumer, post("""http://api.twitter.com/oauth/request_token""").oauth(consumer).asToken)
   }
@@ -15,7 +15,7 @@ trait OAuth {
 
   def authorization(requestToken: Token): String = """http://api.twitter.com/oauth/authorize?oauth_token=""" + requestToken.key
 
-  def accessToken(tokens: Tokens, verifier: String)(implicit timeout: Timeout) = tokens.copy(token = get("""https://api.twitter.com/oauth/access_token""").oauth(tokens.consumer, tokens.token, verifier).asToken)
+  def accessToken(tokens: Tokens, verifier: String) = tokens.copy(token = get("""https://api.twitter.com/oauth/access_token""").oauth(tokens.consumer, tokens.token, verifier).asToken)
 
   def readTokens(name: String) = {
     val stream = new ObjectInputStream(new FileInputStream(name))
