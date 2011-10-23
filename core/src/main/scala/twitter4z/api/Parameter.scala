@@ -3,14 +3,6 @@ package twitter4z.api
 import scalaz._
 import Scalaz._
 
-trait Parameter extends NewType[(String, String)]
-
-abstract class AbstractParameter[+A: Show](key: String) extends Parameter with Product1[A] {
-
-  val value = key -> _1.shows
-
-}
-
 trait Parameters extends XParameters {
 
   sealed abstract class Unit(val value: String) extends NewType[String]
