@@ -89,7 +89,7 @@ package object json {
       x <- field[String]("source")(json).map(x)
       x <- field[String]("text")(json).map(x)
       x <- field[Boolean]("truncated")(json).map(x)
-      x <- field[User]("user")(json)(UserJSONR).map(x)
+      x <- field[User]("user")(json).map(x)
     } yield x
   }
 
@@ -98,7 +98,7 @@ package object json {
     case "crop" => Crop
   }
 
-  implicit def SizeJSONR = JSONR[Size]((Size.apply _).applyJSON(field("w"), field("h"), field("resize")))
+  implicit def SizeJSONR =  JSONR[Size]((Size.apply _).applyJSON(field("w"), field("h"), field("resize")))
 
   implicit def SizesJSONR = JSONR[Sizes]((Sizes.apply _).applyJSON(field("large"), field("medium"), field("small"), field("thumb")))
 
@@ -111,6 +111,10 @@ package object json {
   implicit def URLJSONR: JSONR[URL] = jsonr(new URL(_))
 
   implicit def DateTimeJSONR: JSONR[DateTime] = jsonr(DateTimeFormat.forPattern("EEE MMM dd HH:mm:ss Z yyyy").withLocale(java.util.Locale.ENGLISH).parseDateTime)
+
+  implicit def TweetJSONR = JSONR[Tweet](json => (field[String]("created_at")(json) |@| field[String]("from_user")(json) |@| field[ID]("from_user_id")(json) |@| field[ID]("id")(json) |@| field[String]("iso_language_code")(json) |@| field[URL]("profile_image_url")(json) |@| field[String]("source")(json) |@| field[String]("text")(json) |@| fieldOpt[String]("to_user")(json) |@| field[Option[ID]]("to_user_id")(json))(Tweet.apply))
+
+  implicit def QueryResultJSONR = JSONR((QueryResult.apply _).applyJSON(field("completed_in"), field("max_id"), field("next_page"), field("page"), field("query"), field("refresh_url"), field("results")))
 
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {

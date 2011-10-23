@@ -7,7 +7,7 @@ import twitter4z.api._
 import twitter4z.auth._
 import twitter4z.objects._
 
-object Twitter4z extends OAuth with Parameters with Timelines with Tweets {
+object Twitter4z extends OAuth with Parameters with Timelines with Tweets with Search {
 
   implicit val DefaultTokens = none[Tokens]
 
