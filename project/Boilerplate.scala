@@ -5,8 +5,8 @@ object Boilerplate {
   def generateParameter(dir: File, resource: File) = {
     val parameters = IO.readLines((resource / "parameters").asFile) map { s =>
       (s.split(":").toList: @unchecked) match {
-	case name :: typo :: key :: Nil => "  case class " + name + "(_1: " + typo + ") extends AbstractParameter[" + typo + "](\"" + key + """")
-  implicit def Wrap""" + name + "(value: " + typo + ") = " + name + "(value)"
+	case name :: typo :: key :: Nil => """  case class %s(_1: %s) extends AbstractParameter[%s]("%s")
+  implicit def Wrap%s(value: %s) = %s(value)""".format(name, typo, typo, key, name, typo, name)
       }
     } mkString("\n")
     val source = """package twitter4z.api
