@@ -4,10 +4,12 @@ object Boilerplate {
 
   def generateParameter(dir: File, resource: File) = {
     val parameters = IO.readLines((resource / "parameters").asFile) map { s =>
-      (s.split(":").toList: @unchecked) match {
-	case name :: typo :: key :: Nil => """  case class %s(_1: %s) extends AbstractParameter[%s]("%s")
-  implicit def Wrap%s(value: %s) = %s(value)""".format(name, typo, typo, key, name, typo, name)
+      val (key, typo, name) = (s.split(",").toList: @unchecked) match {
+	case key :: typo :: name :: Nil => (key, typo, name)
+	case key :: typo :: Nil => (key, typo, key.split("_").map(s => s.head.toUpper + s.tail).mkString)
       }
+      """  case class %s(_1: %s) extends AbstractParameter[%s]("%s")
+  implicit def Wrap%s(value: %s) = %s(value)""".format(name, typo, typo, key, name, typo, name)
     } mkString("\n")
     val source = """package twitter4z.api
 
