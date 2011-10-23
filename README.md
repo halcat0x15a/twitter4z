@@ -34,4 +34,4 @@ A Scalaz wrapper for Twitter API.
 
 # Source
 
-http://halcat0x15a.github.com/twitter4z/target/scala-2.9.1.final/classes.sxr/index.html
+http://halcat0x15a.github.com/twitter4z/core/target/scala-2.9.1/classes.sxr/index.html
