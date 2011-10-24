@@ -116,6 +116,8 @@ package object json {
 
   implicit def QueryResultJSONR = JSONR((QueryResult.apply _).applyJSON(field("completed_in"), field("max_id"), field("next_page"), field("page"), field("query"), field("refresh_url"), field("results")))
 
+  implicit def DirectMessageJSONR = JSONR(json => (field[DateTime]("created_at")(json) |@| field[ID]("id")(json) |@| field[User]("recipient")(json) |@| field[ID]("recipient_id")(json) |@| field[String]("recipient_screen_name")(json) |@| field[User]("sender")(json) |@| field[ID]("sender_id")(json) |@| field[String]("sender_screen_name")(json) |@| field[String]("text")(json)) { DirectMessage })
+
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {
       case NoSuchFieldError(_, _) => Success(None)

@@ -5,6 +5,10 @@ import Scalaz._
 
 trait Parameters extends XParameters {
 
+  case class Paging(count: Count = null, sinceId: SinceId = null, maxId: MaxId = null, page: Page = null) extends NewType[List[Parameter]] {
+    val value = List(count, sinceId, maxId, page).filter(null !=)
+  }
+
   sealed abstract class Unit(val value: String) extends NewType[String]
   case object Kilometers extends Unit("km")
   case object Miles extends Unit("mi")
