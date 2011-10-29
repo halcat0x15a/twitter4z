@@ -1,0 +1,14 @@
+retweetedBy,Users,id
+Option,get,statuses/:id/retweeted_by,count,page
+retweetedByIds,List[Long],id
+Some,get,statuses/:id/retweeted_by/ids,count,page,stringify_ids
+retweets,Statuses,id
+Some,get,statuses/retweets/:id,count,trim_user,include_entities
+showStatus,StatusObject,id
+,get,statuses/show/:id,trim_user,include_entities
+destroyStatus,StatusObject,id
+Some,post,statuses/destroy/:id,include_entities,trim_user
+retweet,StatusObject,id
+Some,post,statuses/retweet/:id,include_entities,trim_user
+update,StatusObject,status
+Some,post,statuses/update,in_reply_to_status_id,lat,long,place_id,display_coordinates,trim_user,include_entities,wrap_links

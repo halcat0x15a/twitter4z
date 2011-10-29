@@ -21,7 +21,7 @@ case class User(
   followersCount: Int,
   friendsCount: Int,
   geoEnabled: Boolean,
-  id: ID,
+  id: Long,
   isTranslator: Boolean,
   lang: String,
   listedCount: Int,

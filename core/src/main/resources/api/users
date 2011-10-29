@@ -1,0 +1,12 @@
+lookupUsers,Users,user_id|screen_name
+Option,get,users/lookup,include_entities
+profileImage,URL,screen_name
+,get,users/profile_image/:screen_name,size
+searchUsers,Users,q
+Some,get,users/search,page,per_page,include_entities
+showUser,User,user_id|screen_name
+Option,get,users/show,include_entities
+contributees,Users,user_id|screen_name
+Option,get,users/contributees,include_entities,skip_status
+contributors,Users,user_id|screen_name
+Option,get,users/contributors,include_entities,skip_status

@@ -1,8 +1,8 @@
 package twitter4z.objects
 
-case class UserMention(
+case class Friendship(
   id: Long,
   screenName: String,
   name: String,
-  indices: Indices
+  connections: List[String]
 )

@@ -1,0 +1,10 @@
+directMessages,DirectMessages
+Some,get,direct_messages,since_id,max_id,count,page,include_entities,skip_status
+sentDirectMessages,DirectMessages
+Some,get,direct_messages/sent,since_id,max_id,count,page,include_entities
+destroyDirectMessage,DirectMessage,id
+Some,post,direct_messages/destroy/:id,include_entities
+newDirectMessage,DirectMessage,user_id|screen_name,text
+Some,post,direct_messages/new,wrap_links
+showDirectMessage,DirectMessage,id
+Some,get,direct_messages/show/:id

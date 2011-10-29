@@ -46,7 +46,7 @@ package object json {
       x <- field[Int]("followers_count")(json).map(x)
       x <- field[Int]("friends_count")(json).map(x)
       x <- field[Boolean]("geo_enabled")(json).map(x)
-      x <- field[ID]("id")(json).map(x)
+      x <- field[Long]("id")(json).map(x)
       x <- field[Boolean]("is_translator")(json).map(x)
       x <- field[String]("lang")(json).map(x)
       x <- field[Int]("listed_count")(json).map(x)
@@ -73,15 +73,15 @@ package object json {
 
   implicit object StatusJSONR extends JSONR[Status] {
     def read(json: JValue) = for {
-      x <- field[Option[List[ID]]]("contributors")(json).map((Status.apply _).curried)
+      x <- field[Option[List[Long]]]("contributors")(json).map((Status.apply _).curried)
       x <- field[Option[Coordinates]]("coordinates")(json).map(x)
       x <- field[DateTime]("created_at")(json).map(x)
       x <- fieldOpt[Entities]("entities")(json).map(x)
       x <- field[Boolean]("favorited")(json).map(x)
-      x <- field[ID]("id")(json).map(x)
+      x <- field[Long]("id")(json).map(x)
       x <- field[Option[String]]("in_reply_to_screen_name")(json).map(x)
-      x <- field[Option[ID]]("in_reply_to_status_id")(json).map(x)
-      x <- field[Option[ID]]("in_reply_to_user_id")(json).map(x)
+      x <- field[Option[Long]]("in_reply_to_status_id")(json).map(x)
+      x <- field[Option[Long]]("in_reply_to_user_id")(json).map(x)
       x <- field[Option[Place]]("place")(json).map(x)
       x <- field[Count]("retweet_count")(json).map(x)
       x <- field[Boolean]("retweeted")(json).map(x)
@@ -112,11 +112,25 @@ package object json {
 
   implicit def DateTimeJSONR: JSONR[DateTime] = jsonr(DateTimeFormat.forPattern("EEE MMM dd HH:mm:ss Z yyyy").withLocale(java.util.Locale.ENGLISH).parseDateTime)
 
-  implicit def TweetJSONR = JSONR[Tweet](json => (field[String]("created_at")(json) |@| field[String]("from_user")(json) |@| field[ID]("from_user_id")(json) |@| field[ID]("id")(json) |@| field[String]("iso_language_code")(json) |@| field[URL]("profile_image_url")(json) |@| field[String]("source")(json) |@| field[String]("text")(json) |@| fieldOpt[String]("to_user")(json) |@| field[Option[ID]]("to_user_id")(json))(Tweet.apply))
+  implicit def TweetJSONR = JSONR[Tweet](json => (field[String]("created_at")(json) |@| field[String]("from_user")(json) |@| field[Long]("from_user_id")(json) |@| field[Long]("id")(json) |@| field[String]("iso_language_code")(json) |@| field[URL]("profile_image_url")(json) |@| field[String]("source")(json) |@| field[String]("text")(json) |@| fieldOpt[String]("to_user")(json) |@| field[Option[Long]]("to_user_id")(json))(Tweet.apply))
 
   implicit def QueryResultJSONR = JSONR((QueryResult.apply _).applyJSON(field("completed_in"), field("max_id"), field("next_page"), field("page"), field("query"), field("refresh_url"), field("results")))
 
-  implicit def DirectMessageJSONR = JSONR(json => (field[DateTime]("created_at")(json) |@| field[ID]("id")(json) |@| field[User]("recipient")(json) |@| field[ID]("recipient_id")(json) |@| field[String]("recipient_screen_name")(json) |@| field[User]("sender")(json) |@| field[ID]("sender_id")(json) |@| field[String]("sender_screen_name")(json) |@| field[String]("text")(json)) { DirectMessage })
+  implicit def DirectMessageJSONR = JSONR(json => (field[DateTime]("created_at")(json) |@| field[Long]("id")(json) |@| field[User]("recipient")(json) |@| field[Long]("recipient_id")(json) |@| field[String]("recipient_screen_name")(json) |@| field[User]("sender")(json) |@| field[Long]("sender_id")(json) |@| field[String]("sender_screen_name")(json) |@| field[String]("text")(json)) { DirectMessage })
+
+  implicit def SourceJSONR = JSONR(json => (field[Long]("id")(json) |@| field[String]("screen_name")(json) |@| field[Boolean]("following")(json) |@| field[Boolean]("followed_by")(json) |@| field[Boolean]("blocking")(json) |@| field[Boolean]("can_dm")(json) |@| field[Boolean]("marked_spam")(json) |@| field[Boolean]("all_replies")(json) |@| field[Boolean]("want_retweets")(json) |@| field[Boolean]("notifications_enabled")(json))(Source.apply))
+
+  implicit def TargetJSONR = JSONR((Target.apply _).applyJSON(field("id"), field("screen_name"), field("following"), field("followed_by")))
+
+  implicit def RelationshipJSONR = JSONR((Relationship.apply _).applyJSON(field("source"), field("target")))
+
+  implicit def IdsJSONR = JSONR((Ids.apply _).applyJSON(field("ids"), field("next_cursor"), field("previous_cursor")))
+
+  implicit def FriendshipJSONR = JSONR((Friendship.apply _).applyJSON(field("id"), field("screen_name"), field("name"), field("connections")))
+
+  implicit def CategoryJSONR = JSONR((objects.Category.apply _).applyJSON(field("name"), field("slug"), field("size"), fieldOpt("users")))
+
+  implicit def UserListJSONR = JSONR(json => (field[String]("description")(json) |@| field[String]("full_name")(json) |@| field[Long]("id")(json) |@| field[Int]("member_count")(json) |@| field[String]("name")(json) |@| field[String]("slug")(json) |@| field[Int]("subscriber_count")(json) |@| field[String]("uri")(json) |@| field[User]("user")(json) |@| field[Boolean]("following")(json) |@| field[String]("mode")(json))(UserList.apply))
 
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {

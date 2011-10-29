@@ -1,15 +1,15 @@
 package twitter4z.objects
 
 case class Status(
-  contributors: Option[List[ID]],
+  contributors: Option[List[Long]],
   coordinates: Option[Coordinates],
   createdAt: DateTime,
   entities: Option[Entities],
   favorited: Boolean,
-  id: ID,
+  id: Long,
   inReplyToScreenName: Option[String],
-  inReplyToStatusId: Option[ID],
-  inReplyToUserId: Option[ID],
+  inReplyToStatusId: Option[Long],
+  inReplyToUserId: Option[Long],
   place: Option[Place],
   retweetCount: Count,
   retweeted: Boolean,

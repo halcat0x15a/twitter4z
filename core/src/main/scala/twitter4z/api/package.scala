@@ -5,12 +5,15 @@ import Scalaz._
 import scalaj.http._
 import net.liftweb.json.scalaz.JsonScalaz._
 import http._
-import objects._
 import json._
 
 package object api {
 
-  type Statuses = List[Status]
+  type StatusObject = twitter4z.objects.Status
+
+  type User = twitter4z.objects.User
+
+  type DirectMessage = twitter4z.objects.DirectMessage
 
   implicit def StringToResourceURL(string: String) = ResourceURL("http://api.twitter.com/1/" + string + ".json")
 

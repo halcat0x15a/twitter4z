@@ -1,0 +1,6 @@
+suggestions,Category
+,get,users/suggestions,lang
+suggestionUsers,Category,slug
+,get,users/suggestions/:slug,lang
+suggestionMembers,List[User],slug
+,get,users/suggestions/:slug/members

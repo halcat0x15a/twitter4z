@@ -2,12 +2,12 @@ package twitter4z.objects
 
 case class DirectMessage(
   createdAt: DateTime,
-  id: ID,
+  id: Long,
   recipient: User,
-  recipientId: ID,
+  recipientId: Long,
   recipientScreenName: String,
   sender: User,
-  senderId: ID,
+  senderId: Long,
   senderScreenName: String,
   text: String
 )

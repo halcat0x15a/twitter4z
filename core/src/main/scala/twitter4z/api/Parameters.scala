@@ -15,10 +15,16 @@ trait Parameters extends XParameters {
 
   implicit def EitherToParameter(either: Either[Parameter, Parameter]): Parameter = either.fold(identity, identity)
 
-  type Id = Either[ScreenName, UserId]
+  type Id = Long
 
   implicit def UserIdToId(userId: Long) = UserId(userId).right[ScreenName]
 
   implicit def StringToId(screenName: String) = ScreenName(screenName).left[UserId]
+
+  type Statuses = List[StatusObject]
+
+  type Users = List[User]
+
+  type DirectMessages = List[DirectMessage]
 
 }

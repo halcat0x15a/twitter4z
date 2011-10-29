@@ -2,7 +2,7 @@ package twitter4z.objects
 
 case class QueryResult(
   completedIn: Double,
-  maxId: ID,
+  maxId: Long,
   nextPage: String,
   page: Int,
   query: String,

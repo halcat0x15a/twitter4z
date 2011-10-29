@@ -24,7 +24,7 @@ sealed trait MediaType
 case object Photo extends MediaType
 
 case class Media(
-  id: ID,
+  id: Long,
   mediaUrl: URL,
   url: URL,
   displayUrl: String,

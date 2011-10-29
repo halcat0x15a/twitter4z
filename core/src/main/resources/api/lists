@@ -1,0 +1,6 @@
+allLists,List[UserList]
+Option,get,lists/all,user_id|screen_name
+listStatuses,List[StatusObject],list_id|slug
+Option,get,lists/statuses,owner_screen_name,owner_id,since_id,max_id,per_page,page,include_entities,include_rts
+destroyListMember,UserList,list_id|slug,user_id|screen_name
+Some,post,lists/members/destroy,owner_screen_name,owner_id

@@ -1,0 +1,2 @@
+search,QueryResult,q
+,get,http://search.twitter.com/search.json,geocode,lang,locale,page,result_type,rpp,show_user,until,since_id,include_entities,with_twitter_user_id
