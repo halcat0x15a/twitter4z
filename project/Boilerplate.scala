@@ -26,7 +26,7 @@ sealed trait Parameter extends NewType[(String, String)]
 
 sealed abstract class AbstractParameter[+A: Show](key: String) extends Parameter with Product1[A] {
 
-val value = key -> _1.shows
+  val value = key -> _1.shows
 
 }
 
