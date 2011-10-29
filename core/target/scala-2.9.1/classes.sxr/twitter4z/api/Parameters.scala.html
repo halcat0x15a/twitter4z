@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>twitter4z/api/Parameters.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.api
+
+<span class="keyword">import</span> scalaz._
+<span class="keyword">import</span> <span title="object scalaz.Scalaz">Scalaz</span>._
+
+<span class="keyword">trait</span> <a title="trait Parameters extends java.lang.Object with twitter4z.api.XParameters with ScalaObject" id="9471">Parameters</a> <span title="ScalaObject" class="keyword">extends</span> <a href="../../XParameters.scala.html#9767" title="twitter4z.api.XParameters">XParameters</a> <span class="delimiter">{</span>
+
+  case <span class="keyword">class</span> <a title="class Paging extends java.lang.Object with scalaz.NewType[List[twitter4z.api.Parameter]] with ScalaObject with Product with Serializable" id="47793">Paging</a><a href="#47793" title="ScalaObject" class="delimiter">(</a><a title="Parameters.this.Count" id="49121">count</a>: <a href="../../XParameters.scala.html#25210" title="Parameters.this.Count">Count</a> = <span title="Null(null)" class="keyword">null</span>, <a title="Parameters.this.SinceId" id="49122">sinceId</a>: <a href="../../XParameters.scala.html#25290" title="Parameters.this.SinceId">SinceId</a> = <span title="Null(null)" class="keyword">null</span>, <a title="Parameters.this.MaxId" id="49123">maxId</a>: <a href="../../XParameters.scala.html#25258" title="Parameters.this.MaxId">MaxId</a> = <span title="Null(null)" class="keyword">null</span>, <a title="Parameters.this.Page" id="49124">page</a>: <a href="../../XParameters.scala.html#25262" title="Parameters.this.Page">Page</a> = <span title="Null(null)" class="keyword">null</span><span class="delimiter">)</span> <span class="keyword">extends</span> <span title="scalaz.NewType[List[twitter4z.api.Parameter]]">NewType</span><span class="delimiter">[</span>List<span class="delimiter">[</span>Parameter<span class="delimiter">]</span><span class="delimiter">]</span> <span class="delimiter">{</span>
+    <span class="keyword">val</span> <a title="List[twitter4z.api.AbstractParameter[AnyVal{def getClass(): java.lang.Class[_ &gt;: Int with Long &lt;: AnyVal]}] with Serializable]" id="27687">value</a> = <span title="(xs: twitter4z.api.AbstractParameter[AnyVal{def getClass(): java.lang.Class[_ &gt;: Int with Long &lt;: AnyVal]}] with Serializable*)List[twitter4z.api.AbstractParameter[AnyVal{def getClass(): java.lang.Class[_ &gt;: Int with Long &lt;: AnyVal]}] with Serializable]">List</span><span class="delimiter">(</span><a href="#49121" title="=&gt; Parameters.this.Count">count</a>, <a href="#49122" title="=&gt; Parameters.this.SinceId">sinceId</a>, <a href="#49123" title="=&gt; Parameters.this.MaxId">maxId</a>, <a href="#49124" title="=&gt; Parameters.this.Page">page</a><span class="delimiter">)</span>.<span title="(p: twitter4z.api.AbstractParameter[AnyVal{def getClass(): java.lang.Class[_ &gt;: Int with Long &lt;: AnyVal]}] with Serializable =&gt; Boolean)List[twitter4z.api.AbstractParameter[AnyVal{def getClass(): java.lang.Class[_ &gt;: Int with Long &lt;: AnyVal]}] with Serializable]">filter</span><span class="delimiter">(</span><span title="Null(null)" class="keyword">null</span> <a href="#47775" title="(x$1: AnyRef)Boolean">!=</a><span class="delimiter">)</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">sealed</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <a title="class Unit extends java.lang.Object with scalaz.NewType[String] with ScalaObject" id="25406">Unit</a><a href="#25406" title="ScalaObject" class="delimiter">(</a><span class="keyword">val</span> <a title="String" id="48033">value</a>: <span title="String">String</span><span class="delimiter">)</span> <span class="keyword">extends</span> <span title="scalaz.NewType[String]">NewType</span><span class="delimiter">[</span>String<span class="delimiter">]</span>
+  case <span class="keyword">object</span> <a href="#48040" title="object Parameters.this.Kilometers" id="48043">Kilometers</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#25406" title="Parameters.this.Unit">Unit</a><span class="delimiter">(</span><span title="java.lang.String(&quot;km&quot;)" class="string">&quot;km&quot;</span><span class="delimiter">)</span>
+  case <span class="keyword">object</span> <a href="#48051" title="object Parameters.this.Miles" id="48054">Miles</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#25406" title="Parameters.this.Unit">Unit</a><span class="delimiter">(</span><span title="java.lang.String(&quot;mi&quot;)" class="string">&quot;mi&quot;</span><span class="delimiter">)</span>
+
+  <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit twitter4z.api.Parameters.EitherToParameter : (either: Either[twitter4z.api.Parameter,twitter4z.api.Parameter])twitter4z.api.Parameter" id="25411">EitherToParameter</a><span class="delimiter">(</span><a title="Either[twitter4z.api.Parameter,twitter4z.api.Parameter]" id="48056">either</a>: <span title="Either[twitter4z.api.Parameter,twitter4z.api.Parameter]">Either</span><span class="delimiter">[</span>Parameter, Parameter<span class="delimiter">]</span><span class="delimiter">)</span>: <a href="../../XParameters.scala.html#9764" title="twitter4z.api.Parameter">Parameter</a> = <a href="#48056" title="Either[twitter4z.api.Parameter,twitter4z.api.Parameter]">either</a>.<span title="(fa: twitter4z.api.Parameter =&gt; twitter4z.api.Parameter, fb: twitter4z.api.Parameter =&gt; twitter4z.api.Parameter)twitter4z.api.Parameter">fold</span><span class="delimiter">(</span><a href="#48066" title="(x: twitter4z.api.Parameter)twitter4z.api.Parameter">identity</a>, <a href="#48072" title="(x: twitter4z.api.Parameter)twitter4z.api.Parameter">identity</a><span class="delimiter">)</span>
+
+  <span class="keyword">type</span> <a title="Long" id="25412">Id</a> = <span title="Long">Long</span>
+
+  <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit twitter4z.api.Parameters.UserIdToId : (userId: Long)Either[Parameters.this.ScreenName,Parameters.this.UserId]" id="25413">UserIdToId</a><span class="delimiter">(</span><a title="Long" id="48077">userId</a>: <span title="Long">Long</span><span class="delimiter">)</span> = <a href="../../XParameters.scala.html#48082" title="(_1: Long)Parameters.this.UserId">UserId</a><span title="(x: =&gt; Parameters.this.UserId)scalaz.Identity[Parameters.this.UserId]" class="delimiter">(</span><a href="#48077" title="Long">userId</a><span class="delimiter">)</span>.<span title="[B]=&gt; Either[B,Parameters.this.UserId]">right</span><span title="Either[Parameters.this.ScreenName,Parameters.this.UserId]" class="delimiter">[</span><a href="../../XParameters.scala.html#25282" title="Parameters.this.ScreenName">ScreenName</a><span class="delimiter">]</span>
+
+  <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="implicit twitter4z.api.Parameters.StringToId : (screenName: String)Either[Parameters.this.ScreenName,Parameters.this.UserId]" id="25414">StringToId</a><span class="delimiter">(</span><a title="String" id="48897">screenName</a>: <span title="String">String</span><span class="delimiter">)</span> = <a href="../../XParameters.scala.html#48550" title="(_1: String)Parameters.this.ScreenName">ScreenName</a><span title="(x: =&gt; Parameters.this.ScreenName)scalaz.Identity[Parameters.this.ScreenName]" class="delimiter">(</span><a href="#48897" title="String">screenName</a><span class="delimiter">)</span>.<span title="[B]=&gt; Either[Parameters.this.ScreenName,B]">left</span><span title="Either[Parameters.this.ScreenName,Parameters.this.UserId]" class="delimiter">[</span><a href="../../XParameters.scala.html#25310" title="Parameters.this.UserId">UserId</a><span class="delimiter">]</span>
+
+  <span class="keyword">type</span> <a title="List[twitter4z.api.package.StatusObject]" id="25415">Statuses</a> = <span title="List[twitter4z.api.package.StatusObject]">List</span><span class="delimiter">[</span>StatusObject<span class="delimiter">]</span>
+
+  <span class="keyword">type</span> <a title="List[twitter4z.api.package.User]" id="25416">Users</a> = <span title="List[twitter4z.api.package.User]">List</span><span class="delimiter">[</span>User<span class="delimiter">]</span>
+
+  <span class="keyword">type</span> <a title="List[twitter4z.api.package.DirectMessage]" id="25417">DirectMessages</a> = <span title="List[twitter4z.api.package.DirectMessage]">List</span><span class="delimiter">[</span>DirectMessage<span class="delimiter">]</span>
+
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>
