@@ -54,14 +54,19 @@ trait XParameters {
       val functions = IO.readLines(f).sliding(2, 2).map(_.map(_.split(",").toList)) map { lll =>
 	(lll: @unchecked) match {
 	  case (name :: typo :: require) :: (auth :: method :: url :: optional) :: Nil => {
-	    val Or = """(.+)\|(.+)""".r
+	    val Or = """(.+?)\|(.+?)""".r
+	    val And = """(.+?)\&(.+?)""".r
+	    lazy val createType: String => String = {
+	      case Or(a, b) if !a.contains('&') => "Either[%s, %s]".format(createType(a), createType(b))
+	      case And(a, b) if !a.contains('|') => "(%s, %s)".format(createType(a), createType(b))
+	      case s => parameters.getOrElse(s, toUpperCamel(s))
+	    }
 	    val typeToParam = { s: String =>
-	      def param(s: String) = parameters.getOrElse(s, toUpperCamel(s))
 	      val (name, typo) = s match {
-		case Or(a, b) => (toLowerCamel(a), "Either[%s, %s]".format(param(a), param(b)))
-		case s => (toLowerCamel(s), param(s))
+		case Or(a, b) => (a, s)
+		case s => (s, s)
 	      }
-              "%s: %s".format(name, typo)
+              "%s: %s".format(toLowerCamel(name), createType(typo))
 	    }
 	    val Arg = """(.+): .+""".r
 	    val params = require.map(typeToParam) ::: optional.map(typeToParam.andThen(_ + " = null"))
@@ -78,9 +83,11 @@ trait XParameters {
 	    val tokensPamram = parseTokens("(implicit tokens: %s[Tokens])".format(_: String), "")
 	    val tokensArg = parseTokens(Function.const("tokens"), "None")
 	    val Url = """(.*/?):(\w+)(/?.*)""".r
+	    val ValidUrl = """http.+""".r
 	    val urlString = url match {
+	      case s@ValidUrl() => """"%s"""".format(s)
 	      case Url(a, arg, b) => """"%s" + %s + "%s"""".format(a, toLowerCamel(arg), b)
-	      case s => """"%s"""".format(s)
+	      case s => """"http://api.twitter.com/1/%s.json"""".format(s)
 	    }
 	    "  def %s(%s)%s = resource[%s](%s, %s, %s%s)".format(name, params.mkString(", "), tokensPamram, typo, method, urlString, tokensArg, args)
 	  }

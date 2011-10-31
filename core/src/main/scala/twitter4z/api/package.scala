@@ -15,10 +15,8 @@ package object api {
 
   type DirectMessage = twitter4z.objects.DirectMessage
 
-  implicit def StringToResourceURL(string: String) = ResourceURL("http://api.twitter.com/1/" + string + ".json")
-
-  def resource[A](method: Method, url: ResourceURL, tokens: Option[Tokens], optionalParameters: Parameter*)(implicit jsonr: JSONR[A]) = {
-    val params = optionalParameters.filter(null !=).map(_.value)
+  def resource[A](method: Method, url: String, tokens: Option[Tokens], optionalParameters: Seq[Parameter]*)(implicit jsonr: JSONR[A]): Result[A] = {
+    val params = optionalParameters.flatten.filter(null !=).map(_.value)
     val request = method(url).params(params: _*)
     fromJSON[A](tokens.fold(request.oauth(_), request)(parse))
   }

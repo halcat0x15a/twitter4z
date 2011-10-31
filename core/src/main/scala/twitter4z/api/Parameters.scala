@@ -13,7 +13,14 @@ trait Parameters extends XParameters {
   case object Kilometers extends Unit("km")
   case object Miles extends Unit("mi")
 
-  implicit def EitherToParameter(either: Either[Parameter, Parameter]): Parameter = either.fold(identity, identity)
+  implicit def TupleToParameter[A <% Seq[Parameter], B <% Seq[Parameter]](tuple: (A, B)): Seq[Parameter] = tuple._1 ++ tuple._2
+
+  implicit def EitherToParameter[A <% Seq[Parameter], B <% Seq[Parameter]](either: Either[A, B]): Seq[Parameter] = either match {
+    case Right(r) => r
+    case Left(l) => l
+  }
+
+  implicit def ParameterToSeq[A <% Parameter](parameter: A): Seq[Parameter] = List(parameter)
 
   type Id = Long
 

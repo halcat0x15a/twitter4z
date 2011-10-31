@@ -46,3 +46,7 @@ slug,String
 list_id,Long
 owner_id,Long
 owner_screen_name,String
+filter_to_owned_lists,Boolean
+mode,String
+description,String
+name,String
