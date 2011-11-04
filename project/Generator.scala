@@ -3,6 +3,8 @@ import scala.util.parsing.combinator._
 
 trait Generator extends RegexParsers {
 
+  def generate(dir: File, resource: File): Seq[File]
+
   def applyHead(f: Char => Char)(s: String) = f(s.head) + s.tail
 
   val toUpperCamel = (_: String).split("_").map(applyHead(_.toUpper)).mkString
@@ -22,5 +24,13 @@ trait Generator extends RegexParsers {
   }
 
   def listFiles(resource: File) = IO.listFiles(resource, fileFilter)
+
+  def eol = '\n'
+
+  def key = """[a-z_]+""".r
+
+  def name = """[a-zA-Z]+""".r
+
+  def typo = """[a-zA-Z]+""".r
 
 }
