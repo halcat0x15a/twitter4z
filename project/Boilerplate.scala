@@ -1,55 +1,12 @@
 import sbt._
 
-object Boilerplate {
+object Boilerplate extends Generator{
 
-  def applyHead(f: Char => Char)(s: String) = s.split("_").map(s => f(s.head) + s.tail).mkString
+//  def parser = rep(((name <~ comma) ~ typo ~ repsep(key, ',') <~ eol) ~ (typo <~ comma
 
-  val toUpperCamel = applyHead(_.toUpper)_
-    
-  val toLowerCamel = toUpperCamel.andThen(applyHead(_.toLower))
-
-  def generateParameter(dir: File, resource: File): File = {
-    val parameters = IO.readLines(resource / "parameters") map { s =>
-      val (key, typo, name) = (s.split(",").toList: @unchecked) match {
-case key :: typo :: name :: Nil => (key, typo, name)
-case key :: typo :: Nil => (key, typo, key.split("_").map(toUpperCamel).mkString)
-      }
-      """ case class %s(_1: %s) extends AbstractParameter[%s]("%s")
-implicit def Wrap%s(value: %s) = %s(value)""".format(name, typo, typo, key, name, typo, name)
-    } mkString("\n")
-    val source = """package twitter4z.api
-
-import scalaz._
-import Scalaz._
-
-sealed trait Parameter extends NewType[(String, String)]
-
-sealed abstract class AbstractParameter[+A: Show](key: String) extends Parameter with Product1[A] {
-
-  val value = key -> _1.shows
-
-}
-
-trait XParameters {
-""" + parameters + """
-}"""
-    val file = dir / "twitter4z" / "api" / "XParameters.scala"
-    IO.write(file, source)
-    file
-  }
-
-  def generateAPI(dir: File, resource: File): Seq[File] = {
-    val ParametersRegex = """(.+),.+,(.+)""".r
-    val parameters = IO.readLines(resource / "parameters") collect {
-      case ParametersRegex(name, typo) => name -> typo
-    } toMap
-    val filter = new FileFilter {
-      val Regex = """.*~""".r
-      def accept(pathname: File) = !(PartialFunction.cond(pathname.name) {
-	case Regex() => true
-      })
-    }
-    IO.listFiles(resource / "api", filter) map { f =>
+  def generate(dir: File, resource: File): Seq[File] = {
+    val parameters = ParametersGenerator.parameterMap(resource)
+    listFiles(resource / "api") map { f =>
       val name = toUpperCamel(f.name)
       val functions = IO.readLines(f).sliding(2, 2).map(_.map(_.split(",").toList)) map { lll =>
 	(lll: @unchecked) match {
@@ -101,12 +58,10 @@ import twitter4z.json._
 import twitter4z.auth._
 
 trait %s { self: Parameters =>
-""".format(name) + functions + """
+%s
 }
-"""
-      val file = dir / "twitter4z" / "api" / (name + ".scala")
-      IO.write(file, source)
-      file
+""".format(name, functions)
+      write(dir / "twitter4z" / "api" / (name + ".scala"), source)
     }
   }
 
