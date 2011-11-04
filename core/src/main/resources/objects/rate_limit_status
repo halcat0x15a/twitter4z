@@ -1,0 +1,4 @@
+remaining_hits:Int
+reset_time_in_seconds:Long
+hourly_limit:Int
+reset_time:Int
