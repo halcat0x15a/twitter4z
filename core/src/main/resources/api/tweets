@@ -11,4 +11,4 @@ Some,post,statuses/destroy/:id,include_entities,trim_user
 retweet,StatusObject,id
 Some,post,statuses/retweet/:id,include_entities,trim_user
 update,StatusObject,status
-Some,post,statuses/update,in_reply_to_status_id,lat,long,place_id,display_coordinates,trim_user,include_entities,wrap_links
+Some,post,statuses/update,in_reply_to_status_id,lat&long,place_id,display_coordinates,trim_user,include_entities,wrap_links

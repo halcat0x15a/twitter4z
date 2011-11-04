@@ -1,10 +1,14 @@
 package twitter4z.auth
 
 import java.io._
+import scalaz._
+import Scalaz._
 import scalaj.http._
 import twitter4z.http._
 
 trait OAuth {
+
+  implicit val DefaultTokens = none[Tokens]
 
   def requestToken(key: String, secret: String) = {
     val consumer = Token(key, secret)
