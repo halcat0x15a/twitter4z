@@ -18,8 +18,7 @@ object Twitter4zBuild extends Build {
   import Dependencies._
 
   val buildSettings = Defaults.defaultSettings ++ Seq (
-    name := "Twitter4z",
-    version := "0.1",
+    version := "0.2",
     organization := "twitter4z",
     scalaVersion := "2.9.1",
     libraryDependencies += scalaz,
@@ -28,15 +27,15 @@ object Twitter4zBuild extends Build {
     scalacOptions += "-deprecation"
   )
 
-  lazy val twitter4z = Project (
+  lazy val twitter4z = Project(
     "twitter4z",
-    file ("."),
+    file("."),
     settings = buildSettings
-  ) aggregate (core)
+  ) aggregate (core, plugin)
 
   lazy val core = Project(
-    id = "twitter4z-core",
-    base = file("core"),
+    "twitter4z-core",
+    file("core"),
     settings = buildSettings ++ Seq(
       libraryDependencies ++= Seq(
 	scalaz,
@@ -47,8 +46,16 @@ object Twitter4zBuild extends Build {
       sourceGenerators in Compile <+= (sourceManaged in Compile, resourceDirectory in Compile) map {
         case (dir, resource) => ObjectsGenerator.generate(dir, resource) ++ ParametersGenerator.generate(dir, resource) ++ APIGenerator.generate(dir, resource)
       },
-      excludeFilter in unmanagedResources := "parameters" || "api"
+      excludeFilter in unmanagedResources := "parameters"
     )
   )
+
+  lazy val plugin = Project(
+    "twitter4z-plugin",
+    file("plugin"),
+    settings = buildSettings ++ Seq(
+      sbtPlugin := true
+    )
+  ) dependsOn (core)
 
 }

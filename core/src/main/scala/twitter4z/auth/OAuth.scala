@@ -10,10 +10,13 @@ trait OAuth {
 
   implicit val DefaultTokens = none[Tokens]
 
-  def requestToken(key: String, secret: String) = {
-    val consumer = Token(key, secret)
-    Tokens(consumer, post("""http://api.twitter.com/oauth/request_token""").oauth(consumer).asToken)
-  }
+  def token(key: String, secret: String) = Token(key, secret)
+
+  def tokens(consumer: Token, token: Token) = Tokens(consumer, token)
+
+  def requestToken(consumer: Token): Tokens = Tokens(consumer, post("""http://api.twitter.com/oauth/request_token""").oauth(consumer).asToken)
+
+  def requestToken(key: String, secret: String): Tokens = requestToken(token(key, secret))
 
   def authorization(tokens: Tokens): String = authorization(tokens.token)
 

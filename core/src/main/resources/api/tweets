@@ -28,7 +28,7 @@ POST statuses/retweet/:id
 Yes
 id
 include_entities,trim_user
-update:StatusObject
+updateStatus:StatusObject
 POST statuses/update
 Yes
 status

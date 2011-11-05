@@ -4,3 +4,4 @@ core/target
 target/
 hoge
 *#*#
+*.log
