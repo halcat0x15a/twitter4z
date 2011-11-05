@@ -1,34 +1,85 @@
-allLists,List[UserList]
-Option,get,lists/all,user_id|screen_name
-listStatuses,List[StatusObject],list_id|slug&owner_id|owner_screen_name
-Option,get,lists/statuses,since_id,max_id,per_page,page,include_entities,include_rts
-destroyListMember,UserList,list_id|slug&owner_screen_name|owner_id,user_id|screen_name
-Some,post,lists/members/destroy
-memberships,UserLists
-Option,get,lists/memberships,user_id|screen_name,cursor,filter_to_owned_lists
-subscribers,UserLists,list_id|slug&owner_id|owner_screen_name
-Option,get,lists/subscribers,cursor,include_entities,skip_status
-createSubscribers,UserList,list_id|slug&owner_id|owner_screen_name
-Some,post,lists/subscribers/create
-showSubscribers,User,list_id|slug&owner_id|owner_screen_name,user_id|screen_name
-Some,get,lists/subscribers/show,include_entities,skip_status
-destroySubscribers,UserList,list_id|slug&owner_id|owner_screen_name
-Some,post,lists/subscribers/destroy
-createAllMembers,UserList,list_id|slug&owner_id|owner_screen_name,user_id|screen_name
-Some,post,lists/members/create_all
-showMembers,User,list_id|slug&owner_id|owner_screen_name,user_id|screen_name
-Some,get,lists/members/show,include_entities,skip_status
-members,UserLists,list_id|slug&owner_id|owner_screen_name
-Option,get,lists/members,cursor,include_entities,skip_status
-createMember,UserList,list_id|slug&owner_id|owner_screen_name,user_id|screen_name
-Some,post,lists/members/create
-destroyList,UserList,list_id|slug&owner_id|owner_screen_name
-Some,post,lists/destroy
-updateList,UserList,list_id|slug&owner_id|owner_screen_name
-Some,post,lists/update,name,mode,description
-createList,UserList,name
-Some,post,lists/create,mode,description
-lists,UserLists,user_id|screen_name
-Some,get,lists,cursor
-showLists,UserLists,list_id|slug&owner_id|owner_screen_name
-Option,get,lists/show
+allLists:List[UserList]
+get lists/all
+Supported
+
+user_id|screen_name
+listStatuses:List[StatusObject]
+get lists/statuses
+Supported
+list_id|slug&owner_id|owner_screen_name
+since_id,max_id,per_page,page,include_entities,include_rts
+destroyListMember:UserList
+post lists/members/destroy
+Yes
+list_id|slug&owner_screen_name|owner_id,user_id|screen_name
+
+memberships:UserLists
+get lists/memberships
+Supported
+
+user_id|screen_name,cursor,filter_to_owned_lists
+subscribers:UserLists
+get lists/subscribers
+Supported
+list_id|slug&owner_id|owner_screen_name
+cursor,include_entities,skip_status
+createSubscribers:UserList
+post lists/subscribers/create
+Yes
+list_id|slug&owner_id|owner_screen_name
+
+showSubscribers:User
+get lists/subscribers/show
+Yes
+list_id|slug&owner_id|owner_screen_name,user_id|screen_name
+include_entities,skip_status
+destroySubscribers:UserList
+post lists/subscribers/destroy
+Yes
+list_id|slug&owner_id|owner_screen_name
+
+createAllMembers:UserList
+post lists/members/create_all
+Yes
+list_id|slug&owner_id|owner_screen_name,user_id|screen_name
+
+showMembers:User
+get lists/members/show
+Yes
+list_id|slug&owner_id|owner_screen_name,user_id|screen_name
+include_entities,skip_status
+members:UserLists
+get lists/members
+Supported
+list_id|slug&owner_id|owner_screen_name
+cursor,include_entities,skip_status
+createMember:UserList
+post lists/members/create
+Yes
+list_id|slug&owner_id|owner_screen_name,user_id|screen_name
+
+destroyList:UserList
+post lists/destroy
+Yes
+list_id|slug&owner_id|owner_screen_name
+
+updateList:UserList
+post lists/update
+Yes
+list_id|slug&owner_id|owner_screen_name
+name,mode,description
+createList:UserList
+post lists/create
+Yes
+name
+mode,description
+lists:UserLists
+get lists
+Yes
+user_id|screen_name
+cursor
+showLists:UserLists
+get lists/show
+Supported
+list_id|slug&owner_id|owner_screen_name
+

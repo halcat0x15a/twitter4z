@@ -1,18 +1,45 @@
-homeTimeline,Statuses
-Some,get,statuses/home_timeline,count,since_id,max_id,page,trim_user,include_rts,include_entities,exclude_replies,contributor_details
-mentions,Statuses
-Some,get,statuses/mentions,count,since_id,max_id,page,trim_user,include_rts,include_entities,contributor_details
-publicTimeline,Statuses
-,get,statuses/public_timeline,trim_user,include_entities
-retweetedByMe,Statuses
-Some,get,statuses/retweeted_by_me,count,since_id,max_id,page,trim_user,include_entities
-retweetedToMe,Statuses
-Some,get,statuses/retweeted_to_me,count,since_id,max_id,page,trim_user,include_entities
-retweetsOfMe,Statuses
-Some,get,statuses/retweets_of_me,count,since_id,max_id,page,trim_user,include_entities
-userTimeline,Statuses
-Option,get,statuses/user_timeline,user_id|screen_name,since_id,count,max_id,page,trim_user,include_rts,include_entities,exclude_replies,contributor_details
-retweetedToUser,Statuses,user_id|screen_name
-Option,get,statuses/retweeted_to_user,count,since_id,max_id,page,trim_user,include_entities
-retweetedByUser,Statuses,user_id|screen_name
-Option,get,statuses/retweeted_by_user,count,since_id,max_id,page,trim_user,include_entities
+homeTimeline:Statuses
+get statuses/home_timeline
+Yes
+
+count,since_id,max_id,page,trim_user,include_rts,include_entities,exclude_replies,contributor_details
+mentions:Statuses
+get statuses/mentions
+Yes
+
+count,since_id,max_id,page,trim_user,include_rts,include_entities,contributor_details
+publicTimeline:Statuses
+get statuses/public_timeline
+No
+
+trim_user,include_entities
+retweetedByMe:Statuses
+get statuses/retweeted_by_me
+Yes
+
+count,since_id,max_id,page,trim_user,include_entities
+retweetedToMe:Statuses
+get statuses/retweeted_to_me
+Yes
+
+count,since_id,max_id,page,trim_user,include_entities
+retweetsOfMe:Statuses
+get statuses/retweets_of_me
+Yes
+
+count,since_id,max_id,page,trim_user,include_entities
+userTimeline:Statuses
+get statuses/user_timeline
+Supported
+
+user_id|screen_name,since_id,count,max_id,page,trim_user,include_rts,include_entities,exclude_replies,contributor_details
+retweetedToUser:Statuses
+get statuses/retweeted_to_user
+Supported
+user_id|screen_name
+count,since_id,max_id,page,trim_user,include_entities
+retweetedByUser:Statuses
+get statuses/retweeted_by_user
+Supported
+user_id|screen_name
+count,since_id,max_id,page,trim_user,include_entities

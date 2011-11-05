@@ -1,12 +1,30 @@
-lookupUsers,Users,user_id|screen_name
-Option,get,users/lookup,include_entities
-profileImage,URL,screen_name
-,get,users/profile_image/:screen_name,size
-searchUsers,Users,q
-Some,get,users/search,page,per_page,include_entities
-showUser,User,user_id|screen_name
-Option,get,users/show,include_entities
-contributees,Users,user_id|screen_name
-Option,get,users/contributees,include_entities,skip_status
-contributors,Users,user_id|screen_name
-Option,get,users/contributors,include_entities,skip_status
+lookupUsers:Users
+get users/lookup
+Supported
+user_id|screen_name
+include_entities
+profileImage:URL
+get users/profile_image/:screen_name
+No
+screen_name
+size
+searchUsers:Users
+get users/search
+Yes
+q
+page,per_page,include_entities
+showUser:User
+get users/show
+Supported
+user_id|screen_name
+include_entities
+contributees:Users
+get users/contributees
+Supported
+user_id|screen_name
+include_entities,skip_status
+contributors:Users
+get users/contributors
+Supported
+user_id|screen_name
+include_entities,skip_status

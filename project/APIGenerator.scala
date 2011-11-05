@@ -10,10 +10,6 @@ object APIGenerator extends Generator {
 
   def no = "No".r
 
-  def colon = ':'
-
-  def comma = ','
-
   def space = ' '
 
   def get = "GET".r
@@ -24,13 +20,13 @@ object APIGenerator extends Generator {
 
   def or = '|'
 
-  def definition = (name <~ colon) ~ typo <~ eol
+  def definition = (name <~ Colon) ~ typo <~ eol
 
   def resource = (typo <~ space) ~ url <~ eol
 
   def auth = yes | supported | no <~ eol
 
-  def parameters = repsep(key <~ eol, ',')
+  def parameters = repsep(Key <~ eol, ',')
 
   def parser = rep(definition ~ resource ~ auth ~ parameters ~ parameters)
 

@@ -1,55 +1,84 @@
 import sbt._
 
-object Boilerplate extends Generator{
+object Boilerplate extends Generator {
 
-//  def parser = rep(((name <~ comma) ~ typo ~ repsep(key, ',') <~ eol) ~ (typo <~ comma
+  val Url = """[a-z_/]+""".r
+
+  val ValidUrl = """http.+""".r
+
+  val ResourceUrl = (ValidUrl | Url) ~ opt(Colon ~> Key) ~ opt(Url)
+
+  val APIParameter = """[a-z_\|\&]+""".r
+
+  val Comma = ','
+
+  val Yes = """Yes""".r
+
+  val Supported = """Supported""".r
+
+  val No = """No""".r
+
+  val Auth = Yes | Supported | No
+
+  val Space = ' '
+
+  def parameterParser = repsep(APIParameter, Comma) <~ eol
+
+  def parser = rep(((name <~ Colon) ~ typo <~ eol) ~ ((name <~ Space) ~ ResourceUrl <~ eol) ~ (Auth <~ eol) ~ parameterParser ~ parameterParser)
+
+  val Or = """(.+?)\|(.+)""".r
+
+  val And = """(.+?)\&(.+)""".r
 
   def generate(dir: File, resource: File): Seq[File] = {
     val parameters = ParametersGenerator.parameterMap(resource)
     listFiles(resource / "api") map { f =>
       val name = toUpperCamel(f.name)
-      val functions = IO.readLines(f).sliding(2, 2).map(_.map(_.split(",").toList)) map { lll =>
-	(lll: @unchecked) match {
-	  case (name :: typo :: require) :: (auth :: method :: url :: optional) :: Nil => {
-	    val Or = """(.+?)\|(.+?)""".r
-	    val And = """(.+?)\&(.+?)""".r
+      val functions = parseAll(parser, IO.read(f)) match {
+	case Success(result, _) => result map {
+	  case (name ~ typo) ~ (method ~ url) ~ auth ~ require ~ optional => {
 	    lazy val createType: String => String = {
 	      case Or(a, b) if !a.contains('&') => "Either[%s, %s]".format(createType(a), createType(b))
 	      case And(a, b) if !a.contains('|') => "(%s, %s)".format(createType(a), createType(b))
 	      case s => parameters.getOrElse(s, toUpperCamel(s))
 	    }
-	    val typeToParam = { s: String =>
-	      val (name, typo) = s match {
-		case Or(a, b) => (a, s)
-		case s => (s, s)
+	    val createParam = { key: String =>
+	      val name = key match {
+		case And(a, b) if !a.contains('|') => a + b
+		case Or(a, b) if !a.contains('&') => a
+		case _ => key
 	      }
-              "%s: %s".format(toLowerCamel(name), createType(typo))
+	      "%s: %s".format(toLowerCamel(name), createType(key))
 	    }
 	    val Arg = """(.+): .+""".r
-	    val params = require.map(typeToParam) ::: optional.map(typeToParam.andThen(_ + " = null"))
+	    val params = require.map(createParam) ::: optional.map(createParam.andThen(_ + " = null"))
 	    val args = {
+	      def notArg(arg: String) = url match {
+		case _ ~ None ~ _ => true
+		case _ ~ Some(urlArg) ~ _ => urlArg != arg
+	      }
 	      val args = params collect {
-		case Arg(arg) if arg != "id" && arg != "screenName" => arg
+		case Arg(arg) if notArg(arg) => arg
 	      } mkString(", ")
 	      if (args.isEmpty) args else ", " + args
 	    }
-	    def parseTokens(o: String => String, n: String) = auth match {
-	      case "" => n
-	      case s => o(s)
+	    def parseTokens(f: String => String, n: String) = auth match {
+	      case Yes() => f("Some")
+	      case Supported() => f("Option")
+	      case No() => n
 	    }
 	    val tokensPamram = parseTokens("(implicit tokens: %s[Tokens])".format(_: String), "")
 	    val tokensArg = parseTokens(Function.const("tokens"), "None")
-	    val Url = """(.*/?):(\w+)(/?.*)""".r
-	    val ValidUrl = """http.+""".r
 	    val urlString = url match {
-	      case s@ValidUrl() => """"%s"""".format(s)
-	      case Url(a, arg, b) => """"%s" + %s + "%s"""".format(a, toLowerCamel(arg), b)
-	      case s => """"http://api.twitter.com/1/%s.json"""".format(s)
+	      case (url@ValidUrl()) ~ _ ~ _ => """"%s"""".format(url)
+	      case a ~ Some(arg) ~ b => List(""""https://api.twitter.com/1/%s"""".format(a), toLowerCamel(arg), """"%s.json"""".format(b.getOrElse(""))).mkString(" + ")
+	      case url ~ None ~ None => """"https://api.twitter.com/1/%s.json"""".format(url)
 	    }
 	    "  def %s(%s)%s = resource[%s](%s, %s, %s%s)".format(name, params.mkString(", "), tokensPamram, typo, method, urlString, tokensArg, args)
 	  }
-	}
-      } mkString("\n")
+	} mkString("\n")
+	case Failure(msg, next) => println(name, msg, next.pos);msg
+      }
       val source = """package twitter4z.api
 
 import twitter4z.objects._

@@ -1,20 +1,50 @@
-followersIds,Ids,user_id|screen_name
-Some,get,followers/ids,cursor,stringify_ids
-existsFriendships,Boolean,user_id_a|screen_name_a,user_id_b|screen_name_b
-Option,get,friendships/exists
-incomingFriendships,Ids
-Some,get,cursor,stringify_ids
-outgoingFriendships,Ids
-Some,get,cursor,stringify_ids
-showFriendships,Relationship,source_id|source_screen_name,target_id|target_screen_name
-Option,get,friendships/show
-createFriendships,User,user_id|screen_name
-Some,post,friendships/create,follow
-destroyFriendships,User,user_id|screen_name
-Some,post,friendships/destroy,include_entities
-lookupFriendships,Friendship,user_id|screen_name
-Some,get,friendships/lookup
-updateFriendships,Relationship,user_id|screen_name
-Some,post,friendships/update,device,retweets
-noRetweetIds,List[Long]
-Some,get,friendships/no_retweet_ids,stringify_ids
+followersIds:Ids
+get followers/ids
+Yes
+user_id|screen_name
+cursor,stringify_ids
+existsFriendships:Boolean
+get friendships/exists
+Supported
+user_id_a|screen_name_a,user_id_b|screen_name_b
+
+incomingFriendships:Ids
+get friendships/incoming
+Yes
+
+cursor,stringify_ids
+outgoingFriendships:Ids
+get friendships/outgoing
+Yes
+
+cursor,stringify_ids
+showFriendships:Relationship
+get friendships/show
+Supported
+source_id|source_screen_name,target_id|target_screen_name
+
+createFriendships:User
+post friendships/create
+Yes
+user_id|screen_name
+follow
+destroyFriendships:User
+post friendships/destroy
+Yes
+user_id|screen_name
+include_entities
+lookupFriendships:Friendship
+get friendships/lookup
+Yes
+user_id|screen_name
+
+updateFriendships:Relationship
+post friendships/update
+Yes
+user_id|screen_name
+device,retweets
+noRetweetIds:List[Long]
+get friendships/no_retweet_ids
+Yes
+
+stringify_ids

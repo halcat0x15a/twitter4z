@@ -1,6 +1,15 @@
-favorites,List[StatusObject]
-Some,get,favorites,user_id|screen_name,since_id,page,include_entities
-createFavorite,StatusObject,id
-Some,post,favorites/create/:id,include_entities
-destroyFavorite,StatusObject,id
-Some,post,favorites/destroy/:id
+favorites:List[StatusObject]
+get favorites
+Yes
+user_id|screen_name,since_id,page,include_entities
+
+createFavorite:StatusObject
+post favorites/create/:id
+Yes
+id
+include_entities
+destroyFavorite:StatusObject
+post favorites/destroy/:id
+Yes
+id
+

@@ -25,12 +25,16 @@ trait Generator extends RegexParsers {
 
   def listFiles(resource: File) = IO.listFiles(resource, fileFilter)
 
-  def eol = '\n'
+  def eol = opt('\r') <~ '\n'
 
-  def key = """[a-z_]+""".r
+  val Key = """[a-z_]+""".r
 
   def name = """[a-zA-Z]+""".r
 
-  def typo = """[a-zA-Z]+""".r
+  def typo = """[a-zA-Z\[\]]+""".r
+
+  val Colon = ':'
+
+  override def skipWhitespace: Boolean = false
 
 }

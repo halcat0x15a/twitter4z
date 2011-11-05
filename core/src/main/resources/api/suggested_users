@@ -1,6 +1,15 @@
-suggestions,Category
-,get,users/suggestions,lang
-suggestionUsers,Category,slug
-,get,users/suggestions/:slug,lang
-suggestionMembers,List[User],slug
-,get,users/suggestions/:slug/members
+suggestions:Category
+get users/suggestions
+No
+
+lang
+suggestionUsers:Category
+get users/suggestions/:slug
+No
+slug
+lang
+suggestionMembers:List[User]
+get users/suggestions/:slug/members
+No
+slug
+

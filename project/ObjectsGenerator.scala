@@ -2,13 +2,11 @@ import sbt._
 
 object ObjectsGenerator extends Generator {
 
-  def line = (key <~ colon) ~ typo <~ eol
-
-  def lines = rep(line)
+  def parser = rep((Key <~ Colon) ~ typo <~ eol)
 
   def generate(dir: File, resource: File): Seq[File] = listFiles(resource / "objects") map { f =>
     val name = toUpperCamel(f.name)
-    val pairs = parseAll(lines, IO.read(f)).getOrElse(throw new Exception("Objects"))
+    val pairs = parseAll(parser, IO.read(f)).getOrElse(throw new Exception("Objects"))
     val fields = pairs map {
       case name ~ typo => "  %s: %s".format(toLowerCamel(name), typo)
     } mkString(",\n")

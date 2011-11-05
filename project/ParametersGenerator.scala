@@ -2,11 +2,9 @@ import sbt._
 
 object ParametersGenerator extends Generator {
 
-  def line = (key <~ colon) ~ typo ~ opt(colon ~> typo) <~ eol
+  def parser = rep((Key <~ Colon) ~ typo ~ opt(Colon ~> typo) <~ eol)
 
-  def lines = rep(line)
-
-  def parseParameters(resource: File) = parseAll(lines, IO.read(resource / "parameters")).getOrElse(throw new Exception("Parameter"))
+  def parseParameters(resource: File) = parseAll(parser, IO.read(resource / "parameters")).getOrElse(throw new Exception("Parameter"))
 
   def parameterMap(resource: File) = parseParameters(resource) collect {
     case key ~ _ ~ Some(name) => key -> name
