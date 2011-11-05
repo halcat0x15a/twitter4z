@@ -1,35 +1,35 @@
 retweetedBy:Users
-get statuses/:id/retweeted_by
+GET statuses/:id/retweeted_by
 Supported
 id
 count,page
 retweetedByIds:List[Long]
-get statuses/:id/retweeted_by/ids
+GET statuses/:id/retweeted_by/ids
 Yes
 id
 count,page,stringify_ids
 retweets:Statuses
-get statuses/retweets/:id
+GET statuses/retweets/:id
 Yes
 id
 count,trim_user,include_entities
 showStatus:StatusObject
-get statuses/show/:id
+GET statuses/show/:id
 No
 id
 trim_user,include_entities
 destroyStatus:StatusObject
-post statuses/destroy/:id
+POST statuses/destroy/:id
 Yes
 id
 include_entities,trim_user
 retweet:StatusObject
-post statuses/retweet/:id
+POST statuses/retweet/:id
 Yes
 id
 include_entities,trim_user
 update:StatusObject
-post statuses/update
+POST statuses/update
 Yes
 status
 in_reply_to_status_id,lat&long,place_id,display_coordinates,trim_user,include_entities,wrap_links

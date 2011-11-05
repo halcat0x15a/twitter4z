@@ -1,15 +1,15 @@
 favorites:List[StatusObject]
-get favorites
+GET favorites
 Yes
 user_id|screen_name,since_id,page,include_entities
 
 createFavorite:StatusObject
-post favorites/create/:id
+POST favorites/create/:id
 Yes
 id
 include_entities
 destroyFavorite:StatusObject
-post favorites/destroy/:id
+POST favorites/destroy/:id
 Yes
 id
 

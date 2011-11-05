@@ -1,15 +1,15 @@
 suggestions:Category
-get users/suggestions
+GET users/suggestions
 No
 
 lang
 suggestionUsers:Category
-get users/suggestions/:slug
+GET users/suggestions/:slug
 No
 slug
 lang
 suggestionMembers:List[User]
-get users/suggestions/:slug/members
+GET users/suggestions/:slug/members
 No
 slug
 

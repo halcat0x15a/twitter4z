@@ -2,42 +2,102 @@ import sbt._
 
 object APIGenerator extends Generator {
 
-  def url = """[a-z/:]""".r
+  val Url = """[a-z_/]+""".r
 
-  def yes = "Yes".r
+  val ValidUrl = """http.+""".r
 
-  def supported = "Supported".r
+  val ResourceUrl = (ValidUrl | Url) ~ opt(Colon ~> Key) ~ opt(Url)
 
-  def no = "No".r
+  val APIParameter = """[a-z_\|\&]+""".r
 
-  def space = ' '
+  val Comma = ','
 
-  def get = "GET".r
+  val Yes = """Yes""".r
 
-  def post = "POST".r
+  val Supported = """Supported""".r
 
-  def and = '&'
+  val No = """No""".r
 
-  def or = '|'
+  val Get = "GET".r
 
-  def definition = (name <~ Colon) ~ typo <~ eol
+  val Post = "POST".r
 
-  def resource = (typo <~ space) ~ url <~ eol
+  val method = Get | Post
 
-  def auth = yes | supported | no <~ eol
+  val auth = Yes | Supported | No
 
-  def parameters = repsep(Key <~ eol, ',')
+  val Space = ' '
 
-  def parser = rep(definition ~ resource ~ auth ~ parameters ~ parameters)
+  def parameterParser = repsep(APIParameter, Comma) <~ eol
+
+  def parser = rep(((name <~ Colon) ~ typo <~ eol) ~ ((method <~ Space) ~ ResourceUrl <~ eol) ~ (auth <~ eol) ~ parameterParser ~ parameterParser)
+
+  val Or = """(.+?)\|(.+)""".r
+
+  val And = """(.+?)\&(.+)""".r
 
   def generate(dir: File, resource: File): Seq[File] = {
+    val parameters = ParametersGenerator.parameterMap(resource)
     listFiles(resource / "api") map { f =>
       val name = toUpperCamel(f.name)
-      val functions = parseAll(parser, IO.read(f)).get map {
-	case (name ~ typo) ~ (meth ~ url) ~ auth ~ require ~ optional =>
+      val functions = parseAll(parser, IO.read(f)) match {
+	case Success(result, _) => result map {
+	  case (name ~ typo) ~ (method ~ url) ~ auth ~ require ~ optional => {
+	    lazy val createType: String => String = {
+	      case Or(a, b) if !a.contains('&') => "Either[%s, %s]".format(createType(a), createType(b))
+	      case And(a, b) if !a.contains('|') => "(%s, %s)".format(createType(a), createType(b))
+	      case s => parameters.getOrElse(s, toUpperCamel(s))
+	    }
+	    val createParam = { key: String =>
+	      val name = key match {
+		case And(a, b) if !a.contains('|') => a + b
+		case Or(a, b) if !a.contains('&') => a
+		case _ => key
+	      }
+	      "%s: %s".format(toLowerCamel(name), createType(key))
+	    }
+	    val Arg = """(.+): .+""".r
+	    val params = require.map(createParam) ::: optional.map(createParam.andThen(_ + " = null"))
+	    val args = {
+	      def notArg(arg: String) = url match {
+		case _ ~ None ~ _ => true
+		case _ ~ Some(urlArg) ~ _ => urlArg != arg
+	      }
+	      val args = params collect {
+		case Arg(arg) if notArg(arg) => arg
+	      } mkString(", ")
+	      if (args.isEmpty) args else ", " + args
+	    }
+	    def parseTokens(f: String => String, n: String) = auth match {
+	      case Yes() => f("Some")
+	      case Supported() => f("Option")
+	      case No() => n
+	    }
+	    val tokensPamram = parseTokens("(implicit tokens: %s[Tokens])".format(_: String), "")
+	    val tokensArg = parseTokens(Function.const("tokens"), "None")
+	    val urlString = url match {
+	      case (url@ValidUrl()) ~ _ ~ _ => """"%s"""".format(url)
+	      case a ~ Some(arg) ~ b => List(""""https://api.twitter.com/1/%s"""".format(a), toLowerCamel(arg), """"%s.json"""".format(b.getOrElse(""))).mkString(" + ")
+	      case url ~ None ~ None => """"https://api.twitter.com/1/%s.json"""".format(url)
+	    }
+	    "  def %s(%s)%s = resource[%s](%s, %s, %s%s)".format(name, params.mkString(", "), tokensPamram, typo, method.toLowerCase, urlString, tokensArg, args)
+	  }
+	} mkString("\n")
+	case Failure(msg, next) => println(name, msg, next.pos);msg
       }
+      val source = """package twitter4z.api
+
+import twitter4z.objects._
+import twitter4z.http._
+import twitter4z.json._
+import twitter4z.auth._
+
+trait %s { self: Parameters =>
+%s
+}
+""".format(name, functions)
+      write(dir / "twitter4z" / "api" / (name + ".scala"), source)
     }
-    null
   }
 
 }

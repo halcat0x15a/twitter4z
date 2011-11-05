@@ -1,85 +1,85 @@
 allLists:List[UserList]
-get lists/all
+GET lists/all
 Supported
 
 user_id|screen_name
 listStatuses:List[StatusObject]
-get lists/statuses
+GET lists/statuses
 Supported
 list_id|slug&owner_id|owner_screen_name
 since_id,max_id,per_page,page,include_entities,include_rts
 destroyListMember:UserList
-post lists/members/destroy
+POST lists/members/destroy
 Yes
 list_id|slug&owner_screen_name|owner_id,user_id|screen_name
 
 memberships:UserLists
-get lists/memberships
+GET lists/memberships
 Supported
 
 user_id|screen_name,cursor,filter_to_owned_lists
 subscribers:UserLists
-get lists/subscribers
+GET lists/subscribers
 Supported
 list_id|slug&owner_id|owner_screen_name
 cursor,include_entities,skip_status
 createSubscribers:UserList
-post lists/subscribers/create
+POST lists/subscribers/create
 Yes
 list_id|slug&owner_id|owner_screen_name
 
 showSubscribers:User
-get lists/subscribers/show
+GET lists/subscribers/show
 Yes
 list_id|slug&owner_id|owner_screen_name,user_id|screen_name
 include_entities,skip_status
 destroySubscribers:UserList
-post lists/subscribers/destroy
+POST lists/subscribers/destroy
 Yes
 list_id|slug&owner_id|owner_screen_name
 
 createAllMembers:UserList
-post lists/members/create_all
+POST lists/members/create_all
 Yes
 list_id|slug&owner_id|owner_screen_name,user_id|screen_name
 
 showMembers:User
-get lists/members/show
+GET lists/members/show
 Yes
 list_id|slug&owner_id|owner_screen_name,user_id|screen_name
 include_entities,skip_status
 members:UserLists
-get lists/members
+GET lists/members
 Supported
 list_id|slug&owner_id|owner_screen_name
 cursor,include_entities,skip_status
 createMember:UserList
-post lists/members/create
+POST lists/members/create
 Yes
 list_id|slug&owner_id|owner_screen_name,user_id|screen_name
 
 destroyList:UserList
-post lists/destroy
+POST lists/destroy
 Yes
 list_id|slug&owner_id|owner_screen_name
 
 updateList:UserList
-post lists/update
+POST lists/update
 Yes
 list_id|slug&owner_id|owner_screen_name
 name,mode,description
 createList:UserList
-post lists/create
+POST lists/create
 Yes
 name
 mode,description
 lists:UserLists
-get lists
+GET lists
 Yes
 user_id|screen_name
 cursor
 showLists:UserLists
-get lists/show
+GET lists/show
 Supported
 list_id|slug&owner_id|owner_screen_name
 

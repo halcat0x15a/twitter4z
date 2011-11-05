@@ -1,50 +1,50 @@
 followersIds:Ids
-get followers/ids
+GET followers/ids
 Yes
 user_id|screen_name
 cursor,stringify_ids
 existsFriendships:Boolean
-get friendships/exists
+GET friendships/exists
 Supported
 user_id_a|screen_name_a,user_id_b|screen_name_b
 
 incomingFriendships:Ids
-get friendships/incoming
+GET friendships/incoming
 Yes
 
 cursor,stringify_ids
 outgoingFriendships:Ids
-get friendships/outgoing
+GET friendships/outgoing
 Yes
 
 cursor,stringify_ids
 showFriendships:Relationship
-get friendships/show
+GET friendships/show
 Supported
 source_id|source_screen_name,target_id|target_screen_name
 
 createFriendships:User
-post friendships/create
+POST friendships/create
 Yes
 user_id|screen_name
 follow
 destroyFriendships:User
-post friendships/destroy
+POST friendships/destroy
 Yes
 user_id|screen_name
 include_entities
 lookupFriendships:Friendship
-get friendships/lookup
+GET friendships/lookup
 Yes
 user_id|screen_name
 
 updateFriendships:Relationship
-post friendships/update
+POST friendships/update
 Yes
 user_id|screen_name
 device,retweets
 noRetweetIds:List[Long]
-get friendships/no_retweet_ids
+GET friendships/no_retweet_ids
 Yes
 
 stringify_ids

@@ -1,25 +1,25 @@
 directMessages:DirectMessages
-get direct_messages
+GET direct_messages
 Yes
 
 since_id,max_id,count,page,include_entities,skip_status
 sentDirectMessages:DirectMessages
-get direct_messages/sent
+GET direct_messages/sent
 Yes
 
 since_id,max_id,count,page,include_entities
 destroyDirectMessage:DirectMessage
-post direct_messages/destroy/:id
+POST direct_messages/destroy/:id
 Yes
 id
 include_entities
 newDirectMessage:DirectMessage
-post direct_messages/new
+POST direct_messages/new
 Yes
 user_id|screen_name,text
 wrap_links
 showDirectMessage:DirectMessage
-get direct_messages/show/:id
+GET direct_messages/show/:id
 Yes
 id
 
