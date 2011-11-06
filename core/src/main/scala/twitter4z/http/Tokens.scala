@@ -2,14 +2,12 @@ package twitter4z.http
 
 import java.io._
 import scalaj.http._
+import scalaz._
+import Scalaz._
 
-case class Tokens(consumer: Token, token: Token) {
+case class Tokens(consumer: Token, token: Token) extends NewType[(Token, Token)] {
 
-  def write(name: String) = {
-    val stream = new ObjectOutputStream(new FileOutputStream(name))
-    stream.writeObject(this)
-    stream.close()
-  }
+  val value = (consumer, token)
 
   override def toString = "Tokens@" + hashCode.toHexString
 

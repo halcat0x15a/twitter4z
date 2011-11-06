@@ -73,8 +73,20 @@ object APIGenerator extends Generator {
 	      case Supported() => f("Option")
 	      case No() => n
 	    }
-	    val tokensPamram = parseTokens("(implicit tokens: %s[Tokens])".format(_: String), "")
-	    val tokensArg = parseTokens(Function.const("tokens"), "None")
+	    val tokensPamram = auth match {
+	      case No() => ""
+	      case s => {
+		val typo = s match {
+		  case Yes() => "Tokens"
+		  case Supported() => "OptionTokens"
+		}
+		"(implicit tokens: %s)".format(typo)
+	      }
+	    }
+	    val tokensArg = auth match {
+	      case No() => "NoneTokens"
+	      case _ => "tokens"
+	    }
 	    val urlString = url match {
 	      case (url@ValidUrl()) ~ _ ~ _ => """"%s"""".format(url)
 	      case a ~ Some(arg) ~ b => List(""""https://api.twitter.com/1/%s"""".format(a), toLowerCamel(arg), """"%s.json"""".format(b.getOrElse(""))).mkString(" + ")
@@ -92,7 +104,7 @@ import twitter4z.http._
 import twitter4z.json._
 import twitter4z.auth._
 
-trait %s { self: Parameters =>
+trait %s { self: Http with Parameters =>
 %s
 }
 """.format(name, functions)
