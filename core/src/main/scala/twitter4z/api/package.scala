@@ -15,6 +15,6 @@ package object api {
 
   type DirectMessage = twitter4z.objects.DirectMessage
 
-  def resource[A](method: Method, url: String, tokens: OptionTokens, optionalParameters: Seq[Parameter]*)(implicit jsonr: JSONR[A]): Result[A] = fromJSON[A](tokens.value.foldl(method(url).params(optionalParameters.flatten.withFilter(null !=).map(_.value): _*))(_.oauth(_)).apply(parse))
+  def resource[A](method: Method, url: String, tokens: OptionTokens, optionalParameters: Seq[Parameter]*)(implicit jsonr: JSONR[A]): Result[A] = fromJSON[A](optOAuth(method(url).params(optionalParameters.flatten.withFilter(null !=).map(_.value): _*))(tokens)(parse))
 
 }

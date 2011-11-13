@@ -17,26 +17,16 @@ trait Http {
 
   implicit def ObjectOutputStreamResource = resource[ObjectOutputStream](_.close)
 
-  def readTokens(stream: FileInputStream) = {
-    val eval = { stream: ObjectInputStream =>
-      stream.readObject.asInstanceOf[Tokens]
-    }
-    withResource(new ObjectInputStream(stream), eval)
-  }
+  def readTokens(stream: FileInputStream): Tokens = withResource(new ObjectInputStream(stream), (_: ObjectInputStream).readObject.asInstanceOf[Tokens])
 
   def readTokens(file: File): Tokens = readTokens(new FileInputStream(file))
 
   def readTokens(name: String): Tokens = readTokens(new FileInputStream(name))
 
-  def writeTokens(stream: FileOutputStream)(tokens: Tokens) {
-    val eval = { stream: ObjectOutputStream =>
-      stream.writeObject(tokens)
-    }
-    withResource(new ObjectOutputStream(stream), eval)
-  }
+  def writeTokens(stream: FileOutputStream): Tokens => Unit = (tokens: Tokens) => withResource(new ObjectOutputStream(stream), (_: ObjectOutputStream).writeObject(tokens))
 
-  def writeTokens(file: File): Tokens => Unit = writeTokens(new FileOutputStream(file))_
+  def writeTokens(file: File): Tokens => Unit = writeTokens(new FileOutputStream(file))
 
-  def writeTokens(name: String): Tokens => Unit = writeTokens(new FileOutputStream(name))_
+  def writeTokens(name: String): Tokens => Unit = writeTokens(new FileOutputStream(name))
 
 }
