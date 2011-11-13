@@ -3,13 +3,22 @@ import scala.util.parsing.combinator._
 
 trait Generator extends RegexParsers {
 
+  type Result
+
+  def parser: Parser[Result]
+
+  def parseAll(f: File): Result = parseAll(parser, IO.read(f)) match {
+    case Success(result, _) => result
+    case Failure(msg, next) => sys.error("%s:%s:%s".format(f.name, msg, next.pos))
+  }
+
   def generate(dir: File, resource: File): Seq[File]
 
   def applyHead(f: Char => Char)(s: String) = f(s.head) + s.tail
 
-  val toUpperCamel = (_: String).split("_").map(applyHead(_.toUpper)).mkString
+  lazy val toUpperCamel = (_: String).split("_").map(applyHead(_.toUpper)).mkString
     
-  val toLowerCamel = toUpperCamel.andThen(applyHead(_.toLower))
+  lazy val toLowerCamel = toUpperCamel andThen applyHead(_.toLower)
 
   def write(file: File, source: String) = {
     IO.write(file, source)
@@ -17,10 +26,7 @@ trait Generator extends RegexParsers {
   }
 
   val fileFilter = new FileFilter {
-    val Regex = """.*~""".r
-    def accept(pathname: File) = !(PartialFunction.cond(pathname.name) {
-      case Regex() => true
-    })
+    def accept(pathname: File) = !pathname.name.endsWith("~")
   }
 
   def listFiles(resource: File) = IO.listFiles(resource, fileFilter)
@@ -31,9 +37,9 @@ trait Generator extends RegexParsers {
 
   def name = """[a-zA-Z]+""".r
 
-  def typo = """[a-zA-Z\[\]]+""".r
+  val Typo = """[a-zA-Z\[\]]+""".r
 
-  val Colon = ':'
+  val colon = ':'
 
   override def skipWhitespace: Boolean = false
 

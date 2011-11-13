@@ -2,8 +2,11 @@ package twitter4z
 
 import sbt._
 import Keys._
+import jline._
 
 object Twitter4zPlugin extends Plugin {
+
+  val reader = new ConsoleReader
 
   lazy val twitter4zSettings = Seq(
     accessTokenFile := file(".tokens"),
@@ -15,7 +18,15 @@ object Twitter4zPlugin extends Plugin {
       }
     },
     homeTimeline <<= useTokens { implicit tokens =>
-      Twitter4z.homeTimeline() foreach { _.foreach(status => println(status.user.screenName, status.text)) }
+      Twitter4z.homeTimeline() foreach { statuses =>
+	val size = statuses.map(_.user.screenName.size).max
+	def printline() = println("-" * reader.getTermwidth)
+        printline()
+        statuses foreach { status =>
+	  println(("| %" + -size + "s | %s").format(status.user.screenName, status.text))
+	  printline()
+        }
+      }
     },
     updateStatus <<= useTokens { implicit tokens =>
       SimpleReader.readLine("status> ") foreach { status =>

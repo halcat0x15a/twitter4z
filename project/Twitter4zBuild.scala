@@ -11,6 +11,10 @@ object Dependencies {
 
   val jsonExt = "net.liftweb" %% "lift-json-ext" % "2.4-M4"
 
+  val specs = "org.specs2" %% "specs2" % "1.6.1"
+
+  val specsScalaz = "org.specs2" %% "specs2-scalaz-core" % "6.0.1" % "test"
+
 }
 
 object Twitter4zBuild extends Build {

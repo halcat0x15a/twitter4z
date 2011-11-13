@@ -2,16 +2,18 @@ import sbt._
 
 object ObjectsGenerator extends Generator {
 
-  def parser = rep((Key <~ Colon) ~ typo <~ eol)
+  type Result = List[String ~ String]
+
+  def parser = rep((Key <~ colon) ~ Typo <~ eol)
 
   def generate(dir: File, resource: File): Seq[File] = listFiles(resource / "objects") map { f =>
     val name = toUpperCamel(f.name)
-    val pairs = parseAll(parser, IO.read(f)).getOrElse(throw new Exception("Objects"))
+    val pairs = parseAll(f)
     val fields = pairs map {
       case name ~ typo => "  %s: %s".format(toLowerCamel(name), typo)
     } mkString(",\n")
     val method = pairs.size match {
-      case n if n > 12 =>""
+      case n if n > 12 => ""
       case n if n > 8 => ""
       case _ => {
 	val args = pairs map {

@@ -2,13 +2,15 @@ import sbt._
 
 object ParametersGenerator extends Generator {
 
-  def parser = rep((Key <~ Colon) ~ typo ~ opt(Colon ~> typo) <~ eol)
+  type Result = List[String ~ String ~ Option[String]]
 
-  def parseParameters(resource: File) = parseAll(parser, IO.read(resource / "parameters")).getOrElse(throw new Exception("Parameter"))
+  def parser = rep((Key <~ colon) ~ Typo ~ opt(colon ~> Typo) <~ eol)
 
-  def parameterMap(resource: File) = parseParameters(resource) collect {
+  lazy val parseParameters = (resource: File) => parseAll(resource / "parameters")
+
+  lazy val parameterMap = parseParameters.andThen(_ collect {
     case key ~ _ ~ Some(name) => key -> name
-  } toMap
+  } toMap)
 
   def generate(dir: File, resource: File): Seq[File] = {
     val parameters = parseParameters(resource) map {
