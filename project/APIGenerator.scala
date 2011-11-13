@@ -40,7 +40,8 @@ object APIGenerator extends Generator {
 
   def generate(dir: File, resource: File): Seq[File] = {
     val parameters = ParametersGenerator.parameterMap(resource)
-    listFiles(resource / "api") map { f =>
+    def writeAPI(name: String, source:String) = write(dir / "twitter4z" / "api" / name, source)
+    val apis: Seq[File] = listFiles(resource / "api").toSeq map { f =>
       val name = toUpperCamel(f.name)
       val functions = parseAll(f) map {
 	case (name ~ typo) ~ (method ~ url) ~ auth ~ require ~ optional => {
@@ -107,8 +108,14 @@ trait %s { self: Http with Parameters =>
 %s
 }
 """.format(name, functions)
-      write(dir / "twitter4z" / "api" / (name + ".scala"), source)
+      writeAPI(name + ".scala", source)
     }
+    val source = """package twitter4z.api
+
+import twitter4z.http._
+
+trait APIs extends Parameters with %s { self: Http => }""".format(listFiles(resource / "api").map(f => toUpperCamel(f.name)).mkString(" with "))
+    apis :+ writeAPI("APIs.scala", source)
   }
 
 }

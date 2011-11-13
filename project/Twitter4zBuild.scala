@@ -44,7 +44,9 @@ object Twitter4zBuild extends Build {
 	scalaz,
 	scalaj,
 	jsonScalaz,
-	jsonExt
+	jsonExt,
+	specs,
+	specsScalaz
       ),
       sourceGenerators in Compile <+= (sourceManaged in Compile, resourceDirectory in Compile) map {
         case (dir, resource) => ObjectsGenerator.generate(dir, resource) ++ ParametersGenerator.generate(dir, resource) ++ APIGenerator.generate(dir, resource)

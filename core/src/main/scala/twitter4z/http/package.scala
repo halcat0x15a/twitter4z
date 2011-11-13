@@ -21,16 +21,7 @@ package object http {
 
   type Method = String => Request
 
-  def method(method: Method) = { url: String =>
-    val timeout = {
-      val timeout = for {
-	value <- sys.props.get("twitter4z.timeout")
-	timeout <- value.parseInt.toOption
-      } yield timeout
-      timeout | (1000 * 60)
-    }
-    method(url).options(HttpOptions.connTimeout(timeout), HttpOptions.readTimeout(timeout))
-  }
+  def method(method: Method) = (url: String) => (HttpOptions.connTimeout _ &&& HttpOptions.readTimeout _).apply((sys.props.get("twitter4z.timeout") >>= ((_: String).parseInt.toOption)) | (1000 * 60)).fold(method(url).options(_, _))
 
   val get = method(ScalajHttp.apply)
 
