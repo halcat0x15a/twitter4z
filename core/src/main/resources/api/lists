@@ -11,7 +11,7 @@ since_id,max_id,per_page,page,include_entities,include_rts
 destroyListMember:UserList
 POST lists/members/destroy
 Yes
-list_id|slug&owner_screen_name|owner_id,user_id|screen_name
+list_id|slug&owner_id|owner_screen_name,user_id|screen_name
 
 memberships:UserLists
 GET lists/memberships

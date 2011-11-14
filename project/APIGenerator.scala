@@ -2,41 +2,9 @@ import sbt._
 
 object APIGenerator extends Generator {
 
-  val Url = """[a-z_/]+""".r
-
-  val ValidUrl = """http.+""".r
-
-  def resourceUrl = (ValidUrl | Url) ~ opt(colon ~> Key) ~ opt(Url)
-
-  val APIParameter = """[a-z_\|\&]+""".r
-
-  val comma = ','
-
-  val Yes = """Yes""".r
-
-  val Supported = """Supported""".r
-
-  val No = """No""".r
-
-  val Get = "GET".r
-
-  val Post = "POST".r
-
-  def method = Get | Post
-
-  def auth = Yes | Supported | No
-
-  val space = ' '
-
   type Result = List[(String ~ String) ~ (String ~ (String ~ Option[String] ~ Option[String])) ~ String ~ List[String] ~ List[String]]
 
-  def parameterParser = repsep(APIParameter, comma) <~ eol
-
-  def parser = rep(((name <~ colon) ~ Typo <~ eol) ~ ((method <~ space) ~ resourceUrl <~ eol) ~ (auth <~ eol) ~ parameterParser ~ parameterParser)
-
-  val Or = """(.+?)\|(.+)""".r
-
-  val And = """(.+?)\&(.+)""".r
+  def parser = rep(((name <~ colon) ~ Typo <~ eol) ~ ((method <~ space) ~ resourceUrl <~ eol) ~ (auth <~ eol) ~ (parameters <~ eol) ~ (parameters <~ eol))
 
   def generate(dir: File, resource: File): Seq[File] = {
     val parameters = ParametersGenerator.parameterMap(resource)

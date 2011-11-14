@@ -51,6 +51,9 @@ object Twitter4zBuild extends Build {
       sourceGenerators in Compile <+= (sourceManaged in Compile, resourceDirectory in Compile) map {
         case (dir, resource) => ObjectsGenerator.generate(dir, resource) ++ ParametersGenerator.generate(dir, resource) ++ APIGenerator.generate(dir, resource)
       },
+      sourceGenerators in Test <+= (sourceManaged in Test, resourceDirectory in Compile) map {
+        case (dir, resource) => SpecsGenerator.generate(dir, resource)
+      },
       excludeFilter in unmanagedResources := "parameters"
     )
   )

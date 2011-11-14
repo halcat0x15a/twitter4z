@@ -1,8 +1,8 @@
 favorites:List[StatusObject]
 GET favorites
 Yes
-user_id|screen_name,since_id,page,include_entities
-
+user_id|screen_name
+since_id,page,include_entities
 createFavorite:StatusObject
 POST favorites/create/:id
 Yes

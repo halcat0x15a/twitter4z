@@ -41,6 +41,38 @@ trait Generator extends RegexParsers {
 
   val colon = ':'
 
+  val Url = """[a-z_/]+""".r
+
+  val ValidUrl = """http.+""".r
+
+  def resourceUrl = (ValidUrl | Url) ~ opt(colon ~> Key) ~ opt(Url)
+
+  val APIParameter = """[a-z_\|\&]+""".r
+
+  val comma = ','
+
+  val Yes = """Yes""".r
+
+  val Supported = """Supported""".r
+
+  val No = """No""".r
+
+  val Get = "GET".r
+
+  val Post = "POST".r
+
+  def method = Get | Post
+
+  def auth = Yes | Supported | No
+
+  val space = ' '
+
+  def parameters = repsep(APIParameter, comma)
+
+  val Or = """(.+?)\|(.+)""".r
+
+  val And = """(.+?)\&(.+)""".r
+
   override def skipWhitespace: Boolean = false
 
 }
