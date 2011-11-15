@@ -1,6 +1,5 @@
 package twitter4z
 
-import java.io._
 import org.joda.time.format._
 import scalaz._
 import Scalaz._
@@ -152,7 +151,5 @@ package object json {
       case x => UnexpectedJSONError(x, classOf[JString]).fail.liftFailNel
     }
   }
-
-  def parse(input: InputStream) = JsonParser.parse(new InputStreamReader(input))
 
 }
