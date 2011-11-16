@@ -1,3 +1,3 @@
-seq(twitter4zSettings: _*)
+//seq(twitter4zSettings: _*)
 
-accessTokenFile := file("hoge")
+//accessTokenFile := file("hoge")
