@@ -33,7 +33,8 @@ trait Generator extends RegexParsers {
 
   def eol = opt('\r') <~ '\n'
 
-  val Key = """[a-z_]+""".r
+  // """[a-z_]+""".r
+  val Key = """[a-z_A-Z]+""".r
 
   def name = """[a-zA-Z]+""".r
 

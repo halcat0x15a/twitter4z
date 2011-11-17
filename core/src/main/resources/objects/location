@@ -1,0 +1,6 @@
+name:String
+woeid:Int
+placeType:PlaceType
+country:String
+url:String
+countryCode:String

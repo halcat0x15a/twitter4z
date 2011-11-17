@@ -1,0 +1,7 @@
+sleep_time:SleepTime
+trend_location:Location
+language:String
+always_use_https:Boolean
+discoverable_by_email:Boolean
+time_zone:TimeZone
+geo_enabled:Boolean

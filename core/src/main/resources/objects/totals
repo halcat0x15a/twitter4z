@@ -1,0 +1,4 @@
+friends:Int
+updates:Int
+followers:Int
+favorites:Int
