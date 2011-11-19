@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
-        <title>twitter4z/objects/Coordinates.scala</title>
+        <title>twitter4z/objects/UserLists.scala</title>
         <script type="text/javascript" src="../../jquery-all.js"></script>
         <script type="text/javascript" src="../../linked.js"></script>
         <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
@@ -12,9 +12,10 @@
         <pre>
 <span class="keyword">package</span> twitter4z.objects
 
-case <span class="keyword">class</span> <a title="class Coordinates extends java.lang.Object with ScalaObject with Product with Serializable" id="85472">Coordinates</a><a href="#85472" title="ScalaObject" class="delimiter">(</a>
-  <a title="(Double, Double)" id="60924">coordinates</a>: <span title="(Double, Double)" class="delimiter">(</span>Double, Double<span class="delimiter">)</span>,
-  <a title="String" id="60925">coordinatesType</a>: <span title="String">String</span>
+case <span class="keyword">class</span> <a title="class UserLists extends java.lang.Object with ScalaObject with Product with Serializable" id="88949">UserLists</a><a href="#88949" title="ScalaObject" class="delimiter">(</a>
+  <a title="List[twitter4z.objects.UserList]" id="60883">lists</a>: <span title="List[twitter4z.objects.UserList]">List</span><span class="delimiter">[</span>UserList<span class="delimiter">]</span>,
+  <a title="Long" id="60884">nextCursor</a>: <span title="Long">Long</span>,
+  <a title="Long" id="60885">previousCursor</a>: <span title="Long">Long</span>
 <span class="delimiter">)</span>
 
         </pre>

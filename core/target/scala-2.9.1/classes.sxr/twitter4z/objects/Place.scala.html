@@ -12,27 +12,31 @@
         <pre>
 <span class="keyword">package</span> twitter4z.objects
 
-<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait PlaceType extends java.lang.Object" id="9611">PlaceType</a>
-
-case <span class="keyword">object</span> <a href="#76326" title="object twitter4z.objects.Poi" id="76331">Poi</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9611" title="twitter4z.objects.PlaceType">PlaceType</a>
-
-case <span class="keyword">object</span> <a href="#76338" title="object twitter4z.objects.Neighborhood" id="76343">Neighborhood</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9611" title="twitter4z.objects.PlaceType">PlaceType</a>
-
-case <span class="keyword">object</span> <a href="#76350" title="object twitter4z.objects.City" id="76355">City</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9611" title="twitter4z.objects.PlaceType">PlaceType</a>
-
-case <span class="keyword">object</span> <a href="#76362" title="object twitter4z.objects.Admin" id="76367">Admin</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9611" title="twitter4z.objects.PlaceType">PlaceType</a>
-
-case <span class="keyword">object</span> <a href="#76374" title="object twitter4z.objects.Country" id="76379">Country</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9611" title="twitter4z.objects.PlaceType">PlaceType</a>
-
-case <span class="keyword">class</span> <a title="class Place extends java.lang.Object with ScalaObject with Product with Serializable" id="76519">Place</a><a href="#76519" title="ScalaObject" class="delimiter">(</a>
-  <a title="String" id="53540">country</a>: <span title="String">String</span>,
-  <a title="String" id="53541">countryCode</a>: <span title="String">String</span>,
-  <a title="String" id="53542">fullName</a>: <span title="String">String</span>,
-  <a title="String" id="53543">id</a>: <span title="String">String</span>,
-  <a title="String" id="53544">name</a>: <span title="String">String</span>,
-  <a title="twitter4z.objects.PlaceType" id="53545">placeType</a>: <a href="#9611" title="twitter4z.objects.PlaceType">PlaceType</a>,
-  <a title="twitter4z.objects.package.URL" id="53546">url</a>: <span title="twitter4z.objects.package.URL">URL</span>
+case <span class="keyword">class</span> <a title="class Place extends java.lang.Object with ScalaObject with Product with Serializable" id="64599">Place</a><a href="#64599" title="ScalaObject" class="delimiter">(</a>
+  <a title="String" id="64636">country</a>: <span title="String">String</span>,
+  <a title="String" id="64637">countryCode</a>: <span title="String">String</span>,
+  <a title="String" id="64638">fullName</a>: <span title="String">String</span>,
+  <a title="String" id="64639">id</a>: <span title="String">String</span>,
+  <a title="String" id="64640">name</a>: <span title="String">String</span>,
+  <a title="twitter4z.objects.Place.Type" id="64641">placeType</a>: Place.<a href="#64588" title="twitter4z.objects.Place.Type">Type</a>,
+  <a title="twitter4z.objects.package.URL" id="64642">url</a>: <span title="twitter4z.objects.package.URL">URL</span>
 <span class="delimiter">)</span>
+
+<span class="keyword">object</span> <a title="object twitter4z.objects.Place" id="86598">Place</a> <span title="ScalaObject" class="delimiter">{</span>
+  
+  <span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Type extends java.lang.Object" id="64588">Type</a>
+
+  case <span class="keyword">object</span> <a href="#86544" title="object twitter4z.objects.Place.Poi" id="86549">Poi</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#64588" title="twitter4z.objects.Place.Type">Type</a>
+
+  case <span class="keyword">object</span> <a href="#86556" title="object twitter4z.objects.Place.Neighborhood" id="86561">Neighborhood</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#64588" title="twitter4z.objects.Place.Type">Type</a>
+
+  case <span class="keyword">object</span> <a href="#86568" title="object twitter4z.objects.Place.City" id="86573">City</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#64588" title="twitter4z.objects.Place.Type">Type</a>
+
+  case <span class="keyword">object</span> <a href="#86580" title="object twitter4z.objects.Place.Admin" id="86585">Admin</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#64588" title="twitter4z.objects.Place.Type">Type</a>
+
+  case <span class="keyword">object</span> <a href="#86592" title="object twitter4z.objects.Place.Country" id="86597">Country</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#64588" title="twitter4z.objects.Place.Type">Type</a>
+
+<span class="delimiter">}</span>
 
         </pre>
     </body>

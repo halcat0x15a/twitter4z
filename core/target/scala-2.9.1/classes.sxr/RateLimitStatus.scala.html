@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>RateLimitStatus.scala</title>
+        <script type="text/javascript" src="jquery-all.js"></script>
+        <script type="text/javascript" src="linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.objects
+
+<span class="keyword">import</span> net.liftweb.json.scalaz.<span title="object net.liftweb.json.scalaz.JsonScalaz">JsonScalaz</span>._
+
+case <span class="keyword">class</span> <a title="class RateLimitStatus extends java.lang.Object with ScalaObject with Product with Serializable" id="89203">RateLimitStatus</a><a href="#89203" title="ScalaObject" class="delimiter">(</a>
+  <a title="Int" id="109393">remainingHits</a>: <span title="Int">Int</span>,
+  <a title="Long" id="109394">resetTimeInSeconds</a>: <span title="Long">Long</span>,
+  <a title="Int" id="109395">hourlyLimit</a>: <span title="Int">Int</span>,
+  <a title="Int" id="109396">resetTime</a>: <span title="Int">Int</span>
+<span class="delimiter">)</span>
+
+<span class="keyword">object</span> <a title="object twitter4z.objects.RateLimitStatus" id="109811">RateLimitStatus</a> <span title="ScalaObject" class="delimiter">{</span>
+  <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="=&gt; net.liftweb.json.scalaz.JsonScalaz.JSONR[twitter4z.objects.RateLimitStatus]" id="89202">RateLimitStatusJSONR</a>: <span title="net.liftweb.json.scalaz.JsonScalaz.JSONR[twitter4z.objects.RateLimitStatus]">JSONR</span><span class="delimiter">[</span>RateLimitStatus<span class="delimiter">]</span> = <span class="delimiter">(</span><a href="#109811" title="object twitter4z.objects.RateLimitStatus">RateLimitStatus</a>.<a href="#89203" title="(z: (Int, Long, Int, Int) =&gt; twitter4z.objects.RateLimitStatus)(implicit evidence$6: net.liftweb.json.scalaz.JsonScalaz.JSONR[Int], implicit evidence$7: net.liftweb.json.scalaz.JsonScalaz.JSONR[Long], implicit evidence$8: net.liftweb.json.scalaz.JsonScalaz.JSONR[Int], implicit evidence$9: net.liftweb.json.scalaz.JsonScalaz.JSONR[Int])java.lang.Object{def applyJSON(a: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Int],b: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Long],c: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Int],d: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Int]): net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[twitter4z.objects.RateLimitStatus]}">apply</a> _<span class="delimiter">)</span>.<span title="(a: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Int], b: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Long], c: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Int], d: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[Int])net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[twitter4z.objects.RateLimitStatus]">applyJSON</span><span title="(f: net.liftweb.json.package.JValue =&gt; net.liftweb.json.scalaz.JsonScalaz.Result[twitter4z.objects.RateLimitStatus])net.liftweb.json.scalaz.JsonScalaz.JSONR[twitter4z.objects.RateLimitStatus]" class="delimiter">(</span><span title="(name: String)(json: net.liftweb.json.package.JValue)(implicit evidence$3: net.liftweb.json.scalaz.JsonScalaz.JSONR[Int])net.liftweb.json.scalaz.JsonScalaz.Result[Int]">field</span><a href="#109688" title="net.liftweb.json.package.JValue" class="delimiter">(</a><span title="java.lang.String(&quot;remaining_hits&quot;)" class="string">&quot;remaining_hits&quot;</span><span class="delimiter">)</span>, <span title="(name: String)(json: net.liftweb.json.package.JValue)(implicit evidence$3: net.liftweb.json.scalaz.JsonScalaz.JSONR[Long])net.liftweb.json.scalaz.JsonScalaz.Result[Long]">field</span><a href="#109719" title="net.liftweb.json.package.JValue" class="delimiter">(</a><span title="java.lang.String(&quot;reset_time_in_seconds&quot;)" class="string">&quot;reset_time_in_seconds&quot;</span><span class="delimiter">)</span>, <span title="(name: String)(json: net.liftweb.json.package.JValue)(implicit evidence$3: net.liftweb.json.scalaz.JsonScalaz.JSONR[Int])net.liftweb.json.scalaz.JsonScalaz.Result[Int]">field</span><a href="#109750" title="net.liftweb.json.package.JValue" class="delimiter">(</a><span title="java.lang.String(&quot;hourly_limit&quot;)" class="string">&quot;hourly_limit&quot;</span><span class="delimiter">)</span>, <span title="(name: String)(json: net.liftweb.json.package.JValue)(implicit evidence$3: net.liftweb.json.scalaz.JsonScalaz.JSONR[Int])net.liftweb.json.scalaz.JsonScalaz.Result[Int]">field</span><a href="#109781" title="net.liftweb.json.package.JValue" class="delimiter">(</a><span title="java.lang.String(&quot;reset_time&quot;)" class="string">&quot;reset_time&quot;</span><span class="delimiter">)</span><span class="delimiter">)</span>
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>
