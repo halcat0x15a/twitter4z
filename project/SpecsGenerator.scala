@@ -28,7 +28,7 @@ object SpecsGenerator extends Generator {
 
 import org.specs2.mutable._
 
-import twitter4z.Twitter4z._
+import twitter4z.Twitter._
 
 class %sSpec extends Specification {
 

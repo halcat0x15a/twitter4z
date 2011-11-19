@@ -19,12 +19,12 @@ package object json {
 
   implicit def EntitiesJSONR = JSONR[Entities]((Entities.apply _).applyJSON(field("urls"), field("user_mentions"), field("hashtags")))
 
-  implicit def PlaceTypeJSONR = jsonr[PlaceType] {
-    case "poi" => Poi
-    case "neighborhood" => Neighborhood
-    case "city" => City
-    case "admin" => Admin
-    case "country" => Country
+  implicit def PlaceTypeJSONR = jsonr[Place.Type] {
+    case "poi" => Place.Poi
+    case "neighborhood" => Place.Neighborhood
+    case "city" => Place.City
+    case "admin" => Place.Admin
+    case "country" => Place.Country
   }
 
   implicit def PlaceJSONR = JSONR[Place]((Place.apply _).applyJSON(field("country"), field("country_code"), field("full_name"), field("id"), field("name"), field("place_type"), field("url")))

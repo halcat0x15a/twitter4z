@@ -4,4 +4,4 @@ import scalaz._
 import Scalaz._
 import net.liftweb.json.scalaz.JsonScalaz._
 
-case class TwitterResponse[A](value: Result[A], rateLimit: RateLimit.Result) extends NewType[Result[A]]
+case class TwitterResponse[A](value: A, rateLimit: RateLimit) extends NewType[A]

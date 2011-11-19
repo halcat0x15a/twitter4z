@@ -16,8 +16,8 @@ object ParametersGenerator extends Generator {
     val parameters = parseParameters(resource) map {
       case key ~ typo ~ optName => {
 	val name = optName.getOrElse(toUpperCamel(key))
-	"""case class %s(_1: %s) extends AbstractParameter[%s]("%s")
-implicit def Wrap%s(value: %s) = %s(value)""".format(name, typo, typo, key, name, typo, name)
+	"""  case class %s(_1: %s) extends AbstractParameter[%s]("%s")
+  implicit def Wrap%s(value: %s) = %s(value)""".format(name, typo, typo, key, name, typo, name)
       }
     } mkString("\n")
     val source = """package twitter4z.api

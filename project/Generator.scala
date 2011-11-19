@@ -3,6 +3,10 @@ import scala.util.parsing.combinator._
 
 trait Generator extends RegexParsers {
 
+  lazy val toUpperCamel = (_: String).split("_").map(applyHead(_.toUpper)).mkString
+    
+  lazy val toLowerCamel = toUpperCamel andThen applyHead(_.toLower)
+
   type Result
 
   def parser: Parser[Result]
@@ -15,10 +19,6 @@ trait Generator extends RegexParsers {
   def generate(dir: File, resource: File): Seq[File]
 
   def applyHead(f: Char => Char)(s: String) = f(s.head) + s.tail
-
-  lazy val toUpperCamel = (_: String).split("_").map(applyHead(_.toUpper)).mkString
-    
-  lazy val toLowerCamel = toUpperCamel andThen applyHead(_.toLower)
 
   def write(file: File, source: String) = {
     IO.write(file, source)

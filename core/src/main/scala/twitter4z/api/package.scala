@@ -17,12 +17,15 @@ package object api {
 
   type DirectMessage = twitter4z.objects.DirectMessage
 
-  type HttpURLConnection = java.net.HttpURLConnection
-
   def parseJson(input: InputStream): JValue = JsonParser.parse(new InputStreamReader(input))
 
-  def parse[A: JSONR](conn: HttpURLConnection): Result[A] = fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))
+  import Validation.Monad._
 
-  def resource[A: JSONR](method: Method, url: String, tokens: OptionTokens, optionalParameters: Seq[Parameter]*): TwitterResponse[A] = (TwitterResponse.apply[A] _).tupled(optOAuth(method(url).params(optionalParameters.flatten.withFilter(null !=).map(_.value): _*))(tokens).process(parse[A] _ &&& RateLimit.apply _))
+  type TwitterResult[A] = TwitterValidation[TwitterResponse[A]]
+
+  def parse[A: JSONR](conn: HttpURLConnection): TwitterResult[A] = (TwitterValidation(fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))) <**> TwitterValidation(RateLimit(conn)))(TwitterResponse.apply)
+
+  def resource[A: JSONR](method: Method, url: String, tokens: OptionTokens, parameters: Seq[Parameter]*) = optOAuth(method(url).params(parameters.flatten.withFilter(null !=).map(_.value): _*))(tokens).processValidation(parse[A]).join
+    
 
 }

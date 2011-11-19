@@ -6,10 +6,8 @@ A Scalaz wrapper for Twitter API.
 
 ## Usage
 
-    scala> import twitter4z._
+    scala> import twitter4z.Twitter._
 
-    scala> import Twitter4z._
-    
     scala> publicTimeline()
 
 ## Authorization
