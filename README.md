@@ -18,17 +18,17 @@ A Scalaz wrapper for Twitter API.
     
     scala> implicit val atoken = accessToken(rtoken, "XXXXXXX")
     
-    scala> update("Twitter4z!")
+    scala> updateStatus("Twitter4z!")
 
 ## Read & Write
     
-    scala> atoken.write("hoge")
+    scala> writeTokens(atoken("hoge"))
     
     scala> implicit val atoken = readTokens("hoge")
 
 ## Option
 
-    scala> homeTimeline(page = 2, count = 50)
+    scala> homeTimeline(page=2, count=50)
 
 # Source
 
