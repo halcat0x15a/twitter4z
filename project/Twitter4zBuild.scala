@@ -15,6 +15,8 @@ object Dependencies {
 
   val specsScalaz = "org.specs2" %% "specs2-scalaz-core" % "6.0.1" % "test"
 
+  val swing = "org.scala-lang" % "scala-swing" % "2.9.1"
+
 }
 
 object Twitter4zBuild extends Build {
@@ -63,6 +65,14 @@ object Twitter4zBuild extends Build {
     file("plugin"),
     settings = buildSettings ++ Seq(
       sbtPlugin := true
+    )
+  ) dependsOn (core)
+
+  lazy val tetris = Project(
+    "twitter4z-tetris",
+    file("tetris"),
+    settings = buildSettings ++ Seq(
+      libraryDependencies += swing
     )
   ) dependsOn (core)
 
