@@ -1,13 +1,38 @@
 package twitter4z.tetris
 
+import scalaz._
+import Scalaz._
+
 sealed trait Tetrimino {
 
-  type Coord = (Int, Int)
+  val image: Image
 
-  val coords: (Coord, Coord, Coord, Coord)
+  val model: Coords
+
+  lazy val width: Int = model.toIndexedSeq
+
+  lazy val coords: Coords = model.whileDo(_.right, _.toIndexedSeq.foldMap(_._1) === Column
+
+  def apply(newCoords: Coords) = new Tetrimino {
+    val coords = newCoords
+  }
+
+  private def move(f: Coord => Coord): Tetrimino = apply(coords.mapElements(f, f, f, f))
+
+  def left = move(((_: Int) - 1).first)
+
+  def right = move(((_: Int) + 1).first)
+
+  def down = move(((_: Int) + 1).second)
+
+  def blocks: List[Block] = coords.toIndexedSeq.map(Blcok(image, _))
 
 }
+@@@****@@@
+@@@@@@@@@@
 
+@@@**@@@@@
+@@@@**@@@@
 case object I extends Tetrimino {
 
   val coords = ((0, 0), (1, 0), (2, 0), (3, 0))

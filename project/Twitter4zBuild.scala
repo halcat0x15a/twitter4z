@@ -17,6 +17,8 @@ object Dependencies {
 
   val swing = "org.scala-lang" % "scala-swing" % "2.9.1"
 
+  val stm = "org.scala-tools" %% "scala-stm" % "0.4"
+
 }
 
 object Twitter4zBuild extends Build {
@@ -72,7 +74,10 @@ object Twitter4zBuild extends Build {
     "twitter4z-tetris",
     file("tetris"),
     settings = buildSettings ++ Seq(
-      libraryDependencies += swing
+      libraryDependencies ++= Seq(
+	swing,
+	stm
+      )
     )
   ) dependsOn (core)
 
