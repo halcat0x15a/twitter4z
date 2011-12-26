@@ -1,14 +1,17 @@
 package twitter4z.tetris
 
 import java.awt.Color._
+import javax.imageio.ImageIO
 import swing._
 import event._
 import concurrent.stm._
 import scalaz._
 import Scalaz._
 
-object Tetris extends SimpleSwingApplication {
+import twitter4z.Twitter._
 
+object Tetris extends SimpleSwingApplication {
+/*
   lazy val blocks: Ref[List[Block]] = Ref(EmptyField)
 
   lazy val tetrimino: Ref[Option[Tetrimino]] = Ref(None)
@@ -40,42 +43,36 @@ object Tetris extends SimpleSwingApplication {
       }
     }
   }
-
-  lazy val panel: Panel = new Panel {
+*/
+  lazy val panel = new Panel {
     focusable = true
     preferredSize = new Dimension(Width, Height)
     override def paint(g: Graphics2D): Unit = {
-      for {
-	i <- 0 until Row
-	j <- 0 until Column
-      } {
-	val x = Size * j
-	val y = Size * i
-	field.single()(i)(j) match {
-	  case ImageBlock(image) => {
-	    g.drawImage(image, x, y, x + Size, y + Size, top.peer)
-	  }
-	  case EmptyBlock => {
-	    g.setColor(BLACK)
-	    g.drawRect(x, y, x + Size, y + Size)
-	  }
-	}
-      }
     }
     listenTo(keys)
     reactions += {
       case KeyPressed(_, key, _, _) => {
-	fieldWorker ! key
+	key match {
+	  case Key.Escape => quit()
+	}
       }
     }
   }
 
-  lazy val repaintWorker: SwingWorker = new SwingWorker {
+  lazy val mainWorker: SwingWorker = new SwingWorker {
     def act(): Unit = {
       val fps = 1000 / 60
-      loop {
+      @annotation.tailrec
+      def loop(icons: List[Image]): Unit = {
 	panel.repaint()
 	Thread.sleep(fps)
+	loop(icons)
+      }
+      for {
+	statuses <- publicTimeline()
+	// statuses.value.map(_.user.profile.imageURL).parMap(ImageIO.read)
+      } yield {
+	statuses.value.map(_.user.profile.imageURL).parMap(ImageIO.read)
       }
     }
   }
@@ -83,9 +80,7 @@ object Tetris extends SimpleSwingApplication {
   def top = new MainFrame {
     resizable = false
     contents = panel
-    Dialog.showInput(null, "PIN Code", "Auth", Dialog.Message.Plain, null, Seq.empty, "")
-    fieldWorker.start()
-    repaintWorker.start()
+    mainWorker.start()
   }
 
 }

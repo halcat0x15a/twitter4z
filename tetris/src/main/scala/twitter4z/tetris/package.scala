@@ -1,11 +1,11 @@
-package twitter4z\
+package twitter4z
 
 import scalaz._
 import Scalaz._
 
 package object tetris {
 
-  type Field = List[List[Block]]
+//  type Field = List[List[Block]]
 
   type Coord = (Int, Int)
 
@@ -23,6 +23,7 @@ package object tetris {
 
   val Height = Row * Size
 
-  val EmptyField: Field = List.fill(Row, Column)(EmptyBlock)
+//  val EmptyField: Field = List.fill(Row, Column)(EmptyBlock)
 
 }
+

@@ -48,13 +48,13 @@ object APIGenerator extends Generator {
 	    case s => {
 	      val typo = s match {
 		case Yes() => "Tokens"
-		case Supported() => "OptionTokens"
+		case Supported() => "Option[Tokens]"
 	      }
 	      "(implicit tokens: %s)".format(typo)
 	    }
 	  }
 	  val tokensArg = auth match {
-	    case No() => "NoneTokens"
+	    case No() => "None"
 	    case _ => "tokens"
 	  }
 	  val urlString = url match {
