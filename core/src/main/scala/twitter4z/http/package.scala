@@ -10,7 +10,7 @@ package object http {
 
   type Token = scalaj.http.Token
 
-  type Method = String => Request
+  type Method = Kleisli[Promise, String, Request]
 
   def Token(key: String, secret: String) = scalaj.http.Token(key, secret)
 
