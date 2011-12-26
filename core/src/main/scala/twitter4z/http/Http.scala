@@ -1,9 +1,12 @@
 package twitter4z.http
 
 import java.io._
+
+import scalaj.http.{ Http => ScalajHttp, _ }
+
 import scalaz._
 import Scalaz._
-import scalaj.http.{ Http => ScalajHttp, _ }
+import scalaz.concurrent._
 
 trait Http {
 

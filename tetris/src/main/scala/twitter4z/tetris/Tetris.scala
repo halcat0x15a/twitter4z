@@ -70,10 +70,7 @@ object Tetris extends SimpleSwingApplication {
       }
       for {
 	statuses <- publicTimeline()
-	icons <- statuses.map(_.user.profile.imageURL).parMap(ImageIO.read(_))
-      } yield {
-	statuses.value.map(_.user.profile.imageURL).parMap(ImageIO.read)
-      }
+      } yield statuses.map(_.user.profile.imageURL).map(ImageIO.read(_))
     }
   }
 

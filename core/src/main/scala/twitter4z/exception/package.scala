@@ -5,6 +5,8 @@ import Scalaz._
 
 package object exception {
 
-  type TwitterResult[A] = ValidationNEL[TwitterException, A]
+  type TwitterExceptions = NonEmptyList[TwitterException]
+
+  type TwitterResult[A] = Validation[TwitterExceptions, A]
 
 }
