@@ -10,10 +10,12 @@ package object http {
 
   type Token = scalaj.http.Token
 
-  type Method = Kleisli[Promise, String, Request]
+  type Method = String => Request
 
   def Token(key: String, secret: String) = scalaj.http.Token(key, secret)
 
   implicit def ToTwitterRequest(value: Request) = TwitterRequest(value)
+
+  type TwitterAPIResult[A] = TwitterResult[TwitterResponse[A]]
 
 }

@@ -1,7 +1,7 @@
-package twitter4z.api
+package twitter4z
 
 import scalaz._
 import Scalaz._
-import net.liftweb.json.scalaz.JsonScalaz._
+import twitter4z.api.RateLimit
 
 case class TwitterResponse[A](value: A, rateLimit: RateLimit) extends NewType[A]

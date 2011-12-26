@@ -10,8 +10,14 @@ case class RateLimit(limit: Int, remaining: Int, reset: Long)
 
 object RateLimit {
 
-  type Result = ValidationNEL[NumberFormatException, RateLimit]
+  type Result[A] = ValidationNEL[NumberFormatException, A]
 
-  def apply(conn: HttpURLConnection): Result = (conn.getHeaderField("X-RateLimit-Limit").parseInt.liftFailNel <***> (conn.getHeaderField("X-RateLimit-Remaining").parseInt.liftFailNel, conn.getHeaderField("X-RateLimit-Reset").parseLong.liftFailNel))(RateLimit.apply)//.fail.map2(TwitterNumberFormatException).validation
+  lazy val limit: HttpURLConnection => Result[Int] = _.getHeaderField("X-RateLimit-Limit").parseInt.liftFailNel
+
+  lazy val remaining: HttpURLConnection => Result[Int] = _.getHeaderField("X-RateLimit-Remaining").parseInt.liftFailNel
+
+  lazy val reset: HttpURLConnection => Result[Long] = _.getHeaderField("X-RateLimit-Reset").parseLong.liftFailNel
+
+  def apply(conn: HttpURLConnection): Result[RateLimit] = (limit(conn) <***> (remaining(conn), reset(conn)))(RateLimit.apply)
 
 }

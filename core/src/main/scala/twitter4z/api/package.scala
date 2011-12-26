@@ -21,11 +21,9 @@ package object api {
 
   def parseJson(input: InputStream): JValue = JsonParser.parse(new InputStreamReader(input))
 
-  type TwitterAPIResult[A] = TwitterResult[TwitterResponse[A]]
-
   def parse[A: JsonScalaz.JSONR](conn: HttpURLConnection): JsonScalaz.Result[A] = JsonScalaz.fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))//.fail.map2(TwitterError).validation
 
-  def mapTwitterException[E, A](e: E => TwitterException): ValidationNEL[E, A] => TwitterResult[A] = _.fail.map2(e).validation
+  def mapTwitterException[E, A](twitterException: E => TwitterException): ValidationNEL[E, A] => TwitterResult[A] = _.fail.map2(twitterException).validation
 
   def twitterResult[A: JsonScalaz.JSONR] = mapTwitterException[JsonScalaz.Error, A](TwitterError) *** mapTwitterException[NumberFormatException, RateLimit](TwitterNumberFormatException)
 
@@ -33,6 +31,6 @@ package object api {
 
   def response[A: JsonScalaz.JSONR](conn: HttpURLConnection): TwitterAPIResult[A] = twitterResult.apply(twitterResponse.apply(conn)).fold(_.<**>(_)(TwitterResponse[A]))
 
-  def resource[A: JsonScalaz.JSONR](method: Method, url: String, tokens: Option[Tokens], parameters: Seq[Parameter]*) = method(url).params(parameters.flatten.withFilter(null !=).map(_.value): _*).oauth(tokens).processValidation(response[A]).join
+  def resource[A: JsonScalaz.JSONR](method: Method, url: String, tokens: Option[Tokens], parameters: Seq[Parameter]*): TwitterPromise[A] = TwitterPromise(method(url).params(parameters.flatten.withFilter(null !=).map(_.value): _*).oauth(tokens).processPromise(response[A]).map(_.join))
 
 }
