@@ -1,29 +1,27 @@
 package twitter4z
 
+import java.awt.Font
+
 import scalaz._
 import Scalaz._
 
 package object tetris {
 
-//  type Field = List[List[Block]]
-
-  type Coord = (Int, Int)
-
-  type Coords = (Coord, Coord, Coord, Coord)
-
-  type Image = java.awt.image.BufferedImage
-
-  val Row = 20
+  val Row = 15
 
   val Column = 10
 
-  val Size = 20
+  val Size = 48
 
   val Width = Column * Size
 
   val Height = Row * Size
 
-//  val EmptyField: Field = List.fill(Row, Column)(EmptyBlock)
+  val SleepTime = 1000
+
+  val FontSize = Size / 2
+
+  val DefaultFont: Font = new Font(Font.SANS_SERIF, Font.PLAIN, FontSize)
 
 }
 

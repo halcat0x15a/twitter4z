@@ -30,4 +30,8 @@ object TwitterPromise {
     }
   }
 
+  implicit def TwitterPromiseEach = new Each[TwitterPromise] {
+    def each[A](m: TwitterPromise[A], f: A => Unit): Unit = m.value |>| (_ |>| (_.value |> f))
+  }
+
 }
