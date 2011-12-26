@@ -8,7 +8,7 @@ import scalaz._
 import Scalaz._
 import scalaz.concurrent._
 
-import twitter4z.exception.{ TwitterResult, TwitterHttpException }
+import twitter4z.exception._
 
 case class TwitterRequest(value: ScalajHttp.Request) extends NewType[ScalajHttp.Request] {
 

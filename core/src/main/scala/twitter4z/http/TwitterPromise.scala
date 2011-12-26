@@ -4,7 +4,7 @@ import scalaz._
 import Scalaz._
 import scalaz.concurrent._
 
-import twitter4z.exception.TwitterExceptions
+import twitter4z.exception._
 
 case class TwitterPromise[A](value: Promise[TwitterAPIResult[A]]) extends NewType[Promise[TwitterAPIResult[A]]]
 
@@ -15,8 +15,8 @@ object TwitterPromise {
   implicit def TwitterPromiseFunctor = new Functor[TwitterPromise] {
     def fmap[A, B](m: TwitterPromise[A], f: A => B): TwitterPromise[B] = TwitterPromise {
       m.value.map {
-	case Success(a) => a.copy(value=f(a.value).value).success[TwitterExceptions]
-	case Failure(e) => e.fail[TwitterResponse[B]]
+	case Success(a) => a.copy(value=f(a.value).value).success
+	case Failure(e) => e.fail
       }
     }
   }

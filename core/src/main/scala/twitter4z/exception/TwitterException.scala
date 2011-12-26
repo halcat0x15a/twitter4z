@@ -8,6 +8,6 @@ sealed trait TwitterException
 
 case class TwitterHttpException(e: HttpException) extends TwitterException
 
-case class TwitterError(e: JsonScalaz.Error) extends TwitterException
+case class TwitterJsonError(e: JsonScalaz.Error) extends TwitterException
 
 case class TwitterNumberFormatException(e: NumberFormatException) extends TwitterException

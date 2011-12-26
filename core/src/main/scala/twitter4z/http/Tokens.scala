@@ -1,7 +1,5 @@
 package twitter4z.http
 
-import java.io._
-import scalaj.http._
 import scalaz._
 import Scalaz._
 

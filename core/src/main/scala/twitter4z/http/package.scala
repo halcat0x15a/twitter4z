@@ -5,15 +5,13 @@ import scalaj.http.Http.Request
 import scalaz._
 import Scalaz._
 
-import net.liftweb.json.scalaz.JsonScalaz._
-
-import twitter4z.exception.TwitterResult
+import twitter4z.exception._
 
 package object http {
 
-  type Token = scalaj.http.Token
-
   type Method = String => Request
+
+  type Token = scalaj.http.Token
 
   def Token(key: String, secret: String) = scalaj.http.Token(key, secret)
 

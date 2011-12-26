@@ -4,7 +4,6 @@ import java.net.HttpURLConnection
 import scalaz._
 import Scalaz._
 import twitter4z.exception.{ TwitterResult, TwitterNumberFormatException }
-import twitter4z.http._
 
 case class RateLimit(limit: Int, remaining: Int, reset: Long)
 
@@ -18,6 +17,8 @@ object RateLimit {
 
   lazy val reset: HttpURLConnection => Result[Long] = _.getHeaderField("X-RateLimit-Reset").parseLong.liftFailNel
 
-  def apply(conn: HttpURLConnection): Result[RateLimit] = (limit(conn) <***> (remaining(conn), reset(conn)))(RateLimit.apply)
+  lazy val fields = reset &&& (remaining &&& limit)
+
+  lazy val validation: HttpURLConnection => Result[RateLimit] = fields(_).fold(_ <*> _.fold(_ <*> _.map((RateLimit.apply _).curried)))
 
 }
