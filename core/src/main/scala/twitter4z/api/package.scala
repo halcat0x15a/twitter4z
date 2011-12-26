@@ -1,15 +1,21 @@
 package twitter4z
 
 import java.io.{ InputStream, InputStreamReader }
+
 import java.net.HttpURLConnection
+
 import scalaz._
 import Scalaz._
 import Validation.Monad._
+
 import scalaj.http.Http
+
 import net.liftweb.json.{ JValue, JsonParser }
 import net.liftweb.json.scalaz.JsonScalaz
+
 import http._
 import json._
+import twitter4z.exception.{ TwitterException, TwitterResult, TwitterError, TwitterNumberFormatException }
 
 package object api {
 

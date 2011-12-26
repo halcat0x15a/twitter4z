@@ -3,7 +3,7 @@ package twitter4z.api
 import java.net.HttpURLConnection
 import scalaz._
 import Scalaz._
-import twitter4z.{ TwitterResult, TwitterNumberFormatException }
+import twitter4z.exception.{ TwitterResult, TwitterNumberFormatException }
 import twitter4z.http._
 
 case class RateLimit(limit: Int, remaining: Int, reset: Long)

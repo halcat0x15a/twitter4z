@@ -1,12 +1,15 @@
 package twitter4z
 
+import scalaj.http.Http.Request
+
 import scalaz._
 import Scalaz._
+
 import net.liftweb.json.scalaz.JsonScalaz._
 
-package object http {
+import twitter4z.exception.TwitterResult
 
-  type Request = scalaj.http.Http.Request
+package object http {
 
   type Token = scalaj.http.Token
 
