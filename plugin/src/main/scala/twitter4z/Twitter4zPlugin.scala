@@ -18,7 +18,7 @@ object Twitter4zPlugin extends Plugin {
       }
     },
     homeTimeline <<= useTokens { implicit tokens =>
-      Twitter.homeTimeline() foreach { statuses =>
+      Twitter.homeTimeline().get foreach { statuses =>
 	val size = statuses.map(_.user.screenName.size).max
 	def printline() = println("-" * reader.getTermwidth)
         printline()
@@ -38,7 +38,7 @@ object Twitter4zPlugin extends Plugin {
 
   val consumer = http.Token("nT2Lqz8628ntJ2o8FD0Q", "YEyRv21aOormY5NByIn6FCSRGoNOjVDKdp1kjSQa4gs")
 
-  def useTokens[A](f: Twitter.Tokens => A) = accessTokenFile.map(file => f(Twitter.readTokens(file)))
+  def useTokens[A](f: http.Tokens => A) = accessTokenFile.map(file => f(Twitter.readTokens(file)))
 
   val accessTokenFile = SettingKey[File]("access-token-file")
 

@@ -19,12 +19,6 @@ import twitter4z.exception._
 
 package object api {
 
-  type StatusObject = twitter4z.objects.Status
-
-  type User = twitter4z.objects.User
-
-  type DirectMessage = twitter4z.objects.DirectMessage
-
   def parseJson(input: InputStream): JValue = JsonParser.parse(new InputStreamReader(input))
 
   def parseJValue[A: JsonScalaz.JSONR]: HttpURLConnection => JsonScalaz.Result[A] = conn => JsonScalaz.fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))
@@ -39,6 +33,8 @@ package object api {
 
   def response[A: JsonScalaz.JSONR](conn: HttpURLConnection): TwitterAPIResult[A] = twitterResult.apply(twitterResponse.apply(conn)).fold(_ <*> _.map(curried))
 
-  def resource[A: JsonScalaz.JSONR](method: Method, url: String, tokens: Option[Tokens], parameters: Seq[Parameter]*): TwitterPromise[A] = TwitterPromise(method(url).params(parameters.flatten.withFilter(null !=).map(_.value): _*).oauth(tokens).processPromise(response[A]).map(_.join))
+  type Parameter = (String, Any)
+
+  def resource[A: JsonScalaz.JSONR](method: Method, url: String, tokens: Option[Tokens], parameters: Parameter*): TwitterPromise[A] = TwitterPromise(method(url).params(parameters.withFilter(_._1 != null).map(_.mapElements(identity, _.toString)): _*).oauth(tokens).processPromise(response[A]).map(_.join))
 
 }

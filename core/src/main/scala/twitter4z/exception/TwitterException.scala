@@ -4,10 +4,28 @@ import scalaj.http.HttpException
 
 import net.liftweb.json.scalaz.JsonScalaz
 
-sealed trait TwitterException
+sealed trait TwitterException {
 
-case class TwitterHttpException(e: HttpException) extends TwitterException
+  type Exception
 
-case class TwitterJsonError(e: JsonScalaz.Error) extends TwitterException
+  val exception: Exception
 
-case class TwitterNumberFormatException(e: NumberFormatException) extends TwitterException
+}
+
+case class TwitterHttpException(exception: HttpException) extends TwitterException {
+
+  type Exception = HttpException
+
+}
+
+case class TwitterJsonError(exception: JsonScalaz.Error) extends TwitterException {
+
+  type Exception = JsonScalaz.Error
+
+}
+
+case class TwitterNumberFormatException(exception: NumberFormatException) extends TwitterException {
+
+  type Exception = NumberFormatException
+
+}

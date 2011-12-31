@@ -13,8 +13,6 @@ object Dependencies {
 
   val specs = "org.specs2" %% "specs2" % "1.6.1"
 
-  val specsScalaz = "org.specs2" %% "specs2-scalaz-core" % "6.0.1" % "test"
-
   val swing = "org.scala-lang" % "scala-swing" % "2.9.1"
 
   val stm = "org.scala-tools" %% "scala-stm" % "0.4"
@@ -49,16 +47,9 @@ object Twitter4zBuild extends Build {
 	scalaj,
 	jsonScalaz,
 	jsonExt,
-	specs,
-	specsScalaz
+	specs
       ),
-      sourceGenerators in Compile <+= (sourceManaged in Compile, resourceDirectory in Compile) map {
-        case (dir, resource) => ObjectsGenerator.generate(dir, resource) ++ ParametersGenerator.generate(dir, resource) ++ APIGenerator.generate(dir, resource)
-      },
-      sourceGenerators in Test <+= (sourceManaged in Test, resourceDirectory in Compile) map {
-        case (dir, resource) => SpecsGenerator.generate(dir, resource)
-      },
-      excludeFilter in unmanagedResources := "parameters"
+      sourceGenerators in Compile <+= (sourceManaged in Compile, managedDirectory in Compile) map { APIGenerator.generate }
     )
   )
 
