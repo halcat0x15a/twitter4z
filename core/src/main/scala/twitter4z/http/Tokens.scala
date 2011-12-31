@@ -1,5 +1,7 @@
 package twitter4z.http
 
+import scalaj.http.Token
+
 import scalaz._
 import Scalaz._
 

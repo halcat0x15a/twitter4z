@@ -11,10 +11,6 @@ package object http {
 
   type Method = String => Request
 
-  type Token = scalaj.http.Token
-
-  def Token(key: String, secret: String) = scalaj.http.Token(key, secret)
-
   implicit def ToTwitterRequest(value: Request) = TwitterRequest(value)
 
   type TwitterAPIResult[A] = TwitterResult[TwitterResponse[A]]

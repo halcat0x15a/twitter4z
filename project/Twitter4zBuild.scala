@@ -48,8 +48,7 @@ object Twitter4zBuild extends Build {
 	jsonScalaz,
 	jsonExt,
 	specs
-      ),
-      sourceGenerators in Compile <+= (sourceManaged in Compile, managedDirectory in Compile) map { APIGenerator.generate }
+      )
     )
   )
 

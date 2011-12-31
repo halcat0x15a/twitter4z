@@ -6,7 +6,6 @@ import java.net.HttpURLConnection
 
 import scalaz._
 import Scalaz._
-import Validation.Monad._
 
 import scalaj.http.Http
 
@@ -32,9 +31,5 @@ package object api {
   def curried[A] = (TwitterResponse[A] _).flip.curried
 
   def response[A: JsonScalaz.JSONR](conn: HttpURLConnection): TwitterAPIResult[A] = twitterResult.apply(twitterResponse.apply(conn)).fold(_ <*> _.map(curried))
-
-  type Parameter = (String, Any)
-
-  def resource[A: JsonScalaz.JSONR](method: Method, url: String, tokens: Option[Tokens], parameters: Parameter*): TwitterPromise[A] = TwitterPromise(method(url).params(parameters.withFilter(_._1 != null).map(_.mapElements(identity, _.toString)): _*).oauth(tokens).processPromise(response[A]).map(_.join))
 
 }

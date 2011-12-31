@@ -1,5 +1,0 @@
-search:QueryResult
-GET http://search.twitter.com/search.json
-No
-q
-geocode,lang,locale,page,result_type,rpp,show_user,until,since_id,include_entities,with_twitter_user_id

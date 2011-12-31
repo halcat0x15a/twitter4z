@@ -11,7 +11,7 @@ case class Status(
   inReplyToStatusId: Option[Long],
   inReplyToUserId: Option[Long],
   place: Option[Place],
-  retweetCount: Count,
+  retweetCount: Long,
   retweeted: Boolean,
   retweetedStatus: Option[Status],
   source: String,

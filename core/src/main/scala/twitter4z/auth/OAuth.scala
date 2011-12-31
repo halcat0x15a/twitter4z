@@ -3,9 +3,10 @@ package twitter4z.auth
 import java.io._
 import scalaz._
 import Scalaz._
-import twitter4z.http._
 
-trait OAuth { self: Http =>
+import twitter4z.http.HTTP
+
+trait OAuth { self: HTTP =>
 
   def requestToken(consumer: Token): Tokens = Tokens(consumer, post("http://api.twitter.com/oauth/request_token").oauth(consumer).asToken)
 

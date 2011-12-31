@@ -1,13 +1,16 @@
-package twitter4z
+package twitter4z.json
 
 import org.joda.time.format._
+
 import scalaz._
 import Scalaz._
+
 import net.liftweb.json._
 import net.liftweb.json.scalaz.JsonScalaz._
-import objects._
 
-package object json {
+import twitter4z.objects._
+
+trait JSON {
 
   implicit def CoordinatesJSONR = JSONR[Coordinates]((Coordinates.apply _).applyJSON(field("coordinates"), field("type")))
 
@@ -82,7 +85,7 @@ package object json {
       x <- field[Option[Long]]("in_reply_to_status_id")(json).map(x)
       x <- field[Option[Long]]("in_reply_to_user_id")(json).map(x)
       x <- field[Option[Place]]("place")(json).map(x)
-      x <- field[Count]("retweet_count")(json).map(x)
+      x <- field[Long]("retweet_count")(json).map(x)
       x <- field[Boolean]("retweeted")(json).map(x)
       x <- fieldOpt[Status]("retweeted_status")(json).map(x)
       x <- field[String]("source")(json).map(x)
@@ -127,7 +130,7 @@ package object json {
 
   implicit def FriendshipJSONR = JSONR((Friendship.apply _).applyJSON(field("id"), field("screen_name"), field("name"), field("connections")))
 
-  implicit def CategoryJSONR = JSONR((objects.Category.apply _).applyJSON(field("name"), field("slug"), field("size"), fieldOpt("users")))
+  implicit def CategoryJSONR = JSONR((twitter4z.objects.Category.apply _).applyJSON(field("name"), field("slug"), field("size"), fieldOpt("users")))
 
   implicit def UserListJSONR = JSONR(json => (field[String]("description")(json) |@| field[String]("full_name")(json) |@| field[Long]("id")(json) |@| field[Int]("member_count")(json) |@| field[String]("name")(json) |@| field[String]("slug")(json) |@| field[Int]("subscriber_count")(json) |@| field[String]("uri")(json) |@| field[User]("user")(json) |@| field[Boolean]("following")(json) |@| field[String]("mode")(json))(UserList.apply))
 
