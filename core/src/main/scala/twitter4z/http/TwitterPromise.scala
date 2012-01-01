@@ -6,7 +6,11 @@ import scalaz.concurrent._
 
 import twitter4z.exception._
 
-case class TwitterPromise[A](value: Promise[TwitterAPIResult[A]]) extends NewType[Promise[TwitterAPIResult[A]]]
+case class TwitterPromise[A](value: Promise[TwitterAPIResult[A]]) extends NewType[Promise[TwitterAPIResult[A]]] {
+
+  def unsafe: A = value.get ||| (e => throw e.head)
+
+}
 
 object TwitterPromise {
 

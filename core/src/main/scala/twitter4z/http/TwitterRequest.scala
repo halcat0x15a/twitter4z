@@ -2,7 +2,7 @@ package twitter4z.http
 
 import java.net.HttpURLConnection
 
-import scalaj.http.{ Http => ScalajHttp, HttpException }
+import scalaj.http.{ Http, HttpException }
 
 import scalaz._
 import Scalaz._
@@ -10,7 +10,7 @@ import scalaz.concurrent._
 
 import twitter4z.exception._
 
-case class TwitterRequest(value: ScalajHttp.Request) extends NewType[ScalajHttp.Request] {
+case class TwitterRequest(value: Http.Request) extends NewType[Http.Request] {
 
   def processValidation[A](processor: HttpURLConnection => A): TwitterResult[A] = try {
     value.process(processor).success

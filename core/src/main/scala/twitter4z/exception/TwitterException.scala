@@ -4,7 +4,7 @@ import scalaj.http.HttpException
 
 import net.liftweb.json.scalaz.JsonScalaz
 
-sealed trait TwitterException {
+sealed trait TwitterException extends Throwable {
 
   type Exception
 
