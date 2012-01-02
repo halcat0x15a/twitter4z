@@ -1,7 +1,7 @@
 package twitter4z
 
 import twitter4z.http.HTTP
-import twitter4z.json.JSON
+import twitter4z.objects.JSON
 import twitter4z.auth.OAuth
 import twitter4z.api.API
 

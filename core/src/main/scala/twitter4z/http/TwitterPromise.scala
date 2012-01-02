@@ -8,7 +8,7 @@ import twitter4z.exception._
 
 case class TwitterPromise[A](value: Promise[TwitterAPIResult[A]]) extends NewType[Promise[TwitterAPIResult[A]]] {
 
-  def unsafe: A = value.get ||| (e => throw e.head)
+  def unsafe: A = value.get ||| (e => sys.error(e.shows))
 
 }
 

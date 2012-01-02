@@ -23,4 +23,6 @@ object Parameter {
 
   implicit lazy val IntParameter: Parameter[Int] = parameterA
 
+  implicit lazy val LongParameter: Parameter[Long] = parameterA
+
 }
