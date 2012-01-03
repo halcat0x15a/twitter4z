@@ -16,24 +16,32 @@ class TimelinesSpec extends Specification { def is =
   "statuses/mentions should"                             ^
     "contain 10 statuses when set 10 for count"          ! Mentions.e1^
     "be empty when since_id is equal to max_id"          ! Mentions.e2^
+                                                         p^
+  "statuses/public_timeline should"                      ^
+    "contain 20 statuses"                                ! PublicTimeline.e1^
                                                          end
 
   implicit lazy val tokens = readTokens(getClass.getResourceAsStream("/test.tokens"))
 
   case object HomeTimeline {
-    lazy val statuses1 = homeTimeline(count=50).unsafe
+    lazy val statuses1 = homeTimeline(Paging(count=50)).unsafe
     lazy val e1 = statuses1 must have size 50
     lazy val id = statuses1.last.id
-    lazy val statuses2 = homeTimeline(since_id=id, max_id=id).unsafe
+    lazy val statuses2 = homeTimeline(Paging(sinceId=id, maxId=id)).unsafe
     lazy val e2 = statuses2 must be empty
   }
 
   case object Mentions {
-    lazy val statuses1 = mentions(count=10).unsafe
+    lazy val statuses1 = mentions(Paging(count=10)).unsafe
     lazy val e1 = statuses1 must have size 10
     lazy val id = statuses1.last.id
-    lazy val statuses2 = mentions(since_id=id, max_id=id).unsafe
+    lazy val statuses2 = mentions(Paging(sinceId=id, maxId=id)).unsafe
     lazy val e2 = statuses2 must be empty
+  }
+
+  case object PublicTimeline {
+    lazy val statuses1 = publicTimeline.unsafe
+    lazy val e1 = statuses1 must have size 20
   }
 
 }

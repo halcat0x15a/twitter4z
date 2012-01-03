@@ -20,8 +20,11 @@ case class TwitterRequest(value: Http.Request) extends NewType[Http.Request] {
 
   def processPromise[A] = (processValidation[A] _).promise
 
-  def oauth(tokens: Tokens): TwitterRequest = TwitterRequest(value.oauth(tokens.consumer, tokens.token))
-
-  def oauth(tokens: Option[Tokens]): TwitterRequest = TwitterRequest(tokens.foldl(value)(_.oauth(_)))
+  def oauth(tokens: OptionalTokens): TwitterRequest = TwitterRequest {
+    tokens match {
+      case DummyTokens => value
+      case Tokens(consumer, token) => value.oauth(consumer, token)
+    }
+  }
 
 }
