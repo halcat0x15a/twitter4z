@@ -13,7 +13,9 @@ sealed trait TwitterException extends Exception {
 
   type Exception
 
-  val exception: Exception
+  val value: Exception
+
+  override def toString = value.toString
 
 }
 
@@ -23,13 +25,13 @@ object TwitterException {
 
 }
 
-case class TwitterHttpException(exception: HttpException) extends TwitterException {
+case class TwitterHttpException(value: HttpException) extends TwitterException {
 
   type Exception = HttpException
 
 }
 
-case class TwitterJsonError(exception: Error) extends TwitterException {
+case class TwitterJsonError(value: Error) extends TwitterException {
 
   type Exception = Error
 
@@ -41,7 +43,7 @@ object TwitterJsonError {
 
 }
 
-case class TwitterNumberFormatException(exception: NumberFormatException) extends TwitterException {
+case class TwitterNumberFormatException(value: NumberFormatException) extends TwitterException {
 
   type Exception = NumberFormatException
 
@@ -56,7 +58,7 @@ object TwitterNumberFormatException {
 trait TwitterExceptionInstances {
 
   implicit lazy val TwitterExceptionShow: Show[TwitterException] = shows {
-    _.exception match {
+    _.value match {
       case throwable: Throwable => throwable.getMessage
       case other => other.toString
     }

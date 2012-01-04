@@ -27,4 +27,12 @@ case class TwitterRequest(value: Http.Request) extends NewType[Http.Request] {
     }
   }
 
+  def params(parameters: Seq[Option[(String, String)]]) = TwitterRequest {
+    value.params {
+      parameters.collect {
+	case Some(parameter) => parameter
+      }: _*
+    }
+  }
+
 }

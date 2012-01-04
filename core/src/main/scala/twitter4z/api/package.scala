@@ -18,6 +18,11 @@ import twitter4z.exception._
 
 package object api {
 
+  implicit def applyShow[A: Show](optional: Optional[A]): Optional[String] = optional match {
+    case Value(a) => Value(a.shows)
+    case Default => Default
+  }
+
   def parseJson(input: InputStream): JValue = JsonParser.parse(new InputStreamReader(input))
 
   def parseJValue[A: JSONR]: HttpURLConnection => Result[A] = conn => fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))
@@ -26,10 +31,8 @@ package object api {
 
   def twitterResponse[A: JSONR] = parseJValue[A] &&& RateLimit.validation
 
-  def curried[A] = (TwitterResponse[A] _).flip.curried
+  def response[A: JSONR](conn: HttpURLConnection): TwitterAPIResult[A] = twitterResult.apply(twitterResponse.apply(conn)).fold(_ <*> _.map((TwitterResponse[A] _).flip.curried))
 
-  def response[A: JSONR](conn: HttpURLConnection): TwitterAPIResult[A] = twitterResult.apply(twitterResponse.apply(conn)).fold(_ <*> _.map(curried))
-
-  def resource[A: JSONR](method: Method, url: String, tokens: OptionalTokens, parameters: (String, String)*): TwitterPromise[A] = TwitterPromise(TwitterRequest(method(url).params(parameters: _*)).oauth(tokens).processPromise(response[A]).map(_.join))
+  def resource[A: JSONR](method: Method, url: String, tokens: OptionalTokens, parameters: Option[(String, String)]*): TwitterPromise[A] = TwitterPromise(TwitterRequest(method(url)).params(parameters).oauth(tokens).processPromise(response[A]).map(_.join))
 
 }

@@ -3,21 +3,26 @@ package twitter4z.api
 import scalaz._
 import Scalaz._
 
-sealed abstract class Optional[+A: Parameter] {
+sealed trait Optional[+A] {
 
-  def show: Optional[String] = this match {
-    case Value(a) => Value(implicitly[Parameter[A]].show(a))
-    case Default => Default
-  }
+  val option: Option[A]
 
 }
 
-case class Value[+A: Parameter](value: A) extends Optional[A]
+case class Value[+A](value: A) extends Optional[A] {
 
-case object Default extends Optional[Nothing]
+  val option = value.some
+
+}
+
+case object Default extends Optional[Nothing] {
+
+  val option = none
+
+}
 
 trait Optionals {
 
-  implicit def toOptional[A: Parameter](a: A): Optional[A] = Value(a)
+  implicit def toOptional[A](a: A): Optional[A] = Value(a)
 
 }
