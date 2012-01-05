@@ -25,4 +25,8 @@ trait Timelines { self: HTTP with JSON with API =>
 
   def userTimeline(id: Optional[ID] = Default, paging: Paging = Paging())(implicit tokens: Tokens) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweets_of_me.json", tokens, (id.option.map(_.value) +>:  paging.value): _*)
 
+  def retweetedToUser(id: Optional[ID], paging: Paging = Paging())(implicit tokens: Tokens) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_to_user.json", tokens, (id.option.map(_.value) +>:  paging.value): _*)
+
+  def retweetedByUser(id: Optional[ID], paging: Paging = Paging())(implicit tokens: Tokens) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_by_user.json", tokens, (id.option.map(_.value) +>:  paging.value): _*)
+
 }

@@ -11,7 +11,7 @@ object Dependencies {
 
   val jsonExt = "net.liftweb" %% "lift-json-ext" % "2.4-M4"
 
-  val specs = "org.specs2" %% "specs2" % "1.6.1"
+  val specs = "org.specs2" %% "specs2" % "1.7.1" % "test"
 
   val swing = "org.scala-lang" % "scala-swing" % "2.9.1"
 
