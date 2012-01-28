@@ -23,6 +23,8 @@ package object api {
     case Default => Default
   }
 
+  implicit def toOption[A](optional: Optional[A]): Option[A] = optional.option
+
   def parseJson(input: InputStream): JValue = JsonParser.parse(new InputStreamReader(input))
 
   def parseJValue[A: JSONR]: HttpURLConnection => Result[A] = conn => fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))

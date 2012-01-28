@@ -28,3 +28,12 @@ case class ScreenName(name: String) extends ID {
   val value = "screen_name" -> name
 
 }
+
+trait IDInstances {
+
+  implicit def IDShow: Show[ID] = shows {
+    case UserId(id) => id.shows
+    case ScreenName(name) => name.shows
+  }
+
+}

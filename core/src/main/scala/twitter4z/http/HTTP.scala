@@ -14,7 +14,7 @@ trait HTTP {
 
   implicit lazy val DefaultTokens: OptionalTokens = DummyTokens
 
-  implicit lazy val DefaultTimeout: Int = 1000 * 30
+  implicit lazy val DefaultTimeout: Int = 1000 * 20
 
   implicit def ObjectInputStreamResource = resource[ObjectInputStream](_.close)
 
