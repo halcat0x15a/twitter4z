@@ -21,8 +21,8 @@ package object objects {
 
   def jsonr[A](f: String => A): JSONR[A] = new JSONR[A] {
     def read(json: JValue) = json match {
-      case JString(string) => success(f(string))
-      case x => UnexpectedJSONError(x, classOf[JString]).fail.liftFailNel
+      case JString(string) => Success(f(string))
+      case x => UnexpectedJSONError(x, classOf[JString]).fail.toValidationNel
     }
   }
 

@@ -3,16 +3,17 @@ package twitter4z.api
 import scalaz._
 import Scalaz._
 
+import Optional._
 import Parameters._
 
-case class Paging(count: Optional[Int] = Default, page: Optional[Int] = Default) extends Parameter {
+case class Paging(count: Optional[Int] = Default, page: Optional[Int] = Default) extends Parameters {
 
-  val value = Seq(count(Count), page(Page))
+  val params = Params(COUNT, count) |+| Params(PAGE, page)
 
 }
 
-case class IdPaging(count: Optional[Int] = Default, sinceId: Optional[Long] = Default, maxId: Optional[Long] = Default, page: Optional[Int] = Default) extends Parameter {
+case class IdPaging(count: Optional[Int] = Default, sinceId: Optional[Long] = Default, maxId: Optional[Long] = Default, page: Optional[Int] = Default) extends Parameters {
 
-  val value = Seq(sinceId(SinceId), maxId(MaxId)) |+| Paging(count, page)
+  val params = Params(SINCE_ID, sinceId) |+| Params(MAX_ID, maxId) |+| Paging(count, page).params
 
 }

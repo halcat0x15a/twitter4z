@@ -10,18 +10,23 @@ import twitter4z.Twitter._
 
 package object http {
 
-  type TwitterAPIResult[A] = TwitterResult[TwitterResponse[A]]
+  type Token[T <: TokenType] = scalaj.http.Token @@ T
 
-  type Key = String
+  def Token[T <: TokenType](token: scalaj.http.Token): Token[T] = Tag(token)
 
-  type Secret = String
+  def Token[T <: TokenType](key: String, secret: String): Token[T] = Token(scalaj.http.Token(key, secret))
 
   type Method = String => Http.Request
 
-  def method(method: Method)(implicit timeout: Int) = (url: String) => (HttpOptions.connTimeout _ &&& HttpOptions.readTimeout _).apply(timeout).fold(method(url).options(_, _))
+  lazy val oauth: (Http.Request, OptionalTokenPair) => Http.Request = {
+    case (request, DefaultTokenPair) => request
+    case (request, TokenPair(consumer, token)) => request.oauth(consumer, token)
+  }
 
-  lazy val get = method(Http.apply)
+  def options(method: Method)(implicit conn: Int @@ Conn, read: Int @@ Read, tokenPair: OptionalTokenPair): Method = url => method(url).options(HttpOptions.connTimeout(conn), HttpOptions.readTimeout(read))
 
-  lazy val post = method(Http.post)
+  def get(implicit conn: Conn, read: Read, tokenPair: OptionalTokenPair): Method = options(Http.apply)
+
+  def post(implicit conn: Conn, read: Read, tokenPair: OptionalTokenPair): Method = options(Http.post)
 
 }

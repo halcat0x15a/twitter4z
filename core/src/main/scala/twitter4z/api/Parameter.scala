@@ -3,16 +3,27 @@ package twitter4z.api
 import scalaz._
 import Scalaz._
 
-trait Parameter extends NewType[Seq[Option[(String, String)]]]
+import Parameters._
 
-object Parameters {
+trait Parameter[A] {
 
-  val Count = "count"
+  def param(value: A): Param
 
-  val Page = "page"
+}
 
-  val SinceId = "since_id"
+object Parameter {
 
-  val MaxId = "max_id"
+  implicit object IdParameter extends Parameter[Id] {
+    def param(value: Id) = value match {
+      case UserId(id) => USER_ID -> id.shows
+      case ScreenName(name) => SCREEN_NAME -> name
+    }
+  }
+
+}
+
+trait ParameterSyntax {
+
+  def param[A](value: A)(implicit parameter: Parameter[A]) = parameter.param(value)
 
 }

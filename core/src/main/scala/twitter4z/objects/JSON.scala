@@ -33,7 +33,7 @@ trait JSON extends StatusJSON {
   implicit def CountJSON = JSONR[Count] {
     case JInt(int) => int.toInt.right[String].success
     case JString(string) => string.left[Int].success
-    case x => UnexpectedJSONError(x, classOf[JInt]).fail.liftFailNel
+    case x => UnexpectedJSONError(x, classOf[JInt]).fail.toValidationNel
   }
 
   implicit object UserJSONR extends JSONR[User] {
@@ -115,7 +115,7 @@ trait JSON extends StatusJSON {
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {
       case NoSuchFieldError(_, _) => Success(None)
-      case _ => f.lift[Option, A]
+      case _ => f.map(Option.apply)
     }
     case s: Success[_, _] => s.map(Some.apply)
   }
@@ -126,8 +126,8 @@ trait JSON extends StatusJSON {
 
   def jsonr[A](f: String => A): JSONR[A] = new JSONR[A] {
     def read(json: JValue) = json match {
-      case JString(string) => success(f(string))
-      case x => UnexpectedJSONError(x, classOf[JString]).fail.liftFailNel
+      case JString(string) => Success(f(string))
+      case x => UnexpectedJSONError(x, classOf[JString]).fail.toValidationNel
     }
   }
 

@@ -3,13 +3,17 @@ import Keys._
 
 object Dependencies {
 
-  val scalaz = "org.scalaz" %% "scalaz-core" % "6.0.3"
+  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0-SNAPSHOT"
+
+  val scalazConcurrent = "org.scalaz" %% "scalaz-concurrent" % "7.0-SNAPSHOT"
+
+  val scalazEffect = "org.scalaz" %% "scalaz-effect" % "7.0-SNAPSHOT"
 
   val scalaj = "org.scalaj" %% "scalaj-http" % "0.2.9"
 
-  val jsonScalaz = "net.liftweb" %% "lift-json-scalaz" % "2.4-M4"
+  val jsonScalaz = "net.liftweb" %% "lift-json-scalaz" % "2.5-SNAPSHOT"
 
-  val jsonExt = "net.liftweb" %% "lift-json-ext" % "2.4-M4"
+  val jsonExt = "net.liftweb" %% "lift-json-ext" % "2.4"
 
   val specs = "org.specs2" %% "specs2" % "1.7.1" % "test"
 
@@ -29,7 +33,8 @@ object Twitter4zBuild extends Build {
     scalaVersion := "2.9.1",
     addCompilerPlugin("org.scala-tools.sxr" % "sxr_2.9.0" % "0.2.7"),
     scalacOptions <+= scalaSource in Compile map { "-P:sxr:base-directory:" + _.getAbsolutePath },
-    scalacOptions += "-deprecation"
+    scalacOptions += "-deprecation",
+    resolvers += ScalaToolsSnapshots
   )
 
   lazy val twitter4z = Project(
@@ -44,6 +49,8 @@ object Twitter4zBuild extends Build {
     settings = buildSettings ++ Seq(
       libraryDependencies ++= Seq(
 	scalaz,
+	scalazConcurrent,
+	scalazEffect,
 	scalaj,
 	jsonScalaz,
 	jsonExt,

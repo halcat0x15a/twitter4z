@@ -20,6 +20,9 @@ class TweetsSpec extends Specification { def is =
                                                                p^
   "statuses/show/:id should"                                   ^
     "be specified id status"                                   ! ShowStatus.e^
+                                                               p^
+  "statuses/update should"                                     ^
+    "have specified text"                                      ! UpdateStatus.e1^
 							       end
 
   implicit lazy val tokens = readTokens(getClass.getResourceAsStream("/test.tokens"))
@@ -42,8 +45,12 @@ class TweetsSpec extends Specification { def is =
   case object ShowStatus {
     val id = 105645059239723008L
     lazy val status = showStatus(id).unsafe
-    lazy val statusId = status.id
-    lazy val e = statusId should be equalTo id
+    lazy val e = status.id should be equalTo id
+  }
+
+  case object UpdateStatus {
+    lazy val status = updateStatus("Test").unsafe
+    lazy val e1 = status.text must be equalTo "Test"
   }
 
 }

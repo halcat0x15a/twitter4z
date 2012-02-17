@@ -19,12 +19,6 @@ sealed trait TwitterException extends Exception {
 
 }
 
-object TwitterException {
-
-  def apply[E, A](f: E => TwitterException): ValidationNEL[E, A] => TwitterResult[A] = _.fail.map2(f).validation
-
-}
-
 case class TwitterHttpException(value: HttpException) extends TwitterException {
 
   type Exception = HttpException
@@ -37,30 +31,21 @@ case class TwitterJsonError(value: Error) extends TwitterException {
 
 }
 
-object TwitterJsonError {
-
-  def lift[A]: Result[A] => TwitterResult[A] = TwitterException(TwitterJsonError.apply)
-
-}
-
 case class TwitterNumberFormatException(value: NumberFormatException) extends TwitterException {
 
   type Exception = NumberFormatException
 
 }
 
-object TwitterNumberFormatException {
-
-  lazy val lift: RateLimit.Result[RateLimit] => TwitterResult[RateLimit] = TwitterException(TwitterNumberFormatException.apply)
-
-}
-
 trait TwitterExceptionInstances {
 
-  implicit lazy val TwitterExceptionShow: Show[TwitterException] = shows {
-    _.value match {
-      case throwable: Throwable => throwable.getMessage
-      case other => other.toString
+  implicit val twitterExceptionInstance = new Show[TwitterException] {
+    def show(e: TwitterException) = {
+      val string = e.value match {
+	case throwable: Throwable => throwable.getMessage
+	case other => other.toString
+      }
+      string.toList
     }
   }
 

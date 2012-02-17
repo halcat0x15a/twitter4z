@@ -3,37 +3,23 @@ package twitter4z.api
 import scalaz._
 import Scalaz._
 
-sealed trait ID extends NewType[(String, String)] {
+sealed abstract class Id
 
-  val value: (String, String)
+case class UserId(id: Long) extends Id
 
-}
+case class ScreenName(name: String) extends Id
 
-object ID {
+trait IdInstances {
 
-  def apply(id: Long): ID = UserId(id)
-
-  def apply(name: String): ID = ScreenName(name)
-
-}
-
-case class UserId(id: Long) extends ID {
-
-  val value = "user_id" -> id.shows
-
-}
-
-case class ScreenName(name: String) extends ID {
-
-  val value = "screen_name" -> name
-
-}
-
-trait IDInstances {
-
-  implicit def IDShow: Show[ID] = shows {
-    case UserId(id) => id.shows
-    case ScreenName(name) => name.shows
+  implicit object IdShow {
+    def show(id: Id) = id match {
+      case UserId(id) => id.show
+      case ScreenName(name) => name.show
+    }
   }
+
+  implicit def wrapId(id: Long): Id = UserId(id)
+
+  implicit def wrapId(name: String): Id = ScreenName(name)
 
 }
