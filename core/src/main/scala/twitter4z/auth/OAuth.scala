@@ -23,21 +23,21 @@ trait OAuth { self: HTTP =>
 
   def accessToken(consumer: Token[Consumer], request: Token[Request], verifier: String): Token[Access] = Token(get("https://api.twitter.com/oauth/access_token").oauth(consumer, request, verifier).asToken)
 
-  private def oauth(method: Method @@ Timeout)(implicit ev: Evidence): Method = url => ev(tokens) match {
-    case Required(consumer, access) => method(url).oauth(consumer, access)
+  private def oauth(method: Method, ev: Evidence): Method = ev(tokens) match {
+    case Required(consumer, access) => url => method(url).oauth(consumer, access)
   }
 
-  def oget(implicit ev: Evidence) = oauth(get)
-
-  def opost(implicit ev: Evidence) = oauth(post)
-
-  private def oauthOpt(method: Method @@ Timeout): Method = tokens match {
+  private def oauth(method: Method): Method = tokens match {
     case _: Optional.type => method
     case Required(consumer, access) => url => method(url).oauth(consumer, access)
   }
 
-  def ogetOpt = oauthOpt(get)
+  def get(ev: Evidence): Method = oauth(get, ev)
 
-  def opostOpt = oauthOpt(post)
+  def post(ev: Evidence): Method = oauth(post, ev)
+
+  def get: Method = oauth(get)
+
+  def post: Method = oauth(post)
 
 }

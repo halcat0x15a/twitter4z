@@ -1,13 +1,6 @@
 package twitter4z.api
 
-import scalaz._
-import Scalaz._
-
-trait Parameters {
-  protected var parameters: List[(String, String)] = Nil
-}
-
-object Parameters {
+package object parameters {
 
   val COUNT = "count"
 
@@ -33,8 +26,4 @@ object Parameters {
 
   val DISPLAY_COORDINATES = "display_coordinates"
 
-}
-
-trait Count { self: Parameters =>
-  def count(count: Int) =
 }

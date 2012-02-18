@@ -10,9 +10,7 @@ import twitter4z.http._
 
 import twitter4z.objects.JSON
 
-import Parameters._
-
-trait Tweets { self: HTTP with JSON with API =>
+trait Tweets { self: JSON with API =>
 /*
   def retweetedBy(id: Long, paging: Paging = Paging()) = resource[List[User]](get, "http://api.twitter.com/1/statuses/%s/retweeted_by.json".format(id), paging.params: _*)
 

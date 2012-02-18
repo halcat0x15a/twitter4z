@@ -1,7 +1,5 @@
 package twitter4z.http
 
-import java.io._
-
 import scalaz._
 import Scalaz._
 
@@ -11,31 +9,10 @@ trait HTTP {
 
   val timeout: Timeout = Timeout(60 * 1000, 60 * 1000)
 
-  def readTokens(stream: InputStream): Token[Access] = {
-    val ois = new ObjectInputStream(stream)
-    val token = ois.readObject.asInstanceOf[Token[Access]]
-    ois.close()
-    token
-  }
+  private def timeouts(method: Method): Method = url => method(url).options(HttpOptions.connTimeout(timeout.conn), HttpOptions.readTimeout(timeout.read))
 
-  def readTokens(file: File): Token[Access] = readTokens(new FileInputStream(file))
+  def get: Method = timeouts(Http.apply)
 
-  def readTokens(name: String): Token[Access] = readTokens(new FileInputStream(name))
-
-  def writeTokens(access: Token[Access], stream: OutputStream): Unit = {
-    val oos = new ObjectOutputStream(stream)
-    oos.writeObject(access)
-    oos.close()
-  }
-
-  def writeTokens(access: Token[Access], file: File): Unit = writeTokens(access, new FileOutputStream(file))
-
-  def writeTokens(access: Token[Access], name: String): Unit = writeTokens(access, new FileOutputStream(name))
-
-  private def timeouts(method: Method): Method @@ Timeout = Tag(url => method(url).options(HttpOptions.connTimeout(timeout.conn), HttpOptions.readTimeout(timeout.read)))
-
-  def get = timeouts(Http.apply)
-
-  def post = timeouts(Http.post)
+  def post: Method = timeouts(Http.post)
 
 }

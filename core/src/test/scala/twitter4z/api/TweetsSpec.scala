@@ -3,7 +3,7 @@ package twitter4z.api
 import org.specs2._
 
 import twitter4z.Twitter._
-
+/*
 class TweetsSpec extends Specification { def is =
 
   args(sequential=true, stopOnFail=true)                       ^
@@ -54,3 +54,4 @@ class TweetsSpec extends Specification { def is =
   }
 
 }
+*/

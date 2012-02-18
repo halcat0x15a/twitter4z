@@ -1,37 +1,54 @@
 package twitter4z.api
 
-import scalaz._
-import Scalaz._
+import twitter4z.objects.{ JSON, Status }
+import twitter4z.auth._
+import parameters.Paging
 
-import twitter4z.http._
-import twitter4z.objects.JSON
-import twitter4z.auth.OAuth
+trait Timelines { self: OAuth with JSON with API =>
 
-trait Timelines { self: ParameterSyntax with HTTP with OAuth with JSON with API =>
+  case object homeTimeline extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/home_timeline.json") with Paging {
+    type Self = homeTimeline.type
+    val self = this
+  }
 
-  import twitter4z.objects.Status
+  case object mentions extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/mentions.json") with Paging {
+    type Self = mentions.type
+    val self = this
+  }
 
-  case class homeTimeline(implicit ev: Evidence) extends Resource[List[Status]](oget, "http://api.twitter.com/1/statuses/home_timeline.json")
+  case object publicTimeline extends Resource[List[Status]](get, "http://api.twitter.com/1/statuses/public_timeline.json") {
+    type Self = publicTimeline.type
+    val self = this
+  }
 
-/*
-  import twitter4z.objects.Status
+  case object retweetedByMe extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_by_me.json") with Paging {
+    type Self = retweetedByMe.type
+    val self = this
+  }
 
-  def homeTimeline(paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/home_timeline.json", paging.params: _*)
+  case object retweetedToMe extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_to_me.json") with Paging {
+    type Self = retweetedToMe.type
+    val self = this
+  }
 
-  def mentions(paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/mentions.json", paging.params: _*)
+  case object retweetsOfMe extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/retweets_of_me.json") with Paging {
+    type Self = retweetsOfMe.type
+    val self = this
+  }
 
-  def publicTimeline(implicit tokens: OptionalTokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/public_timeline.json")
+  case object userTimeline extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/retweets_of_me.json") with Paging {
+    type Self = userTimeline.type
+    val self = this
+  }
 
-  def retweetedByMe(paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_by_me.json", paging.params: _*)
+  case class retweetedToUser(id: Long) extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_to_user.json") with Paging {
+    type Self = retweetedToUser
+    val self = this
+  }
 
-  def retweetedToMe(paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_to_me.json", paging.params: _*)
+  case class retweetedByUser(id: Long) extends AuthResource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_by_user.json") with Paging {
+    type Self = retweetedByUser
+    val self = this
+  }
 
-  def retweetsOfMe(paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweets_of_me.json", paging.params: _*)
-
-  def userTimeline(id: Optional[Id] = Default, paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweets_of_me.json", (id.map(param[Id]).toList |+|  paging.params): _*)
-
-  def retweetedToUser(id: Id, paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_to_user.json", (param(id) :: paging.params): _*)
-
-  def retweetedByUser(id: Id, paging: IdPaging = IdPaging())(implicit tokens: TokenPair) = resource[List[Status]](get, "http://api.twitter.com/1/statuses/retweeted_by_user.json", (param(id) ::  paging.params): _*)
-*/
 }

@@ -3,12 +3,24 @@ package twitter4z.api
 import scalaz._
 import Scalaz._
 
+import net.liftweb.json._
+import net.liftweb.json.scalaz.JsonScalaz._
+
 import twitter4z.http._
 import twitter4z.auth.OAuth
 import twitter4z.objects.JSON
 
-trait API extends Timelines with Tweets with OptionalInstances with IdInstances with ParameterSyntax { self: HTTP with OAuth with JSON =>
+trait API extends Timelines with Tweets { self: OAuth with JSON =>
 
-//  def resource[A](method: Method, url: String, parameters: (String, String)*)(implicit json: JSONR[A], tokenPair: OptionalTokenPair) = oauth(method(url).params(parameters.toList), tokenPair).process(parseJValue[A])
+  abstract class AuthResource[A: JSONR](method: Evidence => Method, url: String) extends parameters.Parameters {
+
+    def apply()(implicit ev: Evidence): Result[A] = method(ev)(url).params(parameters).process(parseJValue[A])
+
+    def unary_!(implicit ev: Evidence) : A = apply() match {
+      case Success(a) => a
+      case Failure(e) => throw new Exception(e.toString)
+    }
+
+  }
 
 }
