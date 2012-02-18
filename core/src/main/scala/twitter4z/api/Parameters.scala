@@ -4,7 +4,7 @@ import scalaz._
 import Scalaz._
 
 trait Parameters {
-  val params: Params
+  protected var parameters: List[(String, String)] = Nil
 }
 
 object Parameters {
@@ -33,4 +33,8 @@ object Parameters {
 
   val DISPLAY_COORDINATES = "display_coordinates"
 
+}
+
+trait Count { self: Parameters =>
+  def count(count: Int) =
 }
