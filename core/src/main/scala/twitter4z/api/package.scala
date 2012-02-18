@@ -36,6 +36,4 @@ package object api {
 
   def parseJValue[A: JSONR](conn: HttpURLConnection): Result[A] = fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))
 
-  def resource[A](method: Method, url: String, parameters: (String, String)*)(implicit json: JSONR[A], tokenPair: OptionalTokenPair) = oauth(method(url).params(parameters.toList), tokenPair).process(parseJValue[A])
-
 }

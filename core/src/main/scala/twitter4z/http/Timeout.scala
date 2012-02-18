@@ -1,7 +1,6 @@
 package twitter4z.http
 
-sealed trait Timeout
+case class Timeout(conn: Int, read: Int)
 
-case class Conn(time: Int) extends Timeout
 
-case class Read(time: Int) extends Timeout
+

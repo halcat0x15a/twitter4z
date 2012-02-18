@@ -5,11 +5,11 @@ import java.io._
 import scalaz._
 import Scalaz._
 
-trait HTTP extends OptionalTokenPairImplicits {
+import scalaj.http.{ Http, HttpOptions }
 
-  implicit lazy val DefaultConnTimeout = Conn(1000 * 10)
+trait HTTP {
 
-  implicit lazy val DefaultReadTimeout = Read(1000 * 10)
+  val timeout: Timeout = Timeout(60 * 1000, 60 * 1000)
 
   def readTokens(stream: InputStream): Token[Access] = {
     val ois = new ObjectInputStream(stream)
@@ -31,5 +31,11 @@ trait HTTP extends OptionalTokenPairImplicits {
   def writeTokens(access: Token[Access], file: File): Unit = writeTokens(access, new FileOutputStream(file))
 
   def writeTokens(access: Token[Access], name: String): Unit = writeTokens(access, new FileOutputStream(name))
+
+  private def timeouts(method: Method): Method @@ Timeout = Tag(url => method(url).options(HttpOptions.connTimeout(timeout.conn), HttpOptions.readTimeout(timeout.read)))
+
+  def get = timeouts(Http.apply)
+
+  def post = timeouts(Http.post)
 
 }
