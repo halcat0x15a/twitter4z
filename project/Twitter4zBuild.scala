@@ -3,23 +3,21 @@ import Keys._
 
 object Dependencies {
 
-  val scalaz = "org.scalaz" %% "scalaz-core" % "7.0-SNAPSHOT"
-
-  val scalazConcurrent = "org.scalaz" %% "scalaz-concurrent" % "7.0-SNAPSHOT"
-
-  val scalazEffect = "org.scalaz" %% "scalaz-effect" % "7.0-SNAPSHOT"
-
   val scalaj = "org.scalaj" %% "scalaj-http" % "0.2.9"
 
-  val jsonScalaz = "net.liftweb" %% "lift-json-scalaz" % "2.5-SNAPSHOT"
+  val jsonScalaz = "net.liftweb" %% "lift-json-scalaz" % "2.4"
 
   val jsonExt = "net.liftweb" %% "lift-json-ext" % "2.4"
 
-  val specs = "org.specs2" %% "specs2" % "1.7.1" % "test"
+  val specs = "org.specs2" %% "specs2" % "1.8.2"
 
   val swing = "org.scala-lang" % "scala-swing" % "2.9.1"
 
   val stm = "org.scala-tools" %% "scala-stm" % "0.4"
+
+  val dispatch = "net.databinder" %% "dispatch-oauth" % "0.8.7"
+
+  lazy val dispatchLiftJson = uri("git://github.com/dispatch/dispatch-lift-json#0.1.0")
 
 }
 
@@ -48,16 +46,14 @@ object Twitter4zBuild extends Build {
     file("core"),
     settings = buildSettings ++ Seq(
       libraryDependencies ++= Seq(
-	scalaz,
-	scalazConcurrent,
-	scalazEffect,
 	scalaj,
+	dispatch,
 	jsonScalaz,
 	jsonExt,
 	specs
       )
     )
-  )
+  ) dependsOn (dispatchLiftJson)
 
   lazy val plugin = Project(
     "twitter4z-plugin",

@@ -17,8 +17,4 @@ import twitter4z.exception._
 
 package object api {
 
-  def parseJson(input: InputStream): JValue = JsonParser.parse(new InputStreamReader(input))
-
-  def parseJValue[A: JSONR](conn: HttpURLConnection): Result[A] = fromJSON[A](Http.tryParse(conn.getInputStream, parseJson))
-
 }

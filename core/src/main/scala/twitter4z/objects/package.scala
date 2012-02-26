@@ -22,7 +22,7 @@ package object objects {
   def jsonr[A](f: String => A): JSONR[A] = new JSONR[A] {
     def read(json: JValue) = json match {
       case JString(string) => Success(f(string))
-      case x => UnexpectedJSONError(x, classOf[JString]).fail.toValidationNel
+      case x => UnexpectedJSONError(x, classOf[JString]).fail.liftFailNel
     }
   }
 
