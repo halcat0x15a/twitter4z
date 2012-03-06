@@ -6,11 +6,7 @@ import Scalaz._
 import twitter4z.objects
 import twitter4z.objects.User
 
-import twitter4z.http._
-
-import twitter4z.objects.JSON
-
-trait Tweets { self: JSON with API =>
+trait Tweets { self: API =>
 /*
   def retweetedBy(id: Long, paging: Paging = Paging()) = resource[List[User]](get, "http://api.twitter.com/1/statuses/%s/retweeted_by.json".format(id), paging.params: _*)
 

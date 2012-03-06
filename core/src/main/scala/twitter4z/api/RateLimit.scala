@@ -9,16 +9,18 @@ case class RateLimit(limit: Int, remaining: Int, reset: Long)
 
 object RateLimit {
 
-  type Result[A] = ValidationNEL[NumberFormatException, A]
+  type Result[A] = ValidationNEL[Exception, A]
 
-  lazy val limit: HttpURLConnection => Result[Int] = _.getHeaderField("X-RateLimit-Limit").parseInt.liftFailNel
+  def get[A](key: String)(f: String => Validation[NumberFormatException, A]): Map[String, Seq[String]] => Result[A] = _.get(key).flatMap(_.headOption).toSuccess(new NoSuchElementException).flatMap(f).liftFailNel
 
-  lazy val remaining: HttpURLConnection => Result[Int] = _.getHeaderField("X-RateLimit-Remaining").parseInt.liftFailNel
+  lazy val limit = get("X-RateLimit-Limit")(_.parseInt)
 
-  lazy val reset: HttpURLConnection => Result[Long] = _.getHeaderField("X-RateLimit-Reset").parseLong.liftFailNel
+  lazy val remaining = get("X-RateLimit-Remaining")(_.parseInt)
+
+  lazy val reset = get("X-RateLimit-Reset")(_.parseLong)
 
   lazy val fields = reset &&& (remaining &&& limit)
 
-  lazy val validation: HttpURLConnection => Result[RateLimit] = fields(_).fold(_ <*> _.fold(_ <*> _.map((RateLimit.apply _).curried)))
+  lazy val validation = fields >>> (_.fold(_ <*> _.fold(_ <*> _.map((RateLimit.apply _).curried))))
 
 }

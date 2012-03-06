@@ -11,6 +11,8 @@ import org.specs2.html._
 
 trait OAuth {
 
+  def consumer(key: String, secret: String): Consumer = Consumer(key, secret)
+
   def requestToken(consumer: Consumer): Token @@ Request = tag(Http(request_token(consumer)))
 
   def requestToken(consumer: Consumer, callback: String): Token @@ Request = tag(Http(request_token(consumer, callback)))

@@ -3,51 +3,66 @@ package twitter4z.api
 import twitter4z.objects.{ JSON, Status }
 import parameters.Paging
 
-trait Timelines { self: JSON with API =>
+import dispatch._
 
-  case object homeTimeline extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/home_timeline.json") with Paging {
-    type Self = homeTimeline.type
-    val self = this
+import org.specs2.html._
+
+trait Timelines { self: API =>
+
+  val Statuses = TwitterAPI / "1/statuses"
+
+  case class HomeTimeline(parameters: Parameters = Default) extends Resource[List[Status], Required, HomeTimeline](Statuses / "home_timeline.json" <<?) with Paging {
+    def apply(parameters: Parameters) = HomeTimeline(parameters)
   }
 
-  case object mentions extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/mentions.json") with Paging {
-    type Self = mentions.type
-    val self = this
+  lazy val homeTimeline = HomeTimeline()
+
+  case class Mentions(parameters: Parameters = Default) extends Resource[List[Status], Required, Mentions](Statuses / "mentions.json" <<?) with Paging {
+    def apply(parameters: Parameters) = Mentions(parameters)
   }
 
-  case object publicTimeline extends Resource[List[Status], Optional]("GET", "http://api.twitter.com/1/statuses/public_timeline.json") {
-    type Self = publicTimeline.type
-    val self = this
+  lazy val mentions = Mentions()
+
+  case class PublicTimeline(parameters: Parameters = Default) extends Resource[List[Status], Optional, PublicTimeline](Statuses / "public_timeline.json" <<?) {
+    def apply(parameters: Parameters) = PublicTimeline(parameters)
   }
 
-  case object retweetedByMe extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/retweeted_by_me.json") with Paging {
-    type Self = retweetedByMe.type
-    val self = this
+  lazy val publicTimeline = PublicTimeline()
+
+  case class RetweetedByMe(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedByMe](Statuses / "retweeted_by_me.json" <<?) with Paging {
+    def apply(parameters: Parameters) = RetweetedByMe(parameters)
   }
 
-  case object retweetedToMe extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/retweeted_to_me.json") with Paging {
-    type Self = retweetedToMe.type
-    val self = this
+  lazy val retweetedByMe = RetweetedByMe()
+
+  case class RetweetedToMe(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedToMe](Statuses / "retweeted_to_me.json" <<?) with Paging {
+    def apply(parameters: Parameters) = RetweetedToMe(parameters)
   }
 
-  case object retweetsOfMe extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/retweets_of_me.json") with Paging {
-    type Self = retweetsOfMe.type
-    val self = this
+  lazy val retweetedToMe = RetweetedToMe()
+
+  case class RetweetsOfMe(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetsOfMe](Statuses / "retweets_of_me.json" <<?) with Paging {
+    def apply(parameters: Parameters) = RetweetsOfMe(parameters)
   }
 
-  case object userTimeline extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/retweets_of_me.json") with Paging {
-    type Self = userTimeline.type
-    val self = this
+  lazy val retweetsOfMe = RetweetsOfMe()
+
+  case class UserTimeline(parameters: Parameters = Default) extends Resource[List[Status], Required, UserTimeline](Statuses / "retweets_of_me.json" <<?) with Paging {
+    def apply(parameters: Parameters) = UserTimeline(parameters)
   }
 
-  case class retweetedToUser(id: Long) extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/retweeted_to_user.json") with Paging {
-    type Self = retweetedToUser
-    val self = this
+  lazy val userTimeline = UserTimeline()
+
+  case class RetweetedToUser(parameters: Parameters = Default)(id: Long) extends Resource[List[Status], Required, RetweetedToUser](Statuses / "retweeted_to_user.json" <<?) with Paging {
+    def apply(parameters: Parameters) = RetweetedToUser(parameters)(id)
   }
 
-  case class retweetedByUser(id: Long) extends Resource[List[Status], Required]("GET", "http://api.twitter.com/1/statuses/retweeted_by_user.json") with Paging {
-    type Self = retweetedByUser
-    val self = this
+  lazy val retweetedToUser = RetweetedToUser()_
+
+  case class RetweetedByUser(parameters: Parameters = Default)(id: Long) extends Resource[List[Status], Required, RetweetedByUser](Statuses / "retweeted_by_user.json" <<?) with Paging {
+    def apply(parameters: Parameters) = RetweetedByUser(parameters)(id)
   }
+
+  lazy val retweetedByUser = RetweetedByUser()_
 
 }

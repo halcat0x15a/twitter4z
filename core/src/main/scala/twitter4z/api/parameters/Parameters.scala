@@ -3,68 +3,67 @@ package twitter4z.api.parameters
 import scalaz._
 import Scalaz._
 
-trait Parameters {
+import twitter4z.api._
 
-  type Self <: Parameters
+trait Parameter {
 
-  val self: Self
+  type Self <: Parameter
 
-  private var parameter: Map[String, String] = Map.empty
+  def apply(parameters: Parameters): Self
+
+  val parameters: Parameters
 
   def update[A: Show](key: String, value: A): Self = {
-    parameter += key -> value.shows
-    self
+    apply(parameters + (key -> value.shows))
   }
-
-  def parameters = parameter.toList
 
 }
 
-trait Count { self: Parameters =>
+trait Count { self: Parameter =>
   def count(count: Int) = update("count", count)
 }
 
-trait Page { self: Parameters =>
+trait Page { self: Parameter =>
   def page(page: Int) = update("page", page)
 }
 
-trait SinceId { self: Parameters =>
+trait SinceId { self: Parameter =>
   def sinceId(sinceId: Long) = update("since_id", sinceId)
 }
 
-trait MaxId { self: Parameters =>
+trait MaxId { self: Parameter =>
   def maxId(maxId: Long) = update("max_id", maxId)
 }
 
-trait UserId { self: Parameters =>
+trait UserId { self: Parameter =>
   def userId(userId: Long) = update("user_id", userId)
 }
 
-trait ScreenName { self: Parameters =>
+trait ScreenName { self: Parameter =>
   def screenName(screenName: String) = this("screen_name") = screenName
 }
 
-trait Status { self: Parameters =>
+trait Status { self: Parameter =>
   def status(status: String) = this("status") = status
 }
 
-trait InReplyToStatusId { self: Parameters =>
+trait InReplyToStatusId { self: Parameter =>
   def inReplyToStatusId(inReplyToStatusId: Long) = this("in_reply_to_status_id") = inReplyToStatusId
 }
 
-trait Location { self: Parameters =>
+trait Location { self: Parameter =>
   def location(lat: Double, long: Double) = {
     this("lat") = lat
     this("long") = long
   }
 }
 
-trait PlaceId { self: Parameters =>
+trait PlaceId { self: Parameter =>
   def placeId(placeId: String) = this("place_id") = placeId
 }
 
-trait DisplayCoordinates { self: Parameters =>
+trait DisplayCoordinates { self: Parameter =>
   def displayCoordinates(displayCoordinates: String) = this("display_coordinates") = displayCoordinates
 }
 
-trait Paging extends Page with Count with SinceId with MaxId { self: Parameters => }
+trait Paging extends Page with Count with SinceId with MaxId { self: Parameter => }

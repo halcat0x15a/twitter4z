@@ -10,25 +10,42 @@ import dispatch.oauth._
 import org.specs2.html._
 
 import twitter4z.auth._
-import twitter4z.objects.JSON
 import twitter4z.api._
 
-class Twitter[A <: Authentication](val auth: A) extends OAuth with JSON with API {
+trait Twitter[A <: Authentication] extends OAuth with API {
 
   type Auth = A
 
+  val auth: Auth
+
 }
 
-object Twitter extends Twitter(Optional) {
+object Twitter extends Twitter[Optional] {
+
+  val auth = Optional
+
+  def apply(required: Required): Twitter[Required] = new Twitter[Required] {
+    val auth = required
+  }
 
   def apply(consumer: Consumer, token: Token @@ twitter4z.auth.Request, verifier: String): Twitter[Required] = {
-    accessToken(consumer, token, verifier) match {
-      case (token, userId, screenName) => new Twitter(Required(consumer, token))
-    }
+    Twitter(Required(consumer, token, verifier))
   }
 
   def apply(consumerKey: String, consumerSecret: String, token: String, secret: String): Twitter[Required] = {
-    new Twitter(Required(Consumer(consumerKey, consumerSecret), tag(Token(token, secret))))
+    Twitter(Required(consumerKey, consumerSecret, token, secret))
+  }
+
+  def apply(stream: InputStream): Twitter[Required] = {
+    Twitter(Required(stream))
+  }
+
+  def apply(file: File): Twitter[Required] = {
+    Twitter(Required(file))
+  }
+
+  def apply(name: String): Twitter[Required] = {
+    Twitter(Required(name))
   }
 
 }

@@ -6,6 +6,7 @@ import dispatch.oauth._
 
 import org.specs2.html._
 
+import twitter4z._
 import twitter4z.auth._
 
 sealed trait Authentication
@@ -24,18 +25,28 @@ case class Required(consumer: Consumer, token: Token @@ Access) extends Authenti
 
 }
 
-trait AuthenticationFunction {
+object Required {
 
-  def read(stream: InputStream): Required = {
+  def apply(consumer: Consumer, token: Token @@ Request, verifier: String): Required = {
+    Twitter.accessToken(consumer, token, verifier) match {
+      case (token, userId, screenName) => Required(consumer, token)
+    }
+  }
+
+  def apply(consumerKey: String, consumerSecret: String, token: String, secret: String): Required = {
+    Required(Consumer(consumerKey, consumerSecret), tag(Token(token, secret)))
+  }
+
+  def apply(stream: InputStream): Required = {
     val in = new ObjectInputStream(stream)
     val auth = in.readObject.asInstanceOf[Required]
     in.close()
     auth
   }
 
-  def read(file: File): Required = read(new FileInputStream(file))
+  def apply(file: File): Required = Required(new FileInputStream(file))
 
-  def read(name: String): Required = read(new FileInputStream(name))
+  def apply(name: String): Required = Required(new FileInputStream(name))
 
 }
 
