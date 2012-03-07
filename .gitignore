@@ -6,6 +6,6 @@ hoge
 *#*#
 *.log
 *.tokens
-*.properties
 *.token
 .history
+core/src/test/resources
