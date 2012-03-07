@@ -19,27 +19,15 @@ trait Parameter {
 
 }
 
-trait Count { self: Parameter =>
+trait Paging { self: Parameter =>
   def count(count: Int) = update("count", count)
-}
-
-trait Page { self: Parameter =>
   def page(page: Int) = update("page", page)
-}
-
-trait SinceId { self: Parameter =>
   def sinceId(sinceId: Long) = update("since_id", sinceId)
-}
-
-trait MaxId { self: Parameter =>
   def maxId(maxId: Long) = update("max_id", maxId)
 }
 
 trait UserId { self: Parameter =>
   def userId(userId: Long) = update("user_id", userId)
-}
-
-trait ScreenName { self: Parameter =>
   def screenName(screenName: String) = this("screen_name") = screenName
 }
 
@@ -65,5 +53,3 @@ trait PlaceId { self: Parameter =>
 trait DisplayCoordinates { self: Parameter =>
   def displayCoordinates(displayCoordinates: String) = this("display_coordinates") = displayCoordinates
 }
-
-trait Paging extends Page with Count with SinceId with MaxId { self: Parameter => }

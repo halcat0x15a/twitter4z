@@ -9,7 +9,9 @@ object Dependencies {
 
   val jsonExt = "net.liftweb" %% "lift-json-ext" % "2.4"
 
-  val specs = "org.specs2" %% "specs2" % "1.8.2"
+  val specs2 = "org.specs2" %% "specs2" % "1.8.2"
+
+  val scalacheck = "org.scala-tools.testing" %% "scalacheck" % "1.9"
 
   val swing = "org.scala-lang" % "scala-swing" % "2.9.1"
 
@@ -50,7 +52,8 @@ object Twitter4zBuild extends Build {
 	dispatch,
 	jsonScalaz,
 	jsonExt,
-	specs
+	specs2,
+	scalacheck
       )
     )
   ) dependsOn (dispatchLiftJson)

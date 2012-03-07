@@ -1,7 +1,7 @@
 package twitter4z.api
 
 import twitter4z.objects.{ JSON, Status }
-import parameters.Paging
+import parameters.{ Paging, UserId }
 
 import dispatch._
 
@@ -47,22 +47,28 @@ trait Timelines { self: API =>
 
   lazy val retweetsOfMe = RetweetsOfMe()
 
-  case class UserTimeline(parameters: Parameters = Default) extends Resource[List[Status], Required, UserTimeline](Statuses / "retweets_of_me.json" <<?) with Paging {
+  case class UserTimeline(parameters: Parameters = Default) extends Resource[List[Status], Required, UserTimeline](Statuses / "retweets_of_me.json" <<?) with Paging with UserId {
     def apply(parameters: Parameters) = UserTimeline(parameters)
   }
 
   lazy val userTimeline = UserTimeline()
 
-  case class RetweetedToUser(parameters: Parameters = Default)(id: Long) extends Resource[List[Status], Required, RetweetedToUser](Statuses / "retweeted_to_user.json" <<?) with Paging {
-    def apply(parameters: Parameters) = RetweetedToUser(parameters)(id)
+  case class RetweetedToUser(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedToUser](Statuses / "retweeted_to_user.json" <<?) with Paging with UserId {
+    def apply(parameters: Parameters) = RetweetedToUser(parameters)
   }
 
-  lazy val retweetedToUser = RetweetedToUser()_
-
-  case class RetweetedByUser(parameters: Parameters = Default)(id: Long) extends Resource[List[Status], Required, RetweetedByUser](Statuses / "retweeted_by_user.json" <<?) with Paging {
-    def apply(parameters: Parameters) = RetweetedByUser(parameters)(id)
+  def retweetedToUser[A](value: A)(implicit ev: Contains[A, t[Long]#t[String]]) = value match {
+    case id: Long => RetweetedToUser().userId(id)
+    case name: String => RetweetedToUser().screenName(name)
   }
 
-  lazy val retweetedByUser = RetweetedByUser()_
+  case class RetweetedByUser(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedByUser](Statuses / "retweeted_by_user.json" <<?) with Paging with UserId {
+    def apply(parameters: Parameters) = RetweetedByUser(parameters)
+  }
+
+  def retweetedByUser[A](value: A)(implicit ev: Contains[A, t[Long]#t[String]]) = value match {
+    case id: Long => RetweetedByUser().userId(id)
+    case name: String =>RetweetedByUser().screenName(name)
+  }
 
 }

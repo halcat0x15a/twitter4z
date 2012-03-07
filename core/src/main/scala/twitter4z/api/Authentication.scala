@@ -48,6 +48,8 @@ object Required {
 
   def apply(name: String): Required = Required(new FileInputStream(name))
 
+  def apply(props: java.util.Properties): Required = Required(props.getProperty("consumer.key"), props.getProperty("consumer.secret"), props.getProperty("access.token"), props.getProperty("access.token.secret"))
+
 }
 
 sealed trait Optional extends Authentication

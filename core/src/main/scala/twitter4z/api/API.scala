@@ -23,22 +23,28 @@ trait API extends JSON with Timelines with Tweets {
 
   sealed trait Execute[O <: Authentication] {
 
-    def apply[A: JSONR](resource: Request): Result[A]
+    def apply[A: JSONR](resource: Request): Result[(RateLimit, A)]
 
   }
 
   object Execute {
 
-    def apply[A: JSONR](resource: Request, auth: Required): Result[A] = Http(resource <@ (auth.consumer, auth.token) ># fromJSON[A])
+    def handler[A: JSONR](resource: Request) = resource >:+ {
+      case (header, request) => (request ># fromJSON[A]) ~> (result => (RateLimit.validate(header) <**> result)(_ -> _))
+    }
+
+    def apply[A: JSONR](resource: Request, auth: Required): Result[(RateLimit, A)] = {
+      Http(handler[A](resource <@ (auth.consumer, auth.token)))
+    }
 
     implicit def required(implicit ev: Auth =:= Required) = new Execute[Required] {
       def apply[A: JSONR](resource: Request) = Execute[A](resource, ev(auth))
     }
 
-    implicit def optional = new Execute[Optional] {
+    implicit object optional extends Execute[Optional] {
       def apply[A: JSONR](resource: Request) = auth match {
 	case auth: Required => Execute[A](resource, auth)
-	case _ => Http(resource ># fromJSON[A])
+	case _ => Http(handler[A](resource))
       }
     }
 
@@ -48,10 +54,10 @@ trait API extends JSON with Timelines with Tweets {
 
     type Self = S
 
-    def apply()(implicit execute: Execute[O]): Result[A] = execute(resource(parameters))
+    def apply()(implicit execute: Execute[O]): Result[(RateLimit, A)] = execute(resource(parameters))
 
     def unsafe(implicit execute: Execute[O]): A = this() match {
-      case Success(a) => a
+      case Success((_, a)) => a
       case Failure(e) => throw new Exception(e.toString)
     }
 
