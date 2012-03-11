@@ -26,8 +26,9 @@ trait DirectMessages { self: API =>
 
   lazy val destroyDirectMessage = DestroyDirectMessage(Map.empty)_
 
-  case class NewDirectMessage(parameters: Parameters) extends Resource[DirectMessage, Required, NewDirectMessage](DIRECT_MESSAGES / "new.json" <<) with UserId with Text {
+  case class NewDirectMessage(parameters: Parameters) extends Resource[DirectMessage, Required, NewDirectMessage](DIRECT_MESSAGES / "new.json" <<) with UserId {
     def apply(parameters: Parameters) = NewDirectMessage(parameters)
+    lazy val text = apply[String](TEXT)
   }
 
   def newDirectMessages[A: ContainsId](value: A) = NewDirectMessage(Map.empty).userId(value)

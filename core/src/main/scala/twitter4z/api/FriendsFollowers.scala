@@ -18,8 +18,20 @@ trait FriendsFollowers { self: API =>
 
   def friendIds[A: ContainsId](value: A) = FriendIds(Map.empty).userId(value)
 
-  case class ExistsFriendship(parameters: Parameters) extends Resource[Boolean, Optional, ExistsFriendship](FRIENDSHIPS / "exists.json" <<?) with UserIdAB {
+  case class ExistsFriendship(parameters: Parameters) extends Resource[Boolean, Optional, ExistsFriendship](FRIENDSHIPS / "exists.json" <<?) {
     def apply(parameters: Parameters) = ExistsFriendship(parameters)
+    lazy val userIdA = apply[Long](USER_ID_A)
+    lazy val userIdB = apply[Long](USER_ID_B)
+    lazy val screenNameA = apply[String](SCREEN_NAME_A)
+    lazy val screenNameB = apply[String](SCREEN_NAME_B)
+    def userIdAB[A: ContainsId, B: ContainsId](valueA: A, valueB: B) = {
+      (valueA, valueB) match {
+	case (idA: Long, idB: Long) => userIdA(idA).userIdB(idB)
+	case (idA: Long, nameB: String) => userIdA(idA).screenNameB(nameB)
+	case (nameA: String, idB: Long) => screenNameA(nameA).userIdB(idB)
+	case (nameA: String, nameB: String) => screenNameA(nameA).screenNameB(nameB)
+      }
+    }
   }
 
   def existsFriendship[A: ContainsId, B: ContainsId](valueA: A, valueB: B) = ExistsFriendship(Map.empty).userIdAB(valueA, valueB)
@@ -36,14 +48,27 @@ trait FriendsFollowers { self: API =>
 
   lazy val outgoingFriendship = OutgoingFriendship(Map.empty)
 
-  case class ShowFriendship(parameters: Parameters) extends Resource[Relationship, Optional, ShowFriendship](FRIENDSHIPS / "show.json" <<?) with SourceTargetId {
+  case class ShowFriendship(parameters: Parameters) extends Resource[Relationship, Optional, ShowFriendship](FRIENDSHIPS / "show.json" <<?) {
     def apply(parameters: Parameters) = ShowFriendship(parameters)
+    lazy val sourceId = apply[Long](SOURCE_ID)
+    lazy val sourceScreenName = apply[String](SOURCE_SCREEN_NAME)
+    lazy val targetId = apply[Long](TARGET_ID)
+    lazy val targetScreenName = apply[String](TARGET_SCREEN_NAME)
+    def sourceTargetId[A: ContainsId, B: ContainsId](valueA: A, valueB: B) = {
+      (valueA, valueB) match {
+	case (sourceId: Long, targetId: Long) => this.sourceId(sourceId).targetId(targetId)
+	case (sourceId: Long, targetName: String) => this.sourceId(sourceId).targetScreenName(targetName)
+	case (sourceName: String, targetId: Long) => sourceScreenName(sourceName).targetId(targetId)
+	case (sourceName: String, targetName: String) => sourceScreenName(sourceName).targetScreenName(targetName)
+      }
+    }
   }
 
   def showFriendship[A: ContainsId, B: ContainsId](valueA: A, valueB: B) = ShowFriendship(Map.empty).sourceTargetId(valueA, valueB)
 
-  case class CreateFriendship(parameters: Parameters) extends Resource[User, Required, CreateFriendship](FRIENDSHIPS / "create.json" <<) with Follow {
+  case class CreateFriendship(parameters: Parameters) extends Resource[User, Required, CreateFriendship](FRIENDSHIPS / "create.json" <<) with UserId {
     def apply(parameters: Parameters) = CreateFriendship(parameters)
+    lazy val follow = apply[Boolean](FOLLOW)
   }
 
   def createFriendship[A: ContainsId](value: A) = CreateFriendship(Map.empty).userId(value)
@@ -60,8 +85,10 @@ trait FriendsFollowers { self: API =>
 
   def lookupFriendship[A: ContainsId](value: A) = LookupFriendship(Map.empty).userId(value)
 
-  case class UpdateFriendship(parameters: Parameters) extends Resource[Relationship, Required, UpdateFriendship](FRIENDSHIPS / "update.json" <<) with Device {
+  case class UpdateFriendship(parameters: Parameters) extends Resource[Relationship, Required, UpdateFriendship](FRIENDSHIPS / "update.json" <<) with UserId {
     def apply(parameters: Parameters) = UpdateFriendship(parameters)
+    lazy val device = apply[Boolean](DEVICE)
+    lazy val retweets = apply[Boolean](RETWEETS)
   }
 
   def updateFriendship[A: ContainsId](value: A) = UpdateFriendship(Map.empty).userId(value)
