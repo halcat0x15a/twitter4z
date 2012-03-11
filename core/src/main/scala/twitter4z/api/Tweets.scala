@@ -56,6 +56,6 @@ trait Tweets { self: API =>
     lazy val displayCoordinates = apply[String](DISPLAY_COORDINATES)
   }
 
-  lazy val updateStatus = UpdateStatus(Map.empty).status(_)
+  lazy val updateStatus = UpdateStatus(Map.empty).status
 
 }
