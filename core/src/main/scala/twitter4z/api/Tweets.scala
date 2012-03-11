@@ -7,7 +7,7 @@ import twitter4z.objects.{Status, User}
 
 import parameter._
 
-trait Tweets { self: API =>
+trait Tweets { self: API[_] =>
 
   case class RetweetedBy(parameters: Parameters)(id: Long) extends Resource[List[User], Optional, RetweetedBy](STATUSES / id.shows / "retweeted_by.json" <<?) with Paging {
     def apply(parameters: Parameters) = RetweetedBy(parameters)(id)

@@ -38,7 +38,7 @@ class TimelinesSpec extends Specification with Twitter { def is =
     def extract(text: String) = extract1(text).toInt
   }
 
-  case class count[A <: Resource[List[Status], Required, A] with parameters.Paging](resource: A) extends Then[Int] {
+  case class count[A <: Resource[List[Status], Required, A] with parameter.Paging](resource: A) extends Then[Int] {
     def extract(number: Int, text: String) = {
       resource.count(number)().value must be like {
 	case Success((_, statuses)) => statuses must have size extract1(text).toInt
@@ -50,7 +50,7 @@ class TimelinesSpec extends Specification with Twitter { def is =
     def extract(text: String) = extract1(text).toLong
   }
 
-  case class since[A <: Resource[List[Status], Required, A] with parameters.Paging](resource: A) extends Then[Long] {
+  case class since[A <: Resource[List[Status], Required, A] with parameter.Paging](resource: A) extends Then[Long] {
     def extract(id: Long, text: String) = {
       resource.sinceId(id)().value must be like {
 	case Success((_, statuses)) => statuses.map(_.id) must not contain id

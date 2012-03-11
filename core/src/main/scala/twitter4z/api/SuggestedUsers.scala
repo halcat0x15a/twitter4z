@@ -5,7 +5,7 @@ import Scalaz._
 
 import parameter._
 
-trait SuggestedUsers { self: API =>
+trait SuggestedUsers { self: API[_] =>
 
   import twitter4z.objects._
 

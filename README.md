@@ -17,6 +17,10 @@ Twitter.publicTimeline.unsafe
 ### Monadic
 
 ```scala
+import scalaz._
+import Scalaz._
+import Validation.Monad._
+
 val w = for {
   statuses <- twitter.homeTimeline()
    _ <- twitter.updateStatus("@%s Hello!".format(statuses.head.user.screenName))()
@@ -32,7 +36,7 @@ val consumer = Twitter.cosumer(key, secret)
 
 val token = Twitter.requestToken(consumer)
 
-val url = Twitter.authorizationURI(token)
+val url = Twitter.authorizeURI(token)
 
 val twitter = Twitter(consumer, token, "XXXXXXX")
 

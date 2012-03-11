@@ -5,7 +5,7 @@ import dispatch._
 import twitter4z.objects.{ Count => _, _ }
 import parameter._
 
-trait Lists { self: API =>
+trait Lists { self: API[_] =>
 
   case class AllLists(parameters: Parameters) extends Resource[List[UserList], Optional, AllLists](LISTS / "all.json" <<?) with UserId {
     def apply(parameters: Parameters) = AllLists(parameters)

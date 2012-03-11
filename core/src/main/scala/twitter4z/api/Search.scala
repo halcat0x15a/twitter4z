@@ -15,7 +15,7 @@ import org.joda.time.format._
 import Units._
 import SearchResult._
 
-trait Search { self: API =>
+trait Search { self: API[_] =>
 
   case class Search(parameters: Parameters) extends Resource[List[Status], Optional, Search](url("http://search.twitter.com/search.json") <<?) with Query with Lang {
     lazy val formatter = DateTimeFormat.forPattern("YYYY-MM-DD")

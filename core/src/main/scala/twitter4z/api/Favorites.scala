@@ -8,7 +8,7 @@ import dispatch._
 import twitter4z.objects._
 import parameter._
 
-trait Favorites { self: API =>
+trait Favorites { self: API[_] =>
 
   case class Favorites(parameters: Parameters) extends Resource[List[Status], Required, Favorites](API_TWITTER_COM / "favorites.json" <<?) with Paging {
     def apply(parameters: Parameters) = Favorites(parameters)

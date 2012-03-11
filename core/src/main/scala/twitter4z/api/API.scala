@@ -15,11 +15,9 @@ import dispatch.liftjson.Js._
 
 import org.specs2.html._
 
-trait API extends JSON with Timelines with Tweets with Search with DirectMessages with FriendsFollowers with Users with SuggestedUsers with Favorites with Lists {
+trait API[A <: Authentication] extends JSON with Timelines with Tweets with Search with DirectMessages with FriendsFollowers with Users with SuggestedUsers with Favorites with Lists {
 
-  type Auth <: Authentication
-
-  val auth: Auth
+  val auth: A
 
   type TwitterResult[A] = WriterT[Result, LastOption[RateLimit], A]
 
@@ -39,7 +37,7 @@ trait API extends JSON with Timelines with Tweets with Search with DirectMessage
       Http(handler[A](resource <@ (auth.consumer, auth.token)))
     }
 
-    implicit def required(implicit ev: Auth =:= Required) = new Execute[Required] {
+    implicit def required(implicit ev: A =:= Required) = new Execute[Required] {
       def apply[A: JSONR](resource: Request) = Execute[A](resource, ev(auth))
     }
 

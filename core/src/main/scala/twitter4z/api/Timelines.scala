@@ -7,7 +7,7 @@ import dispatch._
 
 import org.specs2.html._
 
-trait Timelines { self: API =>
+trait Timelines { self: API[_] =>
 
   case class HomeTimeline(parameters: Parameters) extends Resource[List[Status], Required, HomeTimeline](STATUSES / "home_timeline.json" <<?) with Paging {
     def apply(parameters: Parameters) = HomeTimeline(parameters)

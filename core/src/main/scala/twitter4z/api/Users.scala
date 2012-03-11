@@ -7,7 +7,7 @@ import twitter4z.objects._
 
 import parameter._
 
-trait Users { self: API =>
+trait Users { self: API[_] =>
 
   case class LookupUsers(parameters: Parameters) extends Resource[List[User], Optional, LookupUsers](USERS / "lookup.json" <<?) with UserId {
     def apply(parameters: Parameters) = LookupUsers(parameters)

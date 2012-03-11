@@ -6,7 +6,7 @@ import Scalaz._
 import twitter4z.objects._
 import parameter._
 
-trait DirectMessages { self: API =>
+trait DirectMessages { self: API[_] =>
 
   case class DirectMessages(parameters: Parameters) extends Resource[List[DirectMessage], Required, DirectMessages](API_TWITTER_COM / "direct_messages.json" <<?) with Paging {
     def apply(parameters: Parameters) = DirectMessages(parameters)

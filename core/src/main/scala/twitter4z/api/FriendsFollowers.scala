@@ -4,7 +4,7 @@ import twitter4z.objects._
 
 import parameter._
 
-trait FriendsFollowers { self: API =>
+trait FriendsFollowers { self: API[_] =>
 
   case class FollowerIds(parameters: Parameters) extends Resource[List[Long], Optional, FollowerIds](FOLLOWERS / "ids.json" <<?) with UserId with Cursor {
     def apply(parameters: Parameters) = FollowerIds(parameters)
