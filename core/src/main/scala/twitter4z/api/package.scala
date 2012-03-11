@@ -7,42 +7,22 @@ package object api {
 
   type Parameters = Map[String, String]
 
-  val Default: Parameters = Map.empty
+  val API_TWITTER_COM = :/("api.twitter.com") / "1"
 
-  val TwitterAPI = :/("api.twitter.com")
+  val STATUSES = API_TWITTER_COM / "statuses"
 
-  // UnionTypes
+  val DIRECT_MESSAGES = API_TWITTER_COM / "direct_messages"
 
-  type ![A] = A => Nothing
-  type !![A] = ![![A]]
+  val FOLLOWERS = API_TWITTER_COM / "followers"
 
-  trait Disj { self =>
-    type D
-    type t[S] = Disj {
-      type D = self.D with ![S]
-    }
-  }
+  val FRIENDS = API_TWITTER_COM / "friends"
 
-  type t[T] = {
-    type t[S] = (Disj { type D = ![T] })#t[S]
-  }
+  val FRIENDSHIPS = API_TWITTER_COM / "friendships"
 
-  type or[T <: Disj] = ![T#D]
+  val USERS = API_TWITTER_COM / "users"
 
-  type Contains[S, T <: Disj] = !![S] <:< or[T]
-  type ∈[S, T <: Disj] = Contains[S, T]
+  val FAVORITES = API_TWITTER_COM / "favorites"
 
-  sealed trait Union[T] {
-    val value: Any
-  }
-
-  case class Converter[S](s: S) {
-    def union[T <: Disj](implicit ev: Contains[S, T]): Union[T] =
-      new Union[T] {
-        val value = s
-      }
-  }
-
-  implicit def any2Converter[S](s: S): Converter[S] = Converter[S](s)
+  val LISTS =  API_TWITTER_COM / "lists"
 
 }

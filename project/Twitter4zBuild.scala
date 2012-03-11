@@ -13,6 +13,8 @@ object Dependencies {
 
   val scalacheck = "org.scala-tools.testing" %% "scalacheck" % "1.9"
 
+//  val specs2Scalaz = "org.specs2" %% "specs2-scalaz-core" % "6.0.1" % "test"
+
   val swing = "org.scala-lang" % "scala-swing" % "2.9.1"
 
   val stm = "org.scala-tools" %% "scala-stm" % "0.4"

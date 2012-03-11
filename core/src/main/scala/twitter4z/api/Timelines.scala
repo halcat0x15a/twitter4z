@@ -1,7 +1,7 @@
 package twitter4z.api
 
-import twitter4z.objects.{ JSON, Status }
-import parameters.{ Paging, UserId }
+import twitter4z.objects.Status
+import parameter._
 
 import dispatch._
 
@@ -9,66 +9,58 @@ import org.specs2.html._
 
 trait Timelines { self: API =>
 
-  val Statuses = TwitterAPI / "1/statuses"
-
-  case class HomeTimeline(parameters: Parameters = Default) extends Resource[List[Status], Required, HomeTimeline](Statuses / "home_timeline.json" <<?) with Paging {
+  case class HomeTimeline(parameters: Parameters) extends Resource[List[Status], Required, HomeTimeline](STATUSES / "home_timeline.json" <<?) with Paging {
     def apply(parameters: Parameters) = HomeTimeline(parameters)
   }
 
-  lazy val homeTimeline = HomeTimeline()
+  lazy val homeTimeline = HomeTimeline(Map.empty)
 
-  case class Mentions(parameters: Parameters = Default) extends Resource[List[Status], Required, Mentions](Statuses / "mentions.json" <<?) with Paging {
+  case class Mentions(parameters: Parameters) extends Resource[List[Status], Required, Mentions](STATUSES / "mentions.json" <<?) with Paging {
     def apply(parameters: Parameters) = Mentions(parameters)
   }
 
-  lazy val mentions = Mentions()
+  lazy val mentions = Mentions(Map.empty)
 
-  case class PublicTimeline(parameters: Parameters = Default) extends Resource[List[Status], Optional, PublicTimeline](Statuses / "public_timeline.json" <<?) {
+  case class PublicTimeline(parameters: Parameters) extends Resource[List[Status], Optional, PublicTimeline](STATUSES / "public_timeline.json" <<?) {
     def apply(parameters: Parameters) = PublicTimeline(parameters)
   }
 
-  lazy val publicTimeline = PublicTimeline()
+  lazy val publicTimeline = PublicTimeline(Map.empty)
 
-  case class RetweetedByMe(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedByMe](Statuses / "retweeted_by_me.json" <<?) with Paging {
+  case class RetweetedByMe(parameters: Parameters) extends Resource[List[Status], Required, RetweetedByMe](STATUSES / "retweeted_by_me.json" <<?) with Paging {
     def apply(parameters: Parameters) = RetweetedByMe(parameters)
   }
 
-  lazy val retweetedByMe = RetweetedByMe()
+  lazy val retweetedByMe = RetweetedByMe(Map.empty)
 
-  case class RetweetedToMe(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedToMe](Statuses / "retweeted_to_me.json" <<?) with Paging {
+  case class RetweetedToMe(parameters: Parameters) extends Resource[List[Status], Required, RetweetedToMe](STATUSES / "retweeted_to_me.json" <<?) with Paging {
     def apply(parameters: Parameters) = RetweetedToMe(parameters)
   }
 
-  lazy val retweetedToMe = RetweetedToMe()
+  lazy val retweetedToMe = RetweetedToMe(Map.empty)
 
-  case class RetweetsOfMe(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetsOfMe](Statuses / "retweets_of_me.json" <<?) with Paging {
+  case class RetweetsOfMe(parameters: Parameters) extends Resource[List[Status], Required, RetweetsOfMe](STATUSES / "retweets_of_me.json" <<?) with Paging {
     def apply(parameters: Parameters) = RetweetsOfMe(parameters)
   }
 
-  lazy val retweetsOfMe = RetweetsOfMe()
+  lazy val retweetsOfMe = RetweetsOfMe(Map.empty)
 
-  case class UserTimeline(parameters: Parameters = Default) extends Resource[List[Status], Required, UserTimeline](Statuses / "retweets_of_me.json" <<?) with Paging with UserId {
+  case class UserTimeline(parameters: Parameters) extends Resource[List[Status], Required, UserTimeline](STATUSES / "retweets_of_me.json" <<?) with Paging with UserId {
     def apply(parameters: Parameters) = UserTimeline(parameters)
   }
 
-  lazy val userTimeline = UserTimeline()
+  lazy val userTimeline = UserTimeline(Map.empty)
 
-  case class RetweetedToUser(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedToUser](Statuses / "retweeted_to_user.json" <<?) with Paging with UserId {
+  case class RetweetedToUser(parameters: Parameters) extends Resource[List[Status], Required, RetweetedToUser](STATUSES / "retweeted_to_user.json" <<?) with Paging with UserId {
     def apply(parameters: Parameters) = RetweetedToUser(parameters)
   }
 
-  def retweetedToUser[A](value: A)(implicit ev: Contains[A, t[Long]#t[String]]) = value match {
-    case id: Long => RetweetedToUser().userId(id)
-    case name: String => RetweetedToUser().screenName(name)
-  }
+  def retweetedToUser[A: ContainsId](value: A) = RetweetedToUser(Map.empty).userId(value)
 
-  case class RetweetedByUser(parameters: Parameters = Default) extends Resource[List[Status], Required, RetweetedByUser](Statuses / "retweeted_by_user.json" <<?) with Paging with UserId {
+  case class RetweetedByUser(parameters: Parameters) extends Resource[List[Status], Required, RetweetedByUser](STATUSES / "retweeted_by_user.json" <<?) with Paging with UserId {
     def apply(parameters: Parameters) = RetweetedByUser(parameters)
   }
 
-  def retweetedByUser[A](value: A)(implicit ev: Contains[A, t[Long]#t[String]]) = value match {
-    case id: Long => RetweetedByUser().userId(id)
-    case name: String =>RetweetedByUser().screenName(name)
-  }
+  def retweetedByUser[A: ContainsId](value: A) = RetweetedByUser(Map.empty).userId(value)
 
 }
