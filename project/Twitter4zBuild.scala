@@ -35,7 +35,10 @@ object Twitter4zBuild extends Build {
     scalaVersion := "2.9.1",
     addCompilerPlugin("org.scala-tools.sxr" % "sxr_2.9.0" % "0.2.7"),
     scalacOptions <+= scalaSource in Compile map { "-P:sxr:base-directory:" + _.getAbsolutePath },
-    scalacOptions += "-deprecation",
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-unchecked"
+    ),
     resolvers += ScalaToolsSnapshots
   )
 

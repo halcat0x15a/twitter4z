@@ -1,7 +1,7 @@
 package twitter4z.objects
 
-case class UserLists(
-  lists: List[UserList],
+case class CursorList[A](
+  list: List[A],
   nextCursor: Long,
   previousCursor: Long
 )

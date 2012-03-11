@@ -110,7 +110,9 @@ trait JSON extends StatusJSON {
 
   implicit def UserListJSONR = JSONR(json => (field[String]("description")(json) |@| field[String]("full_name")(json) |@| field[Long]("id")(json) |@| field[Int]("member_count")(json) |@| field[String]("name")(json) |@| field[String]("slug")(json) |@| field[Int]("subscriber_count")(json) |@| field[String]("uri")(json) |@| field[User]("user")(json) |@| field[Boolean]("following")(json) |@| field[String]("mode")(json))(UserList.apply))
 
-  implicit def UserListsJSONR = JSONR((UserLists.apply _).applyJSON(field("lists"), field("next_cursor"), field("previous_cursor")))
+  implicit def UserListsJSONR = JSONR((CursorList[UserList] _).applyJSON(field("lists"), field("next_cursor"), field("previous_cursor")))
+
+  implicit def UsersJSONR = JSONR((CursorList[User] _).applyJSON(field("users"), field("next_cursor"), field("previous_cursor")))
 
   def fieldOpt[A: JSONR](name: String)(json: JValue): Result[Option[A]] = field[A](name)(json) match {
     case f@Failure(nel) => nel.head match {

@@ -80,6 +80,12 @@ package object parameter {
 
   val OWNER_SCREEN_NAME = "owner_screen_name"
 
+  val NAME = "name"
+
+  val MODE = "mode"
+
+  val DESCRIPTION = "description"
+
   // UnionTypes
 
   type ![A] = A => Nothing
