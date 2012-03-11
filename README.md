@@ -8,36 +8,42 @@ A Scalaz wrapper for Twitter API.
 
 ### Simple
 
-    scala> import twitter4z.Twitter
+```scala
+import twitter4z.Twitter
 
-    scala> Twitter.publicTimeline.unsafe
+Twitter.publicTimeline.unsafe
+```
 
 ### Monadic
 
-    scala> val w = for {
-         |   statuses <- twitter.homeTimeline()
-         |   _ <- twitter.updateStatus("@%s Hello!".format(statuses.head.user.screenName))()
-         | } yield statuses
+```scala
+val w = for {
+  statuses <- twitter.homeTimeline()
+   _ <- twitter.updateStatus("@%s Hello!".format(statuses.head.user.screenName))()
+ } yield statuses
 
-    scala> w.value
+w.value
+```
 
 ## Authorization
 
-    scala> val consumer = Twitter.cosumer(key, secret)
+```scala
+val consumer = Twitter.cosumer(key, secret)
 
-    scala> val rtoken = Twitter.requestToken(consumer)
-    
-    scala> val url = Twitter.authorizationURI(rtoken)
-    
-    scala> val atoken = Twitter.accessToken(consumer, rtoken, "XXXXXXX")
-    
-    scala> val twitter = Twitter(atoken)
+val token = Twitter.requestToken(consumer)
 
-    scala> twitter.updateStatus("Twitter4z!")
+val url = Twitter.authorizationURI(token)
+
+val twitter = Twitter(consumer, token, "XXXXXXX")
+
+twitter.updateStatus("Twitter4z!")
+```
 
 ## Option
 
-    scala> twitter.homeTimeline.page(2).count(50)
+```
+twitter.homeTimeline.page(2).count(50)
+```
 
 # Source
 
