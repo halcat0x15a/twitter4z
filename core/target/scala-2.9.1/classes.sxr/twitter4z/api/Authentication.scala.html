@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>twitter4z/api/Authentication.scala</title>
+        <script type="text/javascript" src="../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.api
+
+<span class="keyword">import</span> java.io._
+
+<span class="keyword">import</span> dispatch.oauth._
+
+<span class="keyword">import</span> org.specs2.html._
+
+<span class="keyword">import</span> twitter4z._
+<span class="keyword">import</span> twitter4z.auth._
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Authentication extends java.lang.Object" id="9677">Authentication</a>
+
+case <span class="keyword">class</span> <a title="class Required extends java.lang.Object with twitter4z.api.Authentication with ScalaObject with Product with Serializable" id="31229">Required</a><a href="#31229" title="ScalaObject" class="delimiter">(</a><a title="dispatch.oauth.Consumer" id="31245">consumer</a>: <span title="dispatch.oauth.Consumer">Consumer</span>, <a title="org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access]" id="31246">token</a>: Token <span title="org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access]">@@</span> Access<span class="delimiter">)</span> <span class="keyword">extends</span> <a href="#9677" title="twitter4z.api.Authentication">Authentication</a> <span class="delimiter">{</span>
+
+  <span class="keyword">def</span> <a title="(stream: java.io.OutputStream)Unit" id="30789">write</a><span class="delimiter">(</span><a title="java.io.OutputStream" id="79252">stream</a>: <span title="java.io.OutputStream">OutputStream</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <span class="delimiter">{</span>
+    <span class="keyword">val</span> <a title="java.io.ObjectOutputStream" id="79265">out</a> = <span title="java.io.ObjectOutputStream" class="keyword">new</span> <span title="java.io.ObjectOutputStream">ObjectOutputStream</span><span class="delimiter">(</span><a href="#79252" title="java.io.OutputStream">stream</a><span class="delimiter">)</span>
+    <a href="#79265" title="java.io.ObjectOutputStream">out</a>.<span title="(x$1: Any)Unit">writeObject</span><span class="delimiter">(</span><a href="#31229" title="twitter4z.api.Required" class="keyword">this</a><span class="delimiter">)</span>
+    <a href="#79265" title="java.io.ObjectOutputStream">out</a>.<span title="()Unit">close</span><span class="delimiter">(</span><span class="delimiter">)</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">def</span> <a title="(file: java.io.File)Unit" id="30790">write</a><span class="delimiter">(</span><a title="java.io.File" id="79451">file</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#30789" title="(stream: java.io.OutputStream)Unit">write</a><span class="delimiter">(</span><span title="(x$1: java.io.File)java.io.FileOutputStream" class="keyword">new</span> <span title="java.io.FileOutputStream">FileOutputStream</span><span class="delimiter">(</span><a href="#79451" title="java.io.File">file</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+  <span class="keyword">def</span> <a title="(name: String)Unit" id="30791">write</a><span class="delimiter">(</span><a title="String" id="79457">name</a>: <span title="String">String</span><span class="delimiter">)</span>: <span title="Unit">Unit</span> = <a href="#30789" title="(stream: java.io.OutputStream)Unit">write</a><span class="delimiter">(</span><span title="java.io.FileOutputStream" class="keyword">new</span> <span title="java.io.FileOutputStream">FileOutputStream</span><span class="delimiter">(</span><a href="#79457" title="String">name</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+<span class="delimiter">}</span>
+
+<span class="keyword">object</span> <a title="object twitter4z.api.Required" id="80244">Required</a> <span title="ScalaObject" class="delimiter">{</span>
+
+  <span class="keyword">def</span> <a title="(consumer: dispatch.oauth.Consumer, token: org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Request], verifier: String)twitter4z.api.Required" id="31223">apply</a><span class="delimiter">(</span><a title="dispatch.oauth.Consumer" id="31308">consumer</a>: <span title="dispatch.oauth.Consumer">Consumer</span>, <a title="org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Request]" id="31309">token</a>: Token <span title="org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Request]">@@</span> Request, <a title="String" id="31310">verifier</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="#31229" title="twitter4z.api.Required">Required</a> = <span class="delimiter">{</span>
+    <a href="../Twitter.scala.html#9650" title="object twitter4z.Twitter">Twitter</a>.<a href="../auth/OAuth.scala.html#26465" title="(consumer: dispatch.oauth.Consumer, request: org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Request], verifier: String)(org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access], Long, String)">accessToken</a><span class="delimiter">(</span><a href="#31308" title="dispatch.oauth.Consumer">consumer</a>, <a href="#31309" title="org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Request]">token</a>, <a href="#31310" title="String">verifier</a><span class="delimiter">)</span> <span title="twitter4z.api.Required" class="keyword">match</span> <span class="delimiter">{</span>
+      <span class="keyword">case</span> <span title="twitter4z.api.Required" class="delimiter">(</span><a title="org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access]" id="79952">token</a>, <a title="Long" id="79953">userId</a>, <a title="String" id="79954">screenName</a><span class="delimiter">)</span> =&gt; <a href="#31229" title="(consumer: dispatch.oauth.Consumer, token: org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access])twitter4z.api.Required">Required</a><span class="delimiter">(</span><a href="#31308" title="dispatch.oauth.Consumer">consumer</a>, <a href="#79952" title="org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access]">token</a><span class="delimiter">)</span>
+    <span class="delimiter">}</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">def</span> <a title="(consumerKey: String, consumerSecret: String, token: String, secret: String)twitter4z.api.Required" id="31224">apply</a><span class="delimiter">(</span><a title="String" id="31303">consumerKey</a>: <span title="String">String</span>, <a title="String" id="31304">consumerSecret</a>: <span title="String">String</span>, <a title="String" id="31305">token</a>: <span title="String">String</span>, <a title="String" id="31306">secret</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="#31229" title="twitter4z.api.Required">Required</a> = <span class="delimiter">{</span>
+    <a href="#31229" title="(consumer: dispatch.oauth.Consumer, token: org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access])twitter4z.api.Required">Required</a><span class="delimiter">(</span><span title="(key: String, secret: String)dispatch.oauth.Consumer">Consumer</span><span class="delimiter">(</span><a href="#31303" title="String">consumerKey</a>, <a href="#31304" title="String">consumerSecret</a><span class="delimiter">)</span>, <span title="(t: dispatch.oauth.Token)org.specs2.html.package.@@[dispatch.oauth.Token,twitter4z.auth.Access]">tag</span><span class="delimiter">(</span><span title="(value: String, secret: String)dispatch.oauth.Token">Token</span><span class="delimiter">(</span><a href="#31305" title="String">token</a>, <a href="#31306" title="String">secret</a><span class="delimiter">)</span><span class="delimiter">)</span><span class="delimiter">)</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">def</span> <a title="(stream: java.io.InputStream)twitter4z.api.Required" id="31225">apply</a><span class="delimiter">(</span><a title="java.io.InputStream" id="31301">stream</a>: <span title="java.io.InputStream">InputStream</span><span class="delimiter">)</span>: <a href="#31229" title="twitter4z.api.Required">Required</a> = <span class="delimiter">{</span>
+    <span class="keyword">val</span> <a title="java.io.ObjectInputStream" id="80024">in</a> = <span title="java.io.ObjectInputStream" class="keyword">new</span> <span title="java.io.ObjectInputStream">ObjectInputStream</span><span class="delimiter">(</span><a href="#31301" title="java.io.InputStream">stream</a><span class="delimiter">)</span>
+    <span class="keyword">val</span> <a title="twitter4z.api.Required" id="80025">auth</a> = <a href="#80024" title="java.io.ObjectInputStream">in</a>.<span title="()java.lang.Object">readObject</span>.<span title="[T0]=&gt; T0">asInstanceOf</span><span title="twitter4z.api.Required" class="delimiter">[</span><a href="#31229" title="twitter4z.api.Required">Required</a><span class="delimiter">]</span>
+    <a href="#80024" title="java.io.ObjectInputStream">in</a>.<span title="()Unit">close</span><span class="delimiter">(</span><span class="delimiter">)</span>
+    <a href="#80025" title="twitter4z.api.Required">auth</a>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">def</span> <a title="(file: java.io.File)twitter4z.api.Required" id="31226">apply</a><span class="delimiter">(</span><a title="java.io.File" id="31299">file</a>: <span title="java.io.File">File</span><span class="delimiter">)</span>: <a href="#31229" title="twitter4z.api.Required">Required</a> = <a href="#31225" title="(stream: java.io.InputStream)twitter4z.api.Required">Required</a><span class="delimiter">(</span><span title="(x$1: java.io.File)java.io.FileInputStream" class="keyword">new</span> <span title="java.io.FileInputStream">FileInputStream</span><span class="delimiter">(</span><a href="#31299" title="java.io.File">file</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+  <span class="keyword">def</span> <a title="(name: String)twitter4z.api.Required" id="31227">apply</a><span class="delimiter">(</span><a title="String" id="31297">name</a>: <span title="String">String</span><span class="delimiter">)</span>: <a href="#31229" title="twitter4z.api.Required">Required</a> = <a href="#31225" title="(stream: java.io.InputStream)twitter4z.api.Required">Required</a><span class="delimiter">(</span><span title="java.io.FileInputStream" class="keyword">new</span> <span title="java.io.FileInputStream">FileInputStream</span><span class="delimiter">(</span><a href="#31297" title="String">name</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+  <span class="keyword">def</span> <a title="(props: java.util.Properties)twitter4z.api.Required" id="31228">apply</a><span class="delimiter">(</span><a title="java.util.Properties" id="31250">props</a>: java.util.<span title="java.util.Properties">Properties</span><span class="delimiter">)</span>: <a href="#31229" title="twitter4z.api.Required">Required</a> = <a href="#31224" title="(consumerKey: String, consumerSecret: String, token: String, secret: String)twitter4z.api.Required">Required</a><span class="delimiter">(</span><a href="#31250" title="java.util.Properties">props</a>.<span title="(x$1: java.lang.String)java.lang.String">getProperty</span><span class="delimiter">(</span><span title="java.lang.String(&quot;consumer.key&quot;)" class="string">&quot;consumer.key&quot;</span><span class="delimiter">)</span>, <a href="#31250" title="java.util.Properties">props</a>.<span title="(x$1: java.lang.String)java.lang.String">getProperty</span><span class="delimiter">(</span><span title="java.lang.String(&quot;consumer.secret&quot;)" class="string">&quot;consumer.secret&quot;</span><span class="delimiter">)</span>, <a href="#31250" title="java.util.Properties">props</a>.<span title="(x$1: java.lang.String)java.lang.String">getProperty</span><span class="delimiter">(</span><span title="java.lang.String(&quot;access.token&quot;)" class="string">&quot;access.token&quot;</span><span class="delimiter">)</span>, <a href="#31250" title="java.util.Properties">props</a>.<span title="(x$1: java.lang.String)java.lang.String">getProperty</span><span class="delimiter">(</span><span title="java.lang.String(&quot;access.token.secret&quot;)" class="string">&quot;access.token.secret&quot;</span><span class="delimiter">)</span><span class="delimiter">)</span>
+
+<span class="delimiter">}</span>
+
+<span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Optional extends java.lang.Object with twitter4z.api.Authentication" id="9681">Optional</a> <span class="keyword">extends</span> <a href="#9677" title="twitter4z.api.Authentication">Authentication</a>
+
+case <span class="keyword">object</span> <a href="#80252" title="object twitter4z.api.Optional" id="80257">Optional</a> <span title="ScalaObject" class="keyword">extends</span> <a href="#9681" title="twitter4z.api.Optional">Optional</a>
+
+        </pre>
+    </body>
+</html>

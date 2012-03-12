@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>twitter4z/api/parameter/Parameter.scala</title>
+        <script type="text/javascript" src="../../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.api.parameter
+
+<span class="keyword">import</span> scalaz._
+<span class="keyword">import</span> <span title="object scalaz.Scalaz">Scalaz</span>._
+
+<span class="keyword">import</span> twitter4z.api._
+
+<span class="keyword">trait</span> <a title="trait Parameter[+A] extends java.lang.Object with ScalaObject" id="9823">Parameter</a><span class="delimiter">[</span>+<a title="&gt;: Nothing &lt;: Any" id="9824">A</a><span class="delimiter">]</span> <span title="ScalaObject" class="delimiter">{</span>
+
+  <span class="keyword">type</span> <a title="&gt;: Nothing &lt;: twitter4z.api.parameter.Parameter[A] with A" id="78489">Self</a> &lt;: Parameter<span class="delimiter">[</span>A<span class="delimiter">]</span> <span class="keyword">with</span> A
+
+  <span class="keyword">def</span> <a title="(parameters: twitter4z.api.package.Parameters)Parameter.this.Self" id="78490">apply</a><span class="delimiter">(</span><a title="twitter4z.api.package.Parameters" id="78518">parameters</a>: <span title="twitter4z.api.package.Parameters">Parameters</span><span class="delimiter">)</span>: <a href="#78489" title="Parameter.this.Self">Self</a>
+
+  <span class="keyword">val</span> <a title="=&gt; twitter4z.api.package.Parameters" id="78491">parameters</a>: <span title="twitter4z.api.package.Parameters">Parameters</span>
+
+  <span class="keyword">def</span> <a title="[A](key: String)(implicit evidence$1: scalaz.Show[A])A =&gt; Parameter.this.Self" id="78515">apply</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="78494">A</a>: Show<span class="delimiter">]</span><span class="delimiter">(</span><a title="String" id="78514">key</a>: <span title="String">String</span><span class="delimiter">)</span>: A =&gt; Self = <a href="#88643" title="(key: String, value: A)(implicit evidence$2: scalaz.Show[A])Parameter.this.Self" class="keyword">this</a><span class="delimiter">(</span><a href="#78514" title="String">key</a><span class="delimiter">)</span> = <a href="#101435" title="A">_</a>
+
+  <span class="keyword">def</span> <a title="[A](key: String, value: A)(implicit evidence$2: scalaz.Show[A])Parameter.this.Self" id="88643">update</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="78497">A</a>: Show<span class="delimiter">]</span><span class="delimiter">(</span><a title="String" id="88641">key</a>: <span title="String">String</span>, <a title="A" id="88642">value</a>: <a href="#78497" title="A">A</a><span class="delimiter">)</span>: <a href="#78489" title="Parameter.this.Self">Self</a> = <a href="#78490" title="(parameters: twitter4z.api.package.Parameters)Parameter.this.Self">apply</a><span class="delimiter">(</span><a href="#78491" title="=&gt; twitter4z.api.package.Parameters">parameters</a> <span title="(kv: (String, String))scala.collection.immutable.Map[String,String]">+</span> <span class="delimiter">(</span><a href="#88641" title="(x: String)ArrowAssoc[String]">key</a> <span title="(y: String)(String, String)">-&gt;</span> <a href="#88642" title="(x: =&gt; A)scalaz.Identity[A]">value</a>.<a href="#88643" title="(implicit s: scalaz.Show[A])String">shows</a><span class="delimiter">)</span><span class="delimiter">)</span>
+
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>

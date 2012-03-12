@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" ></meta>
+        <title>twitter4z/api/parameter/package.scala</title>
+        <script type="text/javascript" src="../../../jquery-all.js"></script>
+        <script type="text/javascript" src="../../../linked.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../../style.css" title="Style"></link>
+    </head>
+    <body>
+        <pre>
+<span class="keyword">package</span> twitter4z.api
+
+<span class="keyword">package</span> <span class="keyword">object</span> <a title="object twitter4z.api.parameter.package" id="9864">parameter</a> <span title="ScalaObject" class="delimiter">{</span>
+
+  <span class="keyword">type</span> <a title="[A]twitter4z.api.parameter.package.Contains[A,twitter4z.api.parameter.package.Disj{type D = Long =&gt; Nothing with String =&gt; Nothing}]" id="10072">ContainsId</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10073">A</a><span class="delimiter">]</span> = <span title="twitter4z.api.parameter.package.Contains[A,twitter4z.api.parameter.package.Disj{type D = Long =&gt; Nothing with String =&gt; Nothing}]">Contains</span><span class="delimiter">[</span>A, t<span class="delimiter">[</span>Long<span class="delimiter">]</span>#t<span class="delimiter">[</span>String<span class="delimiter">]</span><span class="delimiter">]</span>
+
+  <span class="keyword">type</span> <a title="[A]twitter4z.api.parameter.package.Contains[A,twitter4z.api.parameter.package.Disj{type D = Long =&gt; Nothing with (java.lang.String, Long) =&gt; Nothing with (String, Long) =&gt; Nothing}]" id="10074">ContainsListId</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10075">A</a><span class="delimiter">]</span> = <span title="twitter4z.api.parameter.package.Contains[A,twitter4z.api.parameter.package.Disj{type D = Long =&gt; Nothing with (java.lang.String, Long) =&gt; Nothing with (String, Long) =&gt; Nothing}]">Contains</span><span class="delimiter">[</span>A, t<span class="delimiter">[</span>Long<span class="delimiter">]</span>#t<span class="delimiter">[</span><span class="delimiter">(</span>String, Long<span class="delimiter">)</span><span class="delimiter">]</span>#t<span class="delimiter">[</span><span class="delimiter">(</span>String, Long<span class="delimiter">)</span><span class="delimiter">]</span><span class="delimiter">]</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10076">COUNT</a> = <span title="java.lang.String(&quot;count&quot;)" class="string">&quot;count&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10078">PAGE</a> = <span title="java.lang.String(&quot;page&quot;)" class="string">&quot;page&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10080">SINCE_ID</a> = <span title="java.lang.String(&quot;since_id&quot;)" class="string">&quot;since_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10082">MAX_ID</a> = <span title="java.lang.String(&quot;max_id&quot;)" class="string">&quot;max_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10084">USER_ID</a> = <span title="java.lang.String(&quot;user_id&quot;)" class="string">&quot;user_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10086">SCREEN_NAME</a> = <span title="java.lang.String(&quot;screen_name&quot;)" class="string">&quot;screen_name&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10088">STATUS</a> = <span title="java.lang.String(&quot;status&quot;)" class="string">&quot;status&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10090">IN_REPLY_TO_STATUS_ID</a> = <span title="java.lang.String(&quot;in_reply_to_status_id&quot;)" class="string">&quot;in_reply_to_status_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10092">LAT</a> = <span title="java.lang.String(&quot;lat&quot;)" class="string">&quot;lat&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10094">LONG</a> = <span title="java.lang.String(&quot;long&quot;)" class="string">&quot;long&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10096">PLACE_ID</a> = <span title="java.lang.String(&quot;place_id&quot;)" class="string">&quot;place_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10098">DISPLAY_COORDINATES</a> = <span title="java.lang.String(&quot;display_coordinates&quot;)" class="string">&quot;display_coordinates&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10100">QUERY</a> = <span title="java.lang.String(&quot;q&quot;)" class="string">&quot;q&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10102">GEOCODE</a> = <span title="java.lang.String(&quot;geocode&quot;)" class="string">&quot;geocode&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10104">LANG</a> = <span title="java.lang.String(&quot;lang&quot;)" class="string">&quot;lang&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10106">LOCALE</a> = <span title="java.lang.String(&quot;locale&quot;)" class="string">&quot;locale&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10108">RESULT_TYPE</a> = <span title="java.lang.String(&quot;result_type&quot;)" class="string">&quot;result_type&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10110">RPP</a> = <span title="java.lang.String(&quot;rpp&quot;)" class="string">&quot;rpp&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10112">UNTIL</a> = <span title="java.lang.String(&quot;until&quot;)" class="string">&quot;until&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10114">TEXT</a> = <span title="java.lang.String(&quot;text&quot;)" class="string">&quot;text&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10116">CURSOR</a> = <span title="java.lang.String(&quot;cursor&quot;)" class="string">&quot;cursor&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10118">USER_ID_A</a> = <span title="java.lang.String(&quot;user_id_a&quot;)" class="string">&quot;user_id_a&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10120">USER_ID_B</a> = <span title="java.lang.String(&quot;user_id_b&quot;)" class="string">&quot;user_id_b&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10122">SCREEN_NAME_A</a> = <span title="java.lang.String(&quot;screen_name_a&quot;)" class="string">&quot;screen_name_a&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10124">SCREEN_NAME_B</a> = <span title="java.lang.String(&quot;screen_name_b&quot;)" class="string">&quot;screen_name_b&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10126">SOURCE_ID</a> = <span title="java.lang.String(&quot;source_id&quot;)" class="string">&quot;source_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10128">SOURCE_SCREEN_NAME</a> = <span title="java.lang.String(&quot;source_screen_name&quot;)" class="string">&quot;source_screen_name&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10130">TARGET_ID</a> = <span title="java.lang.String(&quot;target_id&quot;)" class="string">&quot;target_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10132">TARGET_SCREEN_NAME</a> = <span title="java.lang.String(&quot;target_screen_name&quot;)" class="string">&quot;target_screen_name&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10134">FOLLOW</a> = <span title="java.lang.String(&quot;follow&quot;)" class="string">&quot;follow&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10136">RETWEETS</a> = <span title="java.lang.String(&quot;retweets&quot;)" class="string">&quot;retweets&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10138">DEVICE</a> = <span title="java.lang.String(&quot;device&quot;)" class="string">&quot;device&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10140">PAR_PAGE</a> = <span title="java.lang.String(&quot;per_page&quot;)" class="string">&quot;per_page&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10142">LIST_ID</a> = <span title="java.lang.String(&quot;list_id&quot;)" class="string">&quot;list_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10144">SLUG</a> = <span title="java.lang.String(&quot;slug&quot;)" class="string">&quot;slug&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10146">OWNER_ID</a> = <span title="java.lang.String(&quot;owner_id&quot;)" class="string">&quot;owner_id&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10148">OWNER_SCREEN_NAME</a> = <span title="java.lang.String(&quot;owner_screen_name&quot;)" class="string">&quot;owner_screen_name&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10150">NAME</a> = <span title="java.lang.String(&quot;name&quot;)" class="string">&quot;name&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10152">MODE</a> = <span title="java.lang.String(&quot;mode&quot;)" class="string">&quot;mode&quot;</span>
+
+  <span class="keyword">val</span> <a title="java.lang.String" id="10154">DESCRIPTION</a> = <span title="java.lang.String(&quot;description&quot;)" class="string">&quot;description&quot;</span>
+
+  <span class="comment">// UnionTypes</span>
+
+  <span class="keyword">type</span> <a title="[A]A =&gt; Nothing" id="10156">!</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10157">A</a><span class="delimiter">]</span> = A =&gt; Nothing
+  <span class="keyword">type</span> <a title="[A]A =&gt; Nothing =&gt; Nothing" id="10158">!!</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10159">A</a><span class="delimiter">]</span> = <span title="A =&gt; Nothing =&gt; Nothing">!</span><span class="delimiter">[</span>!<span class="delimiter">[</span>A<span class="delimiter">]</span><span class="delimiter">]</span>
+
+  <span class="keyword">trait</span> <a title="trait Disj extends java.lang.Object" id="10160">Disj</a> <span title="java.lang.Object" class="delimiter">{</span> self =&gt;
+    <span class="keyword">type</span> <a title="&gt;: Nothing &lt;: Any" id="81965">D</a>
+    <span class="keyword">type</span> <a title="Disj[S] extends twitter4z.api.parameter.package.Disj" id="81966">t</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="81967">S</a><span class="delimiter">]</span> = <a href="#81975" title="Disj extends twitter4z.api.parameter.package.Disj">Disj</a> <span class="delimiter">{</span>
+      <span class="keyword">type</span> D = self.D <span class="keyword">with</span> !<span class="delimiter">[</span>S<span class="delimiter">]</span>
+    <span class="delimiter">}</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">type</span> <a title="package[T] extends AnyRef" id="10161">t</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10162">T</a><span class="delimiter">]</span> = <a href="#81970" title="package extends AnyRef" class="delimiter">{</a>
+    <span class="keyword">type</span> t<span class="delimiter">[</span>S<span class="delimiter">]</span> = <span class="delimiter">(</span>Disj <span class="delimiter">{</span> <span class="keyword">type</span> D = !<span class="delimiter">[</span>T<span class="delimiter">]</span> <span class="delimiter">}</span><span class="delimiter">)</span>#t<span class="delimiter">[</span>S<span class="delimiter">]</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">type</span> <a title="[T &lt;: twitter4z.api.parameter.package.Disj]T#D =&gt; Nothing" id="10163">or</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: twitter4z.api.parameter.package.Disj" id="10164">T</a> &lt;: Disj<span class="delimiter">]</span> = <span title="T#D =&gt; Nothing">!</span><span class="delimiter">[</span>T#D<span class="delimiter">]</span>
+
+  <span class="keyword">type</span> <a title="[S, T &lt;: twitter4z.api.parameter.package.Disj]&lt;:&lt;[S =&gt; Nothing =&gt; Nothing,T#D =&gt; Nothing]" id="10165">Contains</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10166">S</a>, <a title="&gt;: Nothing &lt;: twitter4z.api.parameter.package.Disj" id="10167">T</a> &lt;: Disj<span class="delimiter">]</span> = !!<span class="delimiter">[</span>S<span class="delimiter">]</span> <span title="&lt;:&lt;[S =&gt; Nothing =&gt; Nothing,T#D =&gt; Nothing]">&lt;:&lt;</span> or<span class="delimiter">[</span>T<span class="delimiter">]</span>
+  <span class="keyword">type</span> <a title="[S, T &lt;: twitter4z.api.parameter.package.Disj]twitter4z.api.parameter.package.Contains[S,T]" id="10168">∈</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10169">S</a>, <a title="&gt;: Nothing &lt;: twitter4z.api.parameter.package.Disj" id="10170">T</a> &lt;: Disj<span class="delimiter">]</span> = <span title="twitter4z.api.parameter.package.Contains[S,T]">Contains</span><span class="delimiter">[</span>S, T<span class="delimiter">]</span>
+
+  <span class="keyword">sealed</span> <span class="keyword">trait</span> <a title="trait Union[T] extends java.lang.Object" id="10171">Union</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10172">T</a><span class="delimiter">]</span> <span title="java.lang.Object" class="delimiter">{</span>
+    <span class="keyword">val</span> <a title="=&gt; Any" id="102126">value</a>: <span title="Any">Any</span>
+  <span class="delimiter">}</span>
+
+  case <span class="keyword">class</span> <a title="class Converter[S] extends java.lang.Object with ScalaObject with Product with Serializable" id="102200">Converter</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="102160">S</a><span class="delimiter">]</span><a href="#102200" title="ScalaObject" class="delimiter">(</a><a title="S" id="102192">s</a>: <a href="#102160" title="S">S</a><span class="delimiter">)</span> <span class="delimiter">{</span>
+    <span class="keyword">def</span> <a title="[T &lt;: twitter4z.api.parameter.package.Disj](implicit ev: twitter4z.api.parameter.package.Contains[S,T])twitter4z.api.parameter.package.Union[T]" id="80438">union</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: twitter4z.api.parameter.package.Disj" id="80440">T</a> &lt;: Disj<span class="delimiter">]</span><span class="delimiter">(</span><span class="keyword">implicit</span> <a title="twitter4z.api.parameter.package.Contains[S,T]" id="102131">ev</a>: <span title="twitter4z.api.parameter.package.Contains[S,T]">Contains</span><span class="delimiter">[</span>S, T<span class="delimiter">]</span><span class="delimiter">)</span>: <a href="#10171" title="twitter4z.api.parameter.package.Union[T]">Union</a><span class="delimiter">[</span>T<span class="delimiter">]</span> =
+      <a href="#102134" title="java.lang.Object with twitter4z.api.parameter.package.Union[T]{}" class="keyword">new</a> <a title="anonymous class $anon extends java.lang.Object with twitter4z.api.parameter.package.Union[T]" id="102134">Union</a><span class="delimiter">[</span>T<span class="delimiter">]</span> <span class="delimiter">{</span>
+        <span class="keyword">val</span> <a title="S" id="102138">value</a> = <a href="#102192" title="=&gt; S">s</a>
+      <span class="delimiter">}</span>
+  <span class="delimiter">}</span>
+
+  <span class="keyword">implicit</span> <span class="keyword">def</span> <a title="[S](s: S)twitter4z.api.parameter.package.Converter[S]" id="10177">any2Converter</a><span class="delimiter">[</span><a title="&gt;: Nothing &lt;: Any" id="10179">S</a><span class="delimiter">]</span><span class="delimiter">(</span><a title="S" id="80431">s</a>: <a href="#10179" title="S">S</a><span class="delimiter">)</span>: <a href="#102200" title="twitter4z.api.parameter.package.Converter[S]">Converter</a><span class="delimiter">[</span>S<span class="delimiter">]</span> = <a href="#102200" title="[S](s: S)twitter4z.api.parameter.package.Converter[S]">Converter</a><span title="(s: S)twitter4z.api.parameter.package.Converter[S]" class="delimiter">[</span><a href="#10179" title="S">S</a><span class="delimiter">]</span><span class="delimiter">(</span><a href="#80431" title="S">s</a><span class="delimiter">)</span>
+
+<span class="delimiter">}</span>
+
+        </pre>
+    </body>
+</html>
